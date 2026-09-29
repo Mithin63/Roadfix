@@ -1,0 +1,2645 @@
+{
+  "users": [
+    [
+      "cust-1",
+      {
+        "id": "cust-1",
+        "email": "rohan@roadfix.com",
+        "password": "password123",
+        "name": "Rohan Sharma",
+        "phone": "+91 98201 44552",
+        "role": "customer",
+        "avatar": "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=200&q=80",
+        "address": "Bandra West, Hill Road, Mumbai",
+        "lat": 19.0596,
+        "lng": 72.8295,
+        "createdAt": "2025-11-10T10:00:00Z",
+        "isBlocked": false
+      }
+    ],
+    [
+      "cust-2",
+      {
+        "id": "cust-2",
+        "email": "priya@roadfix.com",
+        "password": "password123",
+        "name": "Priya Deshmukh",
+        "phone": "+91 98334 11223",
+        "role": "customer",
+        "avatar": "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=200&q=80",
+        "address": "Powai, Hiranandani Gardens, Mumbai",
+        "lat": 19.1176,
+        "lng": 72.906,
+        "createdAt": "2025-12-01T14:30:00Z",
+        "isBlocked": false
+      }
+    ],
+    [
+      "cust-3",
+      {
+        "id": "cust-3",
+        "email": "amit.verma@example.com",
+        "name": "Amit Verma",
+        "phone": "+91 98112 33445",
+        "role": "customer",
+        "avatar": "https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?auto=format&fit=crop&w=200&q=80",
+        "address": "Andheri East, Chakala, Mumbai",
+        "lat": 19.1136,
+        "lng": 72.8697,
+        "createdAt": "2026-01-15T09:15:00Z",
+        "isBlocked": false,
+        "password": "password123"
+      }
+    ],
+    [
+      "cust-4",
+      {
+        "id": "cust-4",
+        "email": "sneha.patil@example.com",
+        "name": "Sneha Patil",
+        "phone": "+91 97665 99881",
+        "role": "customer",
+        "avatar": "https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=200&q=80",
+        "address": "Dadar West, Shivaji Park, Mumbai",
+        "lat": 19.0269,
+        "lng": 72.8373,
+        "createdAt": "2026-02-01T11:00:00Z",
+        "isBlocked": false,
+        "password": "password123"
+      }
+    ],
+    [
+      "cust-5",
+      {
+        "id": "cust-5",
+        "email": "vikas.nair@example.com",
+        "name": "Vikas Nair",
+        "phone": "+91 98450 67890",
+        "role": "customer",
+        "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&q=80",
+        "address": "Worli Seaface, Mumbai",
+        "lat": 19.0166,
+        "lng": 72.8168,
+        "createdAt": "2026-02-14T16:20:00Z",
+        "isBlocked": false,
+        "password": "password123"
+      }
+    ],
+    [
+      "cust-6",
+      {
+        "id": "cust-6",
+        "email": "ananya.iyer@example.com",
+        "name": "Ananya Iyer",
+        "phone": "+91 99200 44112",
+        "role": "customer",
+        "avatar": "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=200&q=80",
+        "address": "Ghatkopar East, Tilak Road, Mumbai",
+        "lat": 19.0864,
+        "lng": 72.908,
+        "createdAt": "2026-03-01T08:45:00Z",
+        "isBlocked": false,
+        "password": "password123"
+      }
+    ],
+    [
+      "cust-7",
+      {
+        "id": "cust-7",
+        "email": "rahul.mehta@example.com",
+        "name": "Rahul Mehta",
+        "phone": "+91 98211 77334",
+        "role": "customer",
+        "avatar": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=200&q=80",
+        "address": "Juhu Tara Road, Mumbai",
+        "lat": 19.0883,
+        "lng": 72.8262,
+        "createdAt": "2026-04-10T12:00:00Z",
+        "isBlocked": false,
+        "password": "password123"
+      }
+    ],
+    [
+      "cust-8",
+      {
+        "id": "cust-8",
+        "email": "kavita.singh@example.com",
+        "name": "Kavita Singh",
+        "phone": "+91 98920 88990",
+        "role": "customer",
+        "avatar": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80",
+        "address": "Borivali West, IC Colony, Mumbai",
+        "lat": 19.2307,
+        "lng": 72.8567,
+        "createdAt": "2026-05-05T15:10:00Z",
+        "isBlocked": false,
+        "password": "password123"
+      }
+    ],
+    [
+      "cust-9",
+      {
+        "id": "cust-9",
+        "email": "arjun.kapoor@example.com",
+        "name": "Arjun Kapoor",
+        "phone": "+91 98199 55667",
+        "role": "customer",
+        "avatar": "https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?auto=format&fit=crop&w=200&q=80",
+        "address": "Thane West, Majiwada, Thane",
+        "lat": 19.2183,
+        "lng": 72.9781,
+        "createdAt": "2026-06-18T17:35:00Z",
+        "isBlocked": false,
+        "password": "password123"
+      }
+    ],
+    [
+      "cust-10",
+      {
+        "id": "cust-10",
+        "email": "neha.joshi@example.com",
+        "name": "Neha Joshi",
+        "phone": "+91 98330 22119",
+        "role": "customer",
+        "avatar": "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=200&q=80",
+        "address": "Chembur East, Diamond Garden, Mumbai",
+        "lat": 19.0522,
+        "lng": 72.9005,
+        "createdAt": "2026-07-20T10:15:00Z",
+        "isBlocked": false,
+        "password": "password123"
+      }
+    ],
+    [
+      "mech-1",
+      {
+        "id": "mech-1",
+        "email": "rajesh@roadfix.com",
+        "password": "password123",
+        "name": "Rajesh Solanki",
+        "phone": "+91 98205 77112",
+        "role": "mechanic",
+        "avatar": "https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&w=200&q=80",
+        "address": "Solanki Auto Works, SV Road, Bandra West",
+        "lat": 19.057,
+        "lng": 72.835,
+        "createdAt": "2025-08-01T09:00:00Z",
+        "isBlocked": false
+      }
+    ],
+    [
+      "mech-2",
+      {
+        "id": "mech-2",
+        "email": "vikram@roadfix.com",
+        "password": "password123",
+        "name": "Vikram Jadhav",
+        "phone": "+91 98204 88223",
+        "role": "mechanic",
+        "avatar": "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=200&q=80",
+        "address": "Jadhav Super Garage, Link Road, Andheri West",
+        "lat": 19.135,
+        "lng": 72.831,
+        "createdAt": "2025-09-12T10:30:00Z",
+        "isBlocked": false
+      }
+    ],
+    [
+      "mech-3",
+      {
+        "id": "mech-3",
+        "email": "santosh.shinde@example.com",
+        "name": "Santosh Shinde",
+        "phone": "+91 98190 33441",
+        "role": "mechanic",
+        "avatar": "https://images.unsplash.com/photo-1540569014015-19a7be504e3a?auto=format&fit=crop&w=200&q=80",
+        "address": "Speedy Tyres & Battery, LBS Marg, Ghatkopar",
+        "lat": 19.088,
+        "lng": 72.912,
+        "createdAt": "2025-10-05T12:00:00Z",
+        "isBlocked": false,
+        "password": "password123"
+      }
+    ],
+    [
+      "mech-4",
+      {
+        "id": "mech-4",
+        "email": "irfan.khan@example.com",
+        "name": "Irfan Khan",
+        "phone": "+91 98921 55660",
+        "role": "mechanic",
+        "avatar": "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=200&q=80",
+        "address": "Khan Auto Electricals, Dharavi 90ft Road",
+        "lat": 19.043,
+        "lng": 72.855,
+        "createdAt": "2025-10-20T08:30:00Z",
+        "isBlocked": false,
+        "password": "password123"
+      }
+    ],
+    [
+      "mech-5",
+      {
+        "id": "mech-5",
+        "email": "balwinder.singh@example.com",
+        "name": "Balwinder Singh",
+        "phone": "+91 98218 99882",
+        "role": "mechanic",
+        "avatar": "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=200&q=80",
+        "address": "Khalsa Roadside Assistance, Eastern Express Hwy, Chembur",
+        "lat": 19.06,
+        "lng": 72.89,
+        "createdAt": "2025-11-15T11:45:00Z",
+        "isBlocked": false,
+        "password": "password123"
+      }
+    ],
+    [
+      "mech-6",
+      {
+        "id": "mech-6",
+        "email": "anil.kadam@example.com",
+        "name": "Anil Kadam",
+        "phone": "+91 98200 12349",
+        "role": "mechanic",
+        "avatar": "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=200&q=80",
+        "address": "Sai Krupa Motors, Senapati Bapat Marg, Dadar",
+        "lat": 19.022,
+        "lng": 72.842,
+        "createdAt": "2025-12-01T10:10:00Z",
+        "isBlocked": false,
+        "password": "password123"
+      }
+    ],
+    [
+      "mech-7",
+      {
+        "id": "mech-7",
+        "email": "mahesh.more@example.com",
+        "name": "Mahesh More",
+        "phone": "+91 98331 44558",
+        "role": "mechanic",
+        "avatar": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=200&q=80",
+        "address": "More Bike Point, JVLR, Powai",
+        "lat": 19.125,
+        "lng": 72.901,
+        "createdAt": "2026-01-08T14:00:00Z",
+        "isBlocked": false,
+        "password": "password123"
+      }
+    ],
+    [
+      "mech-8",
+      {
+        "id": "mech-8",
+        "email": "ganesh.pawar@example.com",
+        "name": "Ganesh Pawar",
+        "phone": "+91 98192 66778",
+        "role": "mechanic",
+        "avatar": "https://images.unsplash.com/photo-1566492031773-4f4e44671857?auto=format&fit=crop&w=200&q=80",
+        "address": "Pawar Quick Puncture & Fuel, Western Express Hwy, Goregaon",
+        "lat": 19.162,
+        "lng": 72.853,
+        "createdAt": "2026-02-10T09:30:00Z",
+        "isBlocked": false,
+        "password": "password123"
+      }
+    ],
+    [
+      "mech-9",
+      {
+        "id": "mech-9",
+        "email": "dilip.rathod@example.com",
+        "name": "Dilip Rathod",
+        "phone": "+91 98207 33221",
+        "role": "mechanic",
+        "avatar": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80",
+        "address": "Rathod Heavy & EV Mobile Rescue, Thane W",
+        "lat": 19.205,
+        "lng": 72.97,
+        "createdAt": "2026-03-02T13:15:00Z",
+        "isBlocked": false,
+        "password": "password123"
+      }
+    ],
+    [
+      "mech-10",
+      {
+        "id": "mech-10",
+        "email": "karan.sharma@example.com",
+        "name": "Karan Sharma",
+        "phone": "+91 98214 77889",
+        "role": "mechanic",
+        "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&q=80",
+        "address": "AutoCare Express 24/7, Dr Annie Besant Rd, Worli",
+        "lat": 19.008,
+        "lng": 72.819,
+        "createdAt": "2026-04-12T16:00:00Z",
+        "isBlocked": false,
+        "password": "password123"
+      }
+    ],
+    [
+      "admin-1",
+      {
+        "id": "admin-1",
+        "email": "admin@roadfix.com",
+        "password": "password123",
+        "name": "Operations Director",
+        "phone": "+91 98200 00001",
+        "role": "admin",
+        "avatar": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80",
+        "address": "Roadfix Central Control, BKC, Mumbai",
+        "lat": 19.0657,
+        "lng": 72.8687,
+        "createdAt": "2025-01-01T00:00:00Z",
+        "isBlocked": false
+      }
+    ],
+    [
+      "cust-1790432431788",
+      {
+        "id": "cust-1790432431788",
+        "email": "rohit.verma@example.com",
+        "password": "mypassword123",
+        "name": "Rohit Verma",
+        "phone": "+91 98200 99999",
+        "role": "customer",
+        "avatar": "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=200&q=80",
+        "address": "Bandra West, Mumbai",
+        "lat": 19.094745623531278,
+        "lng": 72.86297812168382,
+        "createdAt": "2026-09-26T14:20:31.788Z",
+        "isBlocked": false
+      }
+    ],
+    [
+      "cust-1790432821524",
+      {
+        "id": "cust-1790432821524",
+        "email": "mithinboddepalli@gmail.com",
+        "password": "mithin",
+        "name": "Mithin Boddepalli",
+        "phone": "9391465499",
+        "role": "customer",
+        "avatar": "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=200&q=80",
+        "address": "andhra pardesh",
+        "lat": 19.089214302112847,
+        "lng": 72.87841450922225,
+        "createdAt": "2026-09-26T14:27:01.524Z",
+        "isBlocked": false
+      }
+    ]
+  ],
+  "mechanics": [
+    [
+      "mech-1",
+      {
+        "userId": "mech-1",
+        "workshopName": "Solanki Auto Works",
+        "experienceYears": 11,
+        "rating": 4.9,
+        "reviewCount": 148,
+        "isVerified": true,
+        "verificationDocs": {
+          "idProof": "Aadhaar-7782-9912-XXXX.pdf",
+          "drivingLicense": "MH02-2015-889921",
+          "workshopReg": "BMC/SHOP/BND/2018/442",
+          "status": "verified"
+        },
+        "skills": [
+          "Engine Diagnostics",
+          "Battery Replacement",
+          "Jump Start",
+          "Brake Systems",
+          "Coolant Leaks",
+          "Clutch Repair"
+        ],
+        "supportedVehicleTypes": [
+          "car",
+          "suv",
+          "bike",
+          "scooter",
+          "van"
+        ],
+        "equipment": [
+          "Hydraulic Jack",
+          "Wheel Spanner",
+          "Multimeter",
+          "Digital Battery Tester",
+          "Jump Starter Pack",
+          "Jumper Cables",
+          "OBD2 Scanner",
+          "Coolant Tester",
+          "Air Compressor"
+        ],
+        "isOnline": true,
+        "serviceRadiusKm": 12,
+        "hourlyRate": 350,
+        "baseServiceFee": 150,
+        "currentLat": 19.057,
+        "currentLng": 72.835,
+        "totalRepairs": 412,
+        "todayEarnings": 2450,
+        "totalEarnings": 384000,
+        "address": "Solanki Auto Works, SV Road, Bandra West"
+      }
+    ],
+    [
+      "mech-2",
+      {
+        "userId": "mech-2",
+        "workshopName": "Jadhav Super Garage",
+        "experienceYears": 8,
+        "rating": 4.8,
+        "reviewCount": 96,
+        "isVerified": true,
+        "verificationDocs": {
+          "idProof": "Aadhaar-5521-1192-XXXX.pdf",
+          "drivingLicense": "MH02-2017-440019",
+          "workshopReg": "BMC/SHOP/AND/2020/190",
+          "status": "verified"
+        },
+        "skills": [
+          "Tyre Replacement",
+          "Puncture Repair",
+          "Wheel Balancing",
+          "Suspension Check",
+          "Brake Bleeding"
+        ],
+        "supportedVehicleTypes": [
+          "car",
+          "suv",
+          "auto",
+          "van"
+        ],
+        "equipment": [
+          "Pneumatic Jack",
+          "Air Compressor",
+          "Tubeless Puncture Kit",
+          "Wheel Nut Gun",
+          "Torque Spanner",
+          "Tyre Pressure Gauge"
+        ],
+        "isOnline": true,
+        "serviceRadiusKm": 10,
+        "hourlyRate": 300,
+        "baseServiceFee": 120,
+        "currentLat": 19.135,
+        "currentLng": 72.831,
+        "totalRepairs": 310,
+        "todayEarnings": 1800,
+        "totalEarnings": 275000,
+        "address": "Jadhav Super Garage, Link Road, Andheri West"
+      }
+    ],
+    [
+      "mech-3",
+      {
+        "userId": "mech-3",
+        "workshopName": "Speedy Tyres & Battery Hub",
+        "experienceYears": 6,
+        "rating": 4.7,
+        "reviewCount": 84,
+        "isVerified": true,
+        "verificationDocs": {
+          "idProof": "Aadhaar-9911-3322-XXXX.pdf",
+          "drivingLicense": "MH03-2018-001298",
+          "workshopReg": "BMC/SHOP/GHT/2021/872",
+          "status": "verified"
+        },
+        "skills": [
+          "Battery Jump Start",
+          "Alternator Testing",
+          "Tyre Puncture",
+          "Spare Tyre Mounting",
+          "Fuel Delivery"
+        ],
+        "supportedVehicleTypes": [
+          "bike",
+          "scooter",
+          "car",
+          "auto"
+        ],
+        "equipment": [
+          "Industrial Jump Starter",
+          "12V Battery Charger",
+          "Hydraulic Bottle Jack",
+          "Puncture Repair Kit",
+          "Emergency Fuel Can (5L)"
+        ],
+        "isOnline": true,
+        "serviceRadiusKm": 15,
+        "hourlyRate": 280,
+        "baseServiceFee": 100,
+        "currentLat": 19.088,
+        "currentLng": 72.912,
+        "totalRepairs": 240,
+        "todayEarnings": 950,
+        "totalEarnings": 195000,
+        "address": "Speedy Tyres & Battery, LBS Marg, Ghatkopar"
+      }
+    ],
+    [
+      "mech-4",
+      {
+        "userId": "mech-4",
+        "workshopName": "Khan Auto Electricals",
+        "experienceYears": 14,
+        "rating": 4.9,
+        "reviewCount": 172,
+        "isVerified": true,
+        "verificationDocs": {
+          "idProof": "Aadhaar-1289-4411-XXXX.pdf",
+          "drivingLicense": "MH01-2012-772109",
+          "workshopReg": "BMC/SHOP/DHR/2016/091",
+          "status": "verified"
+        },
+        "skills": [
+          "Electrical Wiring",
+          "Starter Motor Repair",
+          "Alternator Overhaul",
+          "Fuse Box Troubleshooting",
+          "ECU Diagnostics",
+          "Key/Lock Lockout"
+        ],
+        "supportedVehicleTypes": [
+          "car",
+          "suv",
+          "van",
+          "auto"
+        ],
+        "equipment": [
+          "Professional Oscilloscope",
+          "Digital Multimeter",
+          "Lockout Key Set",
+          "Wire Crimping Kit",
+          "OBD2 Scanner",
+          "Soldering Station"
+        ],
+        "isOnline": true,
+        "serviceRadiusKm": 14,
+        "hourlyRate": 400,
+        "baseServiceFee": 180,
+        "currentLat": 19.043,
+        "currentLng": 72.855,
+        "totalRepairs": 580,
+        "todayEarnings": 3100,
+        "totalEarnings": 520000,
+        "address": "Khan Auto Electricals, Dharavi 90ft Road"
+      }
+    ],
+    [
+      "mech-5",
+      {
+        "userId": "mech-5",
+        "workshopName": "Khalsa Roadside Assistance",
+        "experienceYears": 12,
+        "rating": 4.8,
+        "reviewCount": 130,
+        "isVerified": true,
+        "verificationDocs": {
+          "idProof": "Aadhaar-6677-2211-XXXX.pdf",
+          "drivingLicense": "MH03-2014-992100",
+          "status": "verified"
+        },
+        "skills": [
+          "Accident Towing Prep",
+          "Radiator Overheating",
+          "Coolant Flush",
+          "Transmission Fluid Leaks",
+          "Mechanical Lockouts"
+        ],
+        "supportedVehicleTypes": [
+          "car",
+          "suv",
+          "van"
+        ],
+        "equipment": [
+          "Heavy Duty Jack",
+          "Tow Straps (5 Ton)",
+          "Coolant Refill Kit",
+          "Thermal Camera",
+          "Mechanical Tool Chest"
+        ],
+        "isOnline": true,
+        "serviceRadiusKm": 16,
+        "hourlyRate": 350,
+        "baseServiceFee": 150,
+        "currentLat": 19.06,
+        "currentLng": 72.89,
+        "totalRepairs": 390,
+        "todayEarnings": 1450,
+        "totalEarnings": 340000,
+        "address": "Eastern Express Hwy, Chembur"
+      }
+    ],
+    [
+      "mech-6",
+      {
+        "userId": "mech-6",
+        "workshopName": "Sai Krupa Motors",
+        "experienceYears": 5,
+        "rating": 4.6,
+        "reviewCount": 52,
+        "isVerified": true,
+        "verificationDocs": {
+          "idProof": "Aadhaar-4433-8821-XXXX.pdf",
+          "drivingLicense": "MH01-2019-124432",
+          "status": "verified"
+        },
+        "skills": [
+          "General Servicing",
+          "Brake Pad Replacement",
+          "Oil Leak Fix",
+          "Air Filter Cleaning"
+        ],
+        "supportedVehicleTypes": [
+          "bike",
+          "scooter",
+          "car"
+        ],
+        "equipment": [
+          "Tool Trolley",
+          "Jack & Stands",
+          "Brake Caliper Tool",
+          "Oil Drain Pan"
+        ],
+        "isOnline": false,
+        "serviceRadiusKm": 8,
+        "hourlyRate": 250,
+        "baseServiceFee": 100,
+        "currentLat": 19.022,
+        "currentLng": 72.842,
+        "totalRepairs": 140,
+        "todayEarnings": 0,
+        "totalEarnings": 120000,
+        "address": "Senapati Bapat Marg, Dadar"
+      }
+    ],
+    [
+      "mech-7",
+      {
+        "userId": "mech-7",
+        "workshopName": "More Two-Wheeler Specialist",
+        "experienceYears": 7,
+        "rating": 4.9,
+        "reviewCount": 88,
+        "isVerified": true,
+        "verificationDocs": {
+          "idProof": "Aadhaar-8811-9922-XXXX.pdf",
+          "drivingLicense": "MH02-2018-877612",
+          "status": "verified"
+        },
+        "skills": [
+          "Two Wheeler Carburetor",
+          "Spark Plug Replacement",
+          "Bike Chain Sprocket",
+          "Scooter Belt Fix",
+          "Bike Puncture"
+        ],
+        "supportedVehicleTypes": [
+          "bike",
+          "scooter"
+        ],
+        "equipment": [
+          "Bike paddock stand",
+          "Puncture kit",
+          "Spark plug wrench",
+          "Chain tension tool",
+          "Portable air pump"
+        ],
+        "isOnline": true,
+        "serviceRadiusKm": 10,
+        "hourlyRate": 200,
+        "baseServiceFee": 80,
+        "currentLat": 19.125,
+        "currentLng": 72.901,
+        "totalRepairs": 320,
+        "todayEarnings": 820,
+        "totalEarnings": 180000,
+        "address": "JVLR, Powai"
+      }
+    ],
+    [
+      "mech-8",
+      {
+        "userId": "mech-8",
+        "workshopName": "Pawar Quick Rescue",
+        "experienceYears": 4,
+        "rating": 4.5,
+        "reviewCount": 39,
+        "isVerified": true,
+        "verificationDocs": {
+          "idProof": "Aadhaar-3322-1199-XXXX.pdf",
+          "drivingLicense": "MH02-2021-334419",
+          "status": "verified"
+        },
+        "skills": [
+          "Emergency Fuel Fill",
+          "Battery Boost",
+          "Tubeless Puncture",
+          "Wiper Replacement"
+        ],
+        "supportedVehicleTypes": [
+          "car",
+          "suv",
+          "bike",
+          "scooter"
+        ],
+        "equipment": [
+          "Fuel containers (5L Petrol, 5L Diesel)",
+          "Jump cable",
+          "Tyre inflator",
+          "Multi-tool kit"
+        ],
+        "isOnline": true,
+        "serviceRadiusKm": 12,
+        "hourlyRate": 220,
+        "baseServiceFee": 100,
+        "currentLat": 19.162,
+        "currentLng": 72.853,
+        "totalRepairs": 110,
+        "todayEarnings": 450,
+        "totalEarnings": 88000,
+        "address": "Western Express Hwy, Goregaon"
+      }
+    ],
+    [
+      "mech-9",
+      {
+        "userId": "mech-9",
+        "workshopName": "Rathod EV & Heavy Mobile Lab",
+        "experienceYears": 9,
+        "rating": 4.8,
+        "reviewCount": 71,
+        "isVerified": false,
+        "verificationDocs": {
+          "idProof": "Aadhaar-7766-3344-XXXX.pdf",
+          "drivingLicense": "MH04-2016-554419",
+          "workshopReg": "TMC/SHOP/2023/881",
+          "status": "pending"
+        },
+        "skills": [
+          "EV High Voltage Safety",
+          "EV Battery Diagnostics",
+          "Controller Faults",
+          "Regen Brake Errors",
+          "Heavy Van Suspension"
+        ],
+        "supportedVehicleTypes": [
+          "car",
+          "suv",
+          "van",
+          "other"
+        ],
+        "equipment": [
+          "1000V Insulated Tool Set",
+          "EV Diagnostic Scanner",
+          "Thermal Imager",
+          "High Amp Clamp Meter"
+        ],
+        "isOnline": true,
+        "serviceRadiusKm": 18,
+        "hourlyRate": 450,
+        "baseServiceFee": 200,
+        "currentLat": 19.205,
+        "currentLng": 72.97,
+        "totalRepairs": 180,
+        "todayEarnings": 0,
+        "totalEarnings": 210000,
+        "address": "Rathod Heavy & EV Mobile Rescue, Thane W"
+      }
+    ],
+    [
+      "mech-10",
+      {
+        "userId": "mech-10",
+        "workshopName": "AutoCare Express 24/7",
+        "experienceYears": 13,
+        "rating": 4.9,
+        "reviewCount": 165,
+        "isVerified": true,
+        "verificationDocs": {
+          "idProof": "Aadhaar-2211-8899-XXXX.pdf",
+          "drivingLicense": "MH01-2013-112299",
+          "workshopReg": "BMC/SHOP/WRL/2017/233",
+          "status": "verified"
+        },
+        "skills": [
+          "Complete Breakdown Overhaul",
+          "Starter Motor",
+          "Fan Belt Replacement",
+          "Overheating Cooling Fix",
+          "Brake Line Flush"
+        ],
+        "supportedVehicleTypes": [
+          "car",
+          "suv",
+          "van"
+        ],
+        "equipment": [
+          "Full Mobile Service Van",
+          "2 Ton Floor Jack",
+          "Compressor",
+          "Battery Analyzer",
+          "OBD2 Pro"
+        ],
+        "isOnline": true,
+        "serviceRadiusKm": 15,
+        "hourlyRate": 380,
+        "baseServiceFee": 160,
+        "currentLat": 19.008,
+        "currentLng": 72.819,
+        "totalRepairs": 490,
+        "todayEarnings": 1900,
+        "totalEarnings": 460000,
+        "address": "Dr Annie Besant Rd, Worli"
+      }
+    ]
+  ],
+  "vehicles": [
+    [
+      "veh-1",
+      {
+        "id": "veh-1",
+        "customerId": "cust-1",
+        "type": "car",
+        "make": "Hyundai",
+        "model": "Creta SX (O)",
+        "year": 2023,
+        "regNo": "MH 02 FZ 4491",
+        "fuelType": "petrol",
+        "color": "Polar White",
+        "lastServiceDate": "2026-06-15",
+        "odometerKm": 28400
+      }
+    ],
+    [
+      "veh-2",
+      {
+        "id": "veh-2",
+        "customerId": "cust-1",
+        "type": "bike",
+        "make": "Royal Enfield",
+        "model": "Hunter 350",
+        "year": 2024,
+        "regNo": "MH 02 GA 8812",
+        "fuelType": "petrol",
+        "color": "Dapper Ash",
+        "lastServiceDate": "2026-07-20",
+        "odometerKm": 9200
+      }
+    ],
+    [
+      "veh-3",
+      {
+        "id": "veh-3",
+        "customerId": "cust-2",
+        "type": "car",
+        "make": "Tata",
+        "model": "Nexon EV Empowered",
+        "year": 2024,
+        "regNo": "MH 03 DZ 1904",
+        "fuelType": "electric",
+        "color": "Fearless Purple",
+        "lastServiceDate": "2026-08-01",
+        "odometerKm": 14500
+      }
+    ],
+    [
+      "veh-4",
+      {
+        "id": "veh-4",
+        "customerId": "cust-2",
+        "type": "scooter",
+        "make": "Ather",
+        "model": "450X Gen 3",
+        "year": 2023,
+        "regNo": "MH 03 DY 8821",
+        "fuelType": "electric",
+        "color": "Space Grey",
+        "lastServiceDate": "2026-05-10",
+        "odometerKm": 8100
+      }
+    ],
+    [
+      "veh-5",
+      {
+        "id": "veh-5",
+        "customerId": "cust-3",
+        "type": "suv",
+        "make": "Mahindra",
+        "model": "XUV700 AX7L",
+        "year": 2023,
+        "regNo": "MH 02 EM 9012",
+        "fuelType": "diesel",
+        "color": "Midnight Black",
+        "lastServiceDate": "2026-04-12",
+        "odometerKm": 34100
+      }
+    ],
+    [
+      "veh-6",
+      {
+        "id": "veh-6",
+        "customerId": "cust-4",
+        "type": "car",
+        "make": "Maruti Suzuki",
+        "model": "Swift ZXi+",
+        "year": 2022,
+        "regNo": "MH 01 DK 4410",
+        "fuelType": "petrol",
+        "color": "Solid Fire Red",
+        "lastServiceDate": "2026-06-28",
+        "odometerKm": 39800
+      }
+    ],
+    [
+      "veh-7",
+      {
+        "id": "veh-7",
+        "customerId": "cust-4",
+        "type": "scooter",
+        "make": "Honda",
+        "model": "Activa 6G Deluxe",
+        "year": 2023,
+        "regNo": "MH 01 EL 3390",
+        "fuelType": "petrol",
+        "color": "Rebel Red Metallic",
+        "lastServiceDate": "2026-07-02",
+        "odometerKm": 11200
+      }
+    ],
+    [
+      "veh-8",
+      {
+        "id": "veh-8",
+        "customerId": "cust-5",
+        "type": "car",
+        "make": "Honda",
+        "model": "City ZX",
+        "year": 2022,
+        "regNo": "MH 01 CY 7721",
+        "fuelType": "petrol",
+        "color": "Golden Brown Metallic",
+        "lastServiceDate": "2026-05-20",
+        "odometerKm": 42100
+      }
+    ],
+    [
+      "veh-9",
+      {
+        "id": "veh-9",
+        "customerId": "cust-6",
+        "type": "bike",
+        "make": "Yamaha",
+        "model": "MT-15 V2",
+        "year": 2024,
+        "regNo": "MH 03 FA 1109",
+        "fuelType": "petrol",
+        "color": "Cyan Storm",
+        "lastServiceDate": "2026-08-14",
+        "odometerKm": 6500
+      }
+    ],
+    [
+      "veh-10",
+      {
+        "id": "veh-10",
+        "customerId": "cust-7",
+        "type": "suv",
+        "make": "Kia",
+        "model": "Seltos GTX+",
+        "year": 2023,
+        "regNo": "MH 02 FE 5543",
+        "fuelType": "petrol",
+        "color": "Gravity Grey",
+        "lastServiceDate": "2026-06-10",
+        "odometerKm": 27900
+      }
+    ],
+    [
+      "veh-11",
+      {
+        "id": "veh-11",
+        "customerId": "cust-8",
+        "type": "car",
+        "make": "Volkswagen",
+        "model": "Taigun GT Plus",
+        "year": 2023,
+        "regNo": "MH 02 ET 8910",
+        "fuelType": "petrol",
+        "color": "Wild Cherry Red",
+        "lastServiceDate": "2026-03-15",
+        "odometerKm": 31200
+      }
+    ],
+    [
+      "veh-12",
+      {
+        "id": "veh-12",
+        "customerId": "cust-9",
+        "type": "van",
+        "make": "Maruti Suzuki",
+        "model": "Eeco 7 STR AC",
+        "year": 2021,
+        "regNo": "MH 04 BB 3391",
+        "fuelType": "cng",
+        "color": "Silky Silver",
+        "lastServiceDate": "2026-05-30",
+        "odometerKm": 68000
+      }
+    ],
+    [
+      "veh-13",
+      {
+        "id": "veh-13",
+        "customerId": "cust-9",
+        "type": "auto",
+        "make": "Bajaj",
+        "model": "RE Compact 4S",
+        "year": 2022,
+        "regNo": "MH 04 CM 8801",
+        "fuelType": "cng",
+        "color": "Black and Yellow",
+        "lastServiceDate": "2026-07-15",
+        "odometerKm": 54000
+      }
+    ],
+    [
+      "veh-14",
+      {
+        "id": "veh-14",
+        "customerId": "cust-10",
+        "type": "scooter",
+        "make": "TVS",
+        "model": "Jupiter 125 Disc",
+        "year": 2024,
+        "regNo": "MH 03 FL 2234",
+        "fuelType": "petrol",
+        "color": "Titanium Grey",
+        "lastServiceDate": "2026-08-20",
+        "odometerKm": 4300
+      }
+    ],
+    [
+      "veh-15",
+      {
+        "id": "veh-15",
+        "customerId": "cust-10",
+        "type": "car",
+        "make": "Toyota",
+        "model": "Urban Cruiser Hyryder Hybrid",
+        "year": 2024,
+        "regNo": "MH 03 FM 9901",
+        "fuelType": "hybrid",
+        "color": "Cafe White",
+        "lastServiceDate": "2026-07-22",
+        "odometerKm": 12400
+      }
+    ],
+    [
+      "veh-1790432431789",
+      {
+        "id": "veh-1790432431789",
+        "customerId": "cust-1790432431788",
+        "type": "car",
+        "make": "Tata",
+        "model": "Nexon EV",
+        "year": 2023,
+        "regNo": "MH 02 FZ 7788",
+        "fuelType": "petrol",
+        "color": "White"
+      }
+    ],
+    [
+      "veh-1790432821527",
+      {
+        "id": "veh-1790432821527",
+        "customerId": "cust-1790432821524",
+        "type": "car",
+        "make": "Hyundai",
+        "model": "Creta",
+        "year": 2023,
+        "regNo": "MH 02 EQ 8821",
+        "fuelType": "petrol",
+        "color": "White"
+      }
+    ]
+  ],
+  "bookings": [
+    [
+      "RR-2026-00125",
+      {
+        "id": "RR-2026-00125",
+        "customerId": "cust-1",
+        "customerName": "Rohan Sharma",
+        "customerPhone": "+91 98201 44552",
+        "mechanicId": "mech-1",
+        "mechanicName": "Rajesh Solanki",
+        "mechanicPhone": "+91 98205 77112",
+        "mechanicAvatar": "https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&w=200&q=80",
+        "vehicleId": "veh-1",
+        "vehicleInfo": {
+          "type": "car",
+          "make": "Hyundai",
+          "model": "Creta SX (O)",
+          "regNo": "MH 02 FZ 4491",
+          "fuelType": "petrol"
+        },
+        "problemType": "battery_dead",
+        "problemDescription": "Vehicle clicks when I turn the key, headlights are very dim, engine is not cranking at all.",
+        "mediaUrls": [
+          "https://images.unsplash.com/photo-1588258524675-c61917b2b005?auto=format&fit=crop&w=600&q=80"
+        ],
+        "customerLat": 19.062,
+        "customerLng": 72.833,
+        "customerAddress": "Near Bandra Reclamation Promenade, Bandra West, Mumbai",
+        "mechanicLat": 19.059,
+        "mechanicLng": 72.834,
+        "status": "travelling",
+        "timeline": [
+          {
+            "status": "requested",
+            "timestamp": "2026-09-25T21:45:00Z",
+            "note": "Customer requested emergency battery assistance"
+          },
+          {
+            "status": "accepted",
+            "timestamp": "2026-09-25T21:46:30Z",
+            "note": "Mechanic Rajesh accepted the request"
+          },
+          {
+            "status": "preparing_equipment",
+            "timestamp": "2026-09-25T21:48:00Z",
+            "note": "Equipped Jump Starter, Battery Tester, and Multimeter"
+          },
+          {
+            "status": "travelling",
+            "timestamp": "2026-09-25T21:51:00Z",
+            "note": "Mechanic en route, estimated arrival in 6 mins"
+          }
+        ],
+        "aiDiagnosis": {
+          "id": "diag-00125",
+          "problemType": "battery_dead",
+          "problemTitle": "Discharged 12V Lead-Acid Starter Battery",
+          "possibleCauses": [
+            "Depleted battery charge due to accessory left running or low voltage",
+            "Corroded battery terminals preventing high current crank",
+            "Alternator diode fault failing to recharge while driving"
+          ],
+          "severity": "medium",
+          "recommendedService": "Jump Start & Battery Health Diagnostic Test",
+          "requiredEquipment": [
+            "Digital Battery Tester",
+            "12V Heavy-Duty Jump Starter",
+            "Jumper Cables",
+            "Wire Brush / Terminal Cleaner",
+            "Multimeter"
+          ],
+          "estimatedCost": {
+            "baseService": 150,
+            "travel": 50,
+            "labour": 250,
+            "parts": 0,
+            "totalMin": 450,
+            "totalMax": 650
+          },
+          "estimatedTimeMinutes": 25,
+          "safeChecks": [
+            "Shift transmission into Park (P) or Neutral (N) with handbrake engaged.",
+            "Do not continuously crank the starter motor to avoid burning out the starter solenoid.",
+            "Keep hazard lights blinking for roadside safety."
+          ],
+          "safetyWarning": "Do not smoke or use open flames near the vehicle battery; lead-acid cells can release flammable hydrogen gas.",
+          "disclaimer": "AI-generated assessment — mechanic will conduct live multimeter voltage and cold-crank amp verification."
+        },
+        "spareParts": [],
+        "additionalCharges": [],
+        "pricing": {
+          "baseService": 150,
+          "travelCharge": 50,
+          "labour": 250,
+          "parts": 0,
+          "additionalCharges": 0,
+          "total": 450,
+          "isFinal": false
+        },
+        "etaMinutes": 6,
+        "distanceKm": 1.4,
+        "createdAt": "2026-09-25T21:45:00Z"
+      }
+    ],
+    [
+      "RR-2026-00124",
+      {
+        "id": "RR-2026-00124",
+        "customerId": "cust-2",
+        "customerName": "Priya Deshmukh",
+        "customerPhone": "+91 98334 11223",
+        "mechanicId": "mech-2",
+        "mechanicName": "Vikram Jadhav",
+        "mechanicPhone": "+91 98204 88223",
+        "mechanicAvatar": "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=200&q=80",
+        "vehicleId": "veh-3",
+        "vehicleInfo": {
+          "type": "car",
+          "make": "Tata",
+          "model": "Nexon EV Empowered",
+          "regNo": "MH 03 DZ 1904",
+          "fuelType": "electric"
+        },
+        "problemType": "flat_tyre",
+        "problemDescription": "Right rear tyre suddenly lost all air pressure after crossing a pothole on JVLR. TPMS shows 0 PSI.",
+        "mediaUrls": [
+          "https://images.unsplash.com/photo-1578844251758-2f71da64c96f?auto=format&fit=crop&w=600&q=80"
+        ],
+        "customerLat": 19.121,
+        "customerLng": 72.898,
+        "customerAddress": "JVLR near Powai Lake Flyover, Mumbai",
+        "mechanicLat": 19.121,
+        "mechanicLng": 72.898,
+        "status": "repair_in_progress",
+        "timeline": [
+          {
+            "status": "requested",
+            "timestamp": "2026-09-25T20:10:00Z"
+          },
+          {
+            "status": "accepted",
+            "timestamp": "2026-09-25T20:12:00Z"
+          },
+          {
+            "status": "preparing_equipment",
+            "timestamp": "2026-09-25T20:14:00Z"
+          },
+          {
+            "status": "travelling",
+            "timestamp": "2026-09-25T20:18:00Z"
+          },
+          {
+            "status": "arrived",
+            "timestamp": "2026-09-25T20:32:00Z"
+          },
+          {
+            "status": "diagnosis_started",
+            "timestamp": "2026-09-25T20:35:00Z"
+          },
+          {
+            "status": "repair_in_progress",
+            "timestamp": "2026-09-25T20:45:00Z",
+            "note": "Tubeless puncture repair and sidewall inspection"
+          }
+        ],
+        "aiDiagnosis": {
+          "id": "diag-00124",
+          "problemType": "flat_tyre",
+          "problemTitle": "Severe Tread Puncture / Bead Dislodgement",
+          "possibleCauses": [
+            "Puncture from road debris/metal bolt",
+            "Rim pinch resulting from sharp pothole impact"
+          ],
+          "severity": "medium",
+          "recommendedService": "Tubeless Strip Plug Repair & High-Volume Re-inflation",
+          "requiredEquipment": [
+            "Hydraulic Trolley Jack",
+            "Cross Spanner",
+            "Tubeless Puncture Kit",
+            "High CFM Tyre Inflator",
+            "Soapy Water Leak Detector"
+          ],
+          "estimatedCost": {
+            "baseService": 120,
+            "travel": 80,
+            "labour": 200,
+            "parts": 150,
+            "totalMin": 550,
+            "totalMax": 700
+          },
+          "estimatedTimeMinutes": 30,
+          "safeChecks": [
+            "Ensure car is on flat asphalt away from traffic before jacking."
+          ],
+          "disclaimer": "AI-generated assessment — mechanic will check sidewall for internal structural tears."
+        },
+        "mechanicDiagnosisNotes": "Found 2-inch steel construction screw lodged into main tread channel. Sidewall intact.",
+        "workPerformed": "Extracted screw, reamed puncture hole, installed vulcanized rubber strip plug, inflated to 33 PSI.",
+        "spareParts": [
+          {
+            "name": "Vulcanized Rubber Plug Strips (2x)",
+            "quantity": 2,
+            "price": 150
+          },
+          {
+            "name": "Brass Valve Core Replacement",
+            "quantity": 1,
+            "price": 50
+          }
+        ],
+        "additionalCharges": [
+          {
+            "id": "chg-1",
+            "description": "High-pressure valve stem replacement (worn out rubber seal)",
+            "amount": 100,
+            "approvedByCustomer": true,
+            "requestedAt": "2026-09-25T20:42:00Z"
+          }
+        ],
+        "pricing": {
+          "baseService": 120,
+          "travelCharge": 80,
+          "labour": 200,
+          "parts": 200,
+          "additionalCharges": 100,
+          "total": 700,
+          "isFinal": false
+        },
+        "etaMinutes": 0,
+        "distanceKm": 0,
+        "createdAt": "2026-09-25T20:10:00Z"
+      }
+    ],
+    [
+      "RR-2026-00120",
+      {
+        "id": "RR-2026-00120",
+        "customerId": "cust-1",
+        "customerName": "Rohan Sharma",
+        "customerPhone": "+91 98201 44552",
+        "mechanicId": "mech-1",
+        "mechanicName": "Rajesh Solanki",
+        "mechanicPhone": "+91 98205 77112",
+        "mechanicAvatar": "https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&w=200&q=80",
+        "vehicleId": "veh-2",
+        "vehicleInfo": {
+          "type": "bike",
+          "make": "Royal Enfield",
+          "model": "Hunter 350",
+          "regNo": "MH 02 GA 8812",
+          "fuelType": "petrol"
+        },
+        "problemType": "vehicle_wont_start",
+        "problemDescription": "Bike stalled suddenly at traffic light, neutral light on but starter won’t engage.",
+        "mediaUrls": [],
+        "customerLat": 19.055,
+        "customerLng": 72.831,
+        "customerAddress": "Linking Road, Khar West, Mumbai",
+        "status": "payment_completed",
+        "timeline": [
+          {
+            "status": "requested",
+            "timestamp": "2026-09-20T14:10:00Z"
+          },
+          {
+            "status": "accepted",
+            "timestamp": "2026-09-20T14:12:00Z"
+          },
+          {
+            "status": "travelling",
+            "timestamp": "2026-09-20T14:15:00Z"
+          },
+          {
+            "status": "arrived",
+            "timestamp": "2026-09-20T14:26:00Z"
+          },
+          {
+            "status": "diagnosis_started",
+            "timestamp": "2026-09-20T14:28:00Z"
+          },
+          {
+            "status": "repair_in_progress",
+            "timestamp": "2026-09-20T14:35:00Z"
+          },
+          {
+            "status": "repair_completed",
+            "timestamp": "2026-09-20T14:55:00Z"
+          },
+          {
+            "status": "payment_completed",
+            "timestamp": "2026-09-20T15:02:00Z"
+          }
+        ],
+        "aiDiagnosis": {
+          "id": "diag-00120",
+          "problemType": "vehicle_wont_start",
+          "problemTitle": "Loose Clutch Switch / Side-Stand Sensor Interlock",
+          "possibleCauses": [
+            "Side stand kill switch jammed",
+            "Blown ignition main fuse (15A)",
+            "Clutch switch disconnect"
+          ],
+          "severity": "low",
+          "recommendedService": "Safety Switch Bypass / Fuse Replacement",
+          "requiredEquipment": [
+            "Multimeter",
+            "Fuse Kit",
+            "Contact Cleaner"
+          ],
+          "estimatedCost": {
+            "baseService": 80,
+            "travel": 40,
+            "labour": 150,
+            "parts": 50,
+            "totalMin": 320,
+            "totalMax": 450
+          },
+          "estimatedTimeMinutes": 20,
+          "safeChecks": [
+            "Ensure bike is in neutral and side stand completely raised."
+          ],
+          "disclaimer": "AI-generated estimate."
+        },
+        "mechanicDiagnosisNotes": "Corroded side stand sensor switch causing ECU to trigger safety cut-off.",
+        "workPerformed": "Cleaned side stand sensor terminal, lubricated switch spring, replaced 15A mini blade fuse.",
+        "spareParts": [
+          {
+            "name": "15A Automotive Blade Fuse",
+            "quantity": 1,
+            "price": 30
+          }
+        ],
+        "additionalCharges": [],
+        "pricing": {
+          "baseService": 80,
+          "travelCharge": 40,
+          "labour": 200,
+          "parts": 30,
+          "additionalCharges": 0,
+          "total": 350,
+          "isFinal": true
+        },
+        "etaMinutes": 0,
+        "distanceKm": 2.1,
+        "createdAt": "2026-09-20T14:10:00Z",
+        "completedAt": "2026-09-20T15:02:00Z"
+      }
+    ],
+    [
+      "RR-2026-00115",
+      {
+        "id": "RR-2026-00115",
+        "customerId": "cust-3",
+        "customerName": "Amit Verma",
+        "customerPhone": "+91 98112 33445",
+        "mechanicId": "mech-4",
+        "mechanicName": "Irfan Khan",
+        "mechanicPhone": "+91 98921 55660",
+        "mechanicAvatar": "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=200&q=80",
+        "vehicleId": "veh-5",
+        "vehicleInfo": {
+          "type": "suv",
+          "make": "Mahindra",
+          "model": "XUV700 AX7L",
+          "regNo": "MH 02 EM 9012",
+          "fuelType": "diesel"
+        },
+        "problemType": "overheating",
+        "problemDescription": "Temperature gauge needle hit the red line, steam coming from under the bonnet.",
+        "mediaUrls": [],
+        "customerLat": 19.112,
+        "customerLng": 72.868,
+        "customerAddress": "Western Express Highway, Andheri East flyover",
+        "status": "payment_completed",
+        "timeline": [
+          {
+            "status": "requested",
+            "timestamp": "2026-09-18T16:00:00Z"
+          },
+          {
+            "status": "accepted",
+            "timestamp": "2026-09-18T16:04:00Z"
+          },
+          {
+            "status": "arrived",
+            "timestamp": "2026-09-18T16:22:00Z"
+          },
+          {
+            "status": "repair_completed",
+            "timestamp": "2026-09-18T17:10:00Z"
+          },
+          {
+            "status": "payment_completed",
+            "timestamp": "2026-09-18T17:15:00Z"
+          }
+        ],
+        "aiDiagnosis": {
+          "id": "diag-00115",
+          "problemType": "overheating",
+          "problemTitle": "Radiator Hose Clamp Slippage / Low Coolant",
+          "possibleCauses": [
+            "Upper radiator hose clamp loose",
+            "Radiator cap pressure failure",
+            "Cooling fan motor relay"
+          ],
+          "severity": "critical",
+          "recommendedService": "Coolant Hose Tightening & Emergency Refill",
+          "requiredEquipment": [
+            "Hose Clamp Plier",
+            "Premixed Coolant 5L",
+            "Distilled Water",
+            "Pressure Cap Tester"
+          ],
+          "estimatedCost": {
+            "baseService": 180,
+            "travel": 70,
+            "labour": 350,
+            "parts": 450,
+            "totalMin": 1050,
+            "totalMax": 1400
+          },
+          "estimatedTimeMinutes": 45,
+          "safeChecks": [
+            "DO NOT open radiator cap while hot! Wait minimum 30 minutes."
+          ],
+          "disclaimer": "AI-generated assessment."
+        },
+        "spareParts": [
+          {
+            "name": "OETIKER Heavy Constant Tension Clamp",
+            "quantity": 2,
+            "price": 180
+          },
+          {
+            "name": "Castrol Radicool Premixed Coolant (3L)",
+            "quantity": 3,
+            "price": 650
+          }
+        ],
+        "additionalCharges": [],
+        "pricing": {
+          "baseService": 180,
+          "travelCharge": 70,
+          "labour": 350,
+          "parts": 830,
+          "additionalCharges": 0,
+          "total": 1430,
+          "isFinal": true
+        },
+        "etaMinutes": 0,
+        "distanceKm": 3.5,
+        "createdAt": "2026-09-18T16:00:00Z",
+        "completedAt": "2026-09-18T17:15:00Z"
+      }
+    ],
+    [
+      "RR-2026-00109",
+      {
+        "id": "RR-2026-00109",
+        "customerId": "cust-4",
+        "customerName": "Sneha Patil",
+        "customerPhone": "+91 97665 99881",
+        "mechanicId": "mech-3",
+        "mechanicName": "Santosh Shinde",
+        "mechanicPhone": "+91 98190 33441",
+        "mechanicAvatar": "https://images.unsplash.com/photo-1540569014015-19a7be504e3a?auto=format&fit=crop&w=200&q=80",
+        "vehicleId": "veh-7",
+        "vehicleInfo": {
+          "type": "scooter",
+          "make": "Honda",
+          "model": "Activa 6G Deluxe",
+          "regNo": "MH 01 EL 3390",
+          "fuelType": "petrol"
+        },
+        "problemType": "fuel_problem",
+        "problemDescription": "Ran out of petrol on Eastern Freeway exit towards Dadar.",
+        "mediaUrls": [],
+        "customerLat": 19.028,
+        "customerLng": 72.842,
+        "customerAddress": "Dadar TT circle, Mumbai",
+        "status": "payment_completed",
+        "timeline": [
+          {
+            "status": "requested",
+            "timestamp": "2026-09-15T11:20:00Z"
+          },
+          {
+            "status": "accepted",
+            "timestamp": "2026-09-15T11:22:00Z"
+          },
+          {
+            "status": "arrived",
+            "timestamp": "2026-09-15T11:35:00Z"
+          },
+          {
+            "status": "repair_completed",
+            "timestamp": "2026-09-15T11:42:00Z"
+          },
+          {
+            "status": "payment_completed",
+            "timestamp": "2026-09-15T11:45:00Z"
+          }
+        ],
+        "aiDiagnosis": {
+          "id": "diag-00109",
+          "problemType": "fuel_problem",
+          "problemTitle": "Fuel Starvation / Empty Tank",
+          "possibleCauses": [
+            "Fuel gauge error",
+            "Low fuel alert ignored"
+          ],
+          "severity": "low",
+          "recommendedService": "Emergency Fuel Delivery (2.5 Litres)",
+          "requiredEquipment": [
+            "Certified Metal Fuel Canister",
+            "Flexible Spout Funnel"
+          ],
+          "estimatedCost": {
+            "baseService": 100,
+            "travel": 50,
+            "labour": 50,
+            "parts": 275,
+            "totalMin": 475,
+            "totalMax": 550
+          },
+          "estimatedTimeMinutes": 15,
+          "safeChecks": [
+            "Park on the left road shoulder and do not light matchsticks."
+          ],
+          "disclaimer": "AI-generated assessment."
+        },
+        "spareParts": [
+          {
+            "name": "Petrol 2.5 Litres with canister delivery",
+            "quantity": 1,
+            "price": 275
+          }
+        ],
+        "additionalCharges": [],
+        "pricing": {
+          "baseService": 100,
+          "travelCharge": 50,
+          "labour": 50,
+          "parts": 275,
+          "additionalCharges": 0,
+          "total": 475,
+          "isFinal": true
+        },
+        "etaMinutes": 0,
+        "distanceKm": 1.8,
+        "createdAt": "2026-09-15T11:20:00Z",
+        "completedAt": "2026-09-15T11:45:00Z"
+      }
+    ],
+    [
+      "RR-2026-00098",
+      {
+        "id": "RR-2026-00098",
+        "customerId": "cust-5",
+        "customerName": "Vikas Nair",
+        "customerPhone": "+91 98450 67890",
+        "mechanicId": "mech-10",
+        "mechanicName": "Karan Sharma",
+        "mechanicPhone": "+91 98214 77889",
+        "mechanicAvatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&q=80",
+        "vehicleId": "veh-8",
+        "vehicleInfo": {
+          "type": "car",
+          "make": "Honda",
+          "model": "City ZX",
+          "regNo": "MH 01 CY 7721",
+          "fuelType": "petrol"
+        },
+        "problemType": "brake_problem",
+        "problemDescription": "Brake pedal feels extremely spongy and goes all the way to floor, low brake fluid warning.",
+        "mediaUrls": [],
+        "customerLat": 19.015,
+        "customerLng": 72.818,
+        "customerAddress": "Worli Naka, Dr E Moses Road, Mumbai",
+        "status": "payment_completed",
+        "timeline": [
+          {
+            "status": "requested",
+            "timestamp": "2026-09-10T18:15:00Z"
+          },
+          {
+            "status": "accepted",
+            "timestamp": "2026-09-10T18:18:00Z"
+          },
+          {
+            "status": "arrived",
+            "timestamp": "2026-09-10T18:30:00Z"
+          },
+          {
+            "status": "repair_completed",
+            "timestamp": "2026-09-10T19:25:00Z"
+          },
+          {
+            "status": "payment_completed",
+            "timestamp": "2026-09-10T19:30:00Z"
+          }
+        ],
+        "aiDiagnosis": {
+          "id": "diag-00098",
+          "problemType": "brake_problem",
+          "problemTitle": "Hydraulic Brake Line Air Intrusion / Leakage",
+          "possibleCauses": [
+            "Front caliper bleeder valve weep",
+            "Brake fluid boiled or degraded"
+          ],
+          "severity": "critical",
+          "recommendedService": "Hydraulic Bleeding & DOT4 Fluid Replacement",
+          "requiredEquipment": [
+            "Vacuum Bleeder Kit",
+            "Metric Flarenut Wrenches",
+            "DOT4 Brake Fluid",
+            "Jack & Jackstands"
+          ],
+          "estimatedCost": {
+            "baseService": 160,
+            "travel": 60,
+            "labour": 400,
+            "parts": 350,
+            "totalMin": 970,
+            "totalMax": 1250
+          },
+          "estimatedTimeMinutes": 50,
+          "safeChecks": [
+            "DO NOT drive with soft brakes. Use handbrake only in standstill."
+          ],
+          "disclaimer": "AI-generated assessment."
+        },
+        "spareParts": [
+          {
+            "name": "Bosch DOT 4 High Temp Brake Fluid (500ml)",
+            "quantity": 2,
+            "price": 360
+          }
+        ],
+        "additionalCharges": [],
+        "pricing": {
+          "baseService": 160,
+          "travelCharge": 60,
+          "labour": 400,
+          "parts": 360,
+          "additionalCharges": 0,
+          "total": 980,
+          "isFinal": true
+        },
+        "etaMinutes": 0,
+        "distanceKm": 1.2,
+        "createdAt": "2026-09-10T18:15:00Z",
+        "completedAt": "2026-09-10T19:30:00Z"
+      }
+    ],
+    [
+      "RR-2026-00085",
+      {
+        "id": "RR-2026-00085",
+        "customerId": "cust-6",
+        "customerName": "Ananya Iyer",
+        "customerPhone": "+91 99200 44112",
+        "mechanicId": "mech-7",
+        "mechanicName": "Mahesh More",
+        "mechanicPhone": "+91 98331 44558",
+        "mechanicAvatar": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=200&q=80",
+        "vehicleId": "veh-9",
+        "vehicleInfo": {
+          "type": "bike",
+          "make": "Yamaha",
+          "model": "MT-15 V2",
+          "regNo": "MH 03 FA 1109",
+          "fuelType": "petrol"
+        },
+        "problemType": "other",
+        "problemDescription": "Drive chain slipped off the rear sprocket while accelerating uphill.",
+        "mediaUrls": [],
+        "customerLat": 19.12,
+        "customerLng": 72.905,
+        "customerAddress": "Hiranandani Hill Road, Powai",
+        "status": "payment_completed",
+        "timeline": [
+          {
+            "status": "requested",
+            "timestamp": "2026-09-02T09:10:00Z"
+          },
+          {
+            "status": "accepted",
+            "timestamp": "2026-09-02T09:13:00Z"
+          },
+          {
+            "status": "arrived",
+            "timestamp": "2026-09-02T09:25:00Z"
+          },
+          {
+            "status": "repair_completed",
+            "timestamp": "2026-09-02T09:50:00Z"
+          },
+          {
+            "status": "payment_completed",
+            "timestamp": "2026-09-02T09:55:00Z"
+          }
+        ],
+        "aiDiagnosis": {
+          "id": "diag-00085",
+          "problemType": "other",
+          "problemTitle": "Excessive Chain Slack / Sprocket Disengagement",
+          "possibleCauses": [
+            "Chain adjustment bolts loosened",
+            "Worn master link or dry links"
+          ],
+          "severity": "medium",
+          "recommendedService": "Chain Remounting, Tension Alignment & Lube",
+          "requiredEquipment": [
+            "Paddock Stand",
+            "Chain Alignment Tool",
+            "Axle Spanner",
+            "Chain Lube Spray"
+          ],
+          "estimatedCost": {
+            "baseService": 80,
+            "travel": 40,
+            "labour": 150,
+            "parts": 80,
+            "totalMin": 350,
+            "totalMax": 450
+          },
+          "estimatedTimeMinutes": 25,
+          "safeChecks": [
+            "Keep hands away from moving chain and sprocket."
+          ],
+          "disclaimer": "AI-generated assessment."
+        },
+        "spareParts": [
+          {
+            "name": "Motul C2 Chain Lube (150ml)",
+            "quantity": 1,
+            "price": 120
+          }
+        ],
+        "additionalCharges": [],
+        "pricing": {
+          "baseService": 80,
+          "travelCharge": 40,
+          "labour": 180,
+          "parts": 120,
+          "additionalCharges": 0,
+          "total": 420,
+          "isFinal": true
+        },
+        "etaMinutes": 0,
+        "distanceKm": 1.5,
+        "createdAt": "2026-09-02T09:10:00Z",
+        "completedAt": "2026-09-02T09:55:00Z"
+      }
+    ],
+    [
+      "RR-2026-00072",
+      {
+        "id": "RR-2026-00072",
+        "customerId": "cust-7",
+        "customerName": "Rahul Mehta",
+        "customerPhone": "+91 98211 77334",
+        "mechanicId": "mech-2",
+        "mechanicName": "Vikram Jadhav",
+        "mechanicPhone": "+91 98204 88223",
+        "mechanicAvatar": "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=200&q=80",
+        "vehicleId": "veh-10",
+        "vehicleInfo": {
+          "type": "suv",
+          "make": "Kia",
+          "model": "Seltos GTX+",
+          "regNo": "MH 02 FE 5543",
+          "fuelType": "petrol"
+        },
+        "problemType": "key_lock_problem",
+        "problemDescription": "Smart key fob battery completely died, vehicle locked and mechanical key slot cover stuck.",
+        "mediaUrls": [],
+        "customerLat": 19.09,
+        "customerLng": 72.828,
+        "customerAddress": "Juhu Beach Parking Lot, Mumbai",
+        "status": "payment_completed",
+        "timeline": [
+          {
+            "status": "requested",
+            "timestamp": "2026-08-25T19:30:00Z"
+          },
+          {
+            "status": "accepted",
+            "timestamp": "2026-08-25T19:32:00Z"
+          },
+          {
+            "status": "arrived",
+            "timestamp": "2026-08-25T19:48:00Z"
+          },
+          {
+            "status": "repair_completed",
+            "timestamp": "2026-08-25T20:05:00Z"
+          },
+          {
+            "status": "payment_completed",
+            "timestamp": "2026-08-25T20:10:00Z"
+          }
+        ],
+        "aiDiagnosis": {
+          "id": "diag-00072",
+          "problemType": "key_lock_problem",
+          "problemTitle": "Smart Key Fob CR2032 Battery Depletion",
+          "possibleCauses": [
+            "Dead button cell battery",
+            "Radio interference near cell towers"
+          ],
+          "severity": "low",
+          "recommendedService": "Emergency Door Release & Fob Battery Replacement",
+          "requiredEquipment": [
+            "Door Trim Wedge",
+            "CR2032 Lithium Button Cells",
+            "Precision Screwdriver Kit"
+          ],
+          "estimatedCost": {
+            "baseService": 120,
+            "travel": 60,
+            "labour": 150,
+            "parts": 100,
+            "totalMin": 430,
+            "totalMax": 550
+          },
+          "estimatedTimeMinutes": 15,
+          "safeChecks": [
+            "Hold smart key directly touching the push start button."
+          ],
+          "disclaimer": "AI-generated assessment."
+        },
+        "spareParts": [
+          {
+            "name": "Panasonic CR2032 3V Coin Battery (Pack of 2)",
+            "quantity": 1,
+            "price": 120
+          }
+        ],
+        "additionalCharges": [],
+        "pricing": {
+          "baseService": 120,
+          "travelCharge": 60,
+          "labour": 180,
+          "parts": 120,
+          "additionalCharges": 0,
+          "total": 480,
+          "isFinal": true
+        },
+        "etaMinutes": 0,
+        "distanceKm": 3.1,
+        "createdAt": "2026-08-25T19:30:00Z",
+        "completedAt": "2026-08-25T20:10:00Z"
+      }
+    ]
+  ],
+  "payments": [],
+  "invoices": [
+    [
+      "INV-2026-00120",
+      {
+        "invoiceNumber": "INV-2026-00120",
+        "bookingId": "RR-2026-00120",
+        "customerId": "cust-1",
+        "customerName": "Rohan Sharma",
+        "customerPhone": "+91 98201 44552",
+        "mechanicId": "mech-1",
+        "mechanicName": "Rajesh Solanki",
+        "mechanicWorkshop": "Solanki Auto Works",
+        "vehicleInfo": "Royal Enfield Hunter 350 (MH 02 GA 8812)",
+        "serviceDate": "2026-09-20T15:02:00Z",
+        "breakdownSummary": "Bike stalled suddenly at traffic light, neutral light on but starter won’t engage.",
+        "items": [
+          {
+            "description": "Emergency Roadside Inspection & Base Callout",
+            "amount": 80
+          },
+          {
+            "description": "Travel & Dispatch Fee (2.1 km)",
+            "amount": 40
+          },
+          {
+            "description": "On-site Technical Labour",
+            "amount": 200
+          },
+          {
+            "description": "15A Automotive Blade Fuse (Qty: 1)",
+            "amount": 30
+          }
+        ],
+        "subtotal": 350,
+        "tax": 63,
+        "total": 413,
+        "paymentMethod": "UPI / Digital Payment",
+        "paymentStatus": "paid",
+        "paidAt": "2026-09-20T15:02:00Z"
+      }
+    ],
+    [
+      "INV-2026-00115",
+      {
+        "invoiceNumber": "INV-2026-00115",
+        "bookingId": "RR-2026-00115",
+        "customerId": "cust-3",
+        "customerName": "Amit Verma",
+        "customerPhone": "+91 98112 33445",
+        "mechanicId": "mech-4",
+        "mechanicName": "Irfan Khan",
+        "mechanicWorkshop": "Khan Auto Electricals",
+        "vehicleInfo": "Mahindra XUV700 AX7L (MH 02 EM 9012)",
+        "serviceDate": "2026-09-18T17:15:00Z",
+        "breakdownSummary": "Temperature gauge needle hit the red line, steam coming from under the bonnet.",
+        "items": [
+          {
+            "description": "Emergency Roadside Inspection & Base Callout",
+            "amount": 180
+          },
+          {
+            "description": "Travel & Dispatch Fee (3.5 km)",
+            "amount": 70
+          },
+          {
+            "description": "On-site Technical Labour",
+            "amount": 350
+          },
+          {
+            "description": "OETIKER Heavy Constant Tension Clamp (Qty: 2)",
+            "amount": 360
+          },
+          {
+            "description": "Castrol Radicool Premixed Coolant (3L) (Qty: 3)",
+            "amount": 1950
+          }
+        ],
+        "subtotal": 1430,
+        "tax": 257,
+        "total": 1687,
+        "paymentMethod": "UPI / Digital Payment",
+        "paymentStatus": "paid",
+        "paidAt": "2026-09-18T17:15:00Z"
+      }
+    ],
+    [
+      "INV-2026-00109",
+      {
+        "invoiceNumber": "INV-2026-00109",
+        "bookingId": "RR-2026-00109",
+        "customerId": "cust-4",
+        "customerName": "Sneha Patil",
+        "customerPhone": "+91 97665 99881",
+        "mechanicId": "mech-3",
+        "mechanicName": "Santosh Shinde",
+        "mechanicWorkshop": "Speedy Tyres & Battery Hub",
+        "vehicleInfo": "Honda Activa 6G Deluxe (MH 01 EL 3390)",
+        "serviceDate": "2026-09-15T11:45:00Z",
+        "breakdownSummary": "Ran out of petrol on Eastern Freeway exit towards Dadar.",
+        "items": [
+          {
+            "description": "Emergency Roadside Inspection & Base Callout",
+            "amount": 100
+          },
+          {
+            "description": "Travel & Dispatch Fee (1.8 km)",
+            "amount": 50
+          },
+          {
+            "description": "On-site Technical Labour",
+            "amount": 50
+          },
+          {
+            "description": "Petrol 2.5 Litres with canister delivery (Qty: 1)",
+            "amount": 275
+          }
+        ],
+        "subtotal": 475,
+        "tax": 86,
+        "total": 561,
+        "paymentMethod": "UPI / Digital Payment",
+        "paymentStatus": "paid",
+        "paidAt": "2026-09-15T11:45:00Z"
+      }
+    ],
+    [
+      "INV-2026-00098",
+      {
+        "invoiceNumber": "INV-2026-00098",
+        "bookingId": "RR-2026-00098",
+        "customerId": "cust-5",
+        "customerName": "Vikas Nair",
+        "customerPhone": "+91 98450 67890",
+        "mechanicId": "mech-10",
+        "mechanicName": "Karan Sharma",
+        "mechanicWorkshop": "AutoCare Express 24/7",
+        "vehicleInfo": "Honda City ZX (MH 01 CY 7721)",
+        "serviceDate": "2026-09-10T19:30:00Z",
+        "breakdownSummary": "Brake pedal feels extremely spongy and goes all the way to floor, low brake fluid warning.",
+        "items": [
+          {
+            "description": "Emergency Roadside Inspection & Base Callout",
+            "amount": 160
+          },
+          {
+            "description": "Travel & Dispatch Fee (1.2 km)",
+            "amount": 60
+          },
+          {
+            "description": "On-site Technical Labour",
+            "amount": 400
+          },
+          {
+            "description": "Bosch DOT 4 High Temp Brake Fluid (500ml) (Qty: 2)",
+            "amount": 720
+          }
+        ],
+        "subtotal": 980,
+        "tax": 176,
+        "total": 1156,
+        "paymentMethod": "UPI / Digital Payment",
+        "paymentStatus": "paid",
+        "paidAt": "2026-09-10T19:30:00Z"
+      }
+    ],
+    [
+      "INV-2026-00085",
+      {
+        "invoiceNumber": "INV-2026-00085",
+        "bookingId": "RR-2026-00085",
+        "customerId": "cust-6",
+        "customerName": "Ananya Iyer",
+        "customerPhone": "+91 99200 44112",
+        "mechanicId": "mech-7",
+        "mechanicName": "Mahesh More",
+        "mechanicWorkshop": "More Two-Wheeler Specialist",
+        "vehicleInfo": "Yamaha MT-15 V2 (MH 03 FA 1109)",
+        "serviceDate": "2026-09-02T09:55:00Z",
+        "breakdownSummary": "Drive chain slipped off the rear sprocket while accelerating uphill.",
+        "items": [
+          {
+            "description": "Emergency Roadside Inspection & Base Callout",
+            "amount": 80
+          },
+          {
+            "description": "Travel & Dispatch Fee (1.5 km)",
+            "amount": 40
+          },
+          {
+            "description": "On-site Technical Labour",
+            "amount": 180
+          },
+          {
+            "description": "Motul C2 Chain Lube (150ml) (Qty: 1)",
+            "amount": 120
+          }
+        ],
+        "subtotal": 420,
+        "tax": 76,
+        "total": 496,
+        "paymentMethod": "UPI / Digital Payment",
+        "paymentStatus": "paid",
+        "paidAt": "2026-09-02T09:55:00Z"
+      }
+    ],
+    [
+      "INV-2026-00072",
+      {
+        "invoiceNumber": "INV-2026-00072",
+        "bookingId": "RR-2026-00072",
+        "customerId": "cust-7",
+        "customerName": "Rahul Mehta",
+        "customerPhone": "+91 98211 77334",
+        "mechanicId": "mech-2",
+        "mechanicName": "Vikram Jadhav",
+        "mechanicWorkshop": "Jadhav Super Garage",
+        "vehicleInfo": "Kia Seltos GTX+ (MH 02 FE 5543)",
+        "serviceDate": "2026-08-25T20:10:00Z",
+        "breakdownSummary": "Smart key fob battery completely died, vehicle locked and mechanical key slot cover stuck.",
+        "items": [
+          {
+            "description": "Emergency Roadside Inspection & Base Callout",
+            "amount": 120
+          },
+          {
+            "description": "Travel & Dispatch Fee (3.1 km)",
+            "amount": 60
+          },
+          {
+            "description": "On-site Technical Labour",
+            "amount": 180
+          },
+          {
+            "description": "Panasonic CR2032 3V Coin Battery (Pack of 2) (Qty: 1)",
+            "amount": 120
+          }
+        ],
+        "subtotal": 480,
+        "tax": 86,
+        "total": 566,
+        "paymentMethod": "UPI / Digital Payment",
+        "paymentStatus": "paid",
+        "paidAt": "2026-08-25T20:10:00Z"
+      }
+    ]
+  ],
+  "reviews": [
+    [
+      "rev-1",
+      {
+        "id": "rev-1",
+        "bookingId": "RR-2026-00120",
+        "customerId": "cust-1",
+        "customerName": "Rohan Sharma",
+        "customerAvatar": "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=200&q=80",
+        "mechanicId": "mech-1",
+        "overallRating": 5,
+        "responseTimeRating": 5,
+        "professionalismRating": 5,
+        "repairQualityRating": 5,
+        "pricingTransparencyRating": 5,
+        "comment": "Rajesh reached Khar in under 12 minutes! Diagnosed the bike sensor issue instantly without unnecessary part replacement. True lifesaver!",
+        "createdAt": "2026-09-20T15:05:00Z"
+      }
+    ],
+    [
+      "rev-2",
+      {
+        "id": "rev-2",
+        "bookingId": "RR-2026-00115",
+        "customerId": "cust-3",
+        "customerName": "Amit Verma",
+        "customerAvatar": "https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?auto=format&fit=crop&w=200&q=80",
+        "mechanicId": "mech-4",
+        "overallRating": 5,
+        "responseTimeRating": 5,
+        "professionalismRating": 5,
+        "repairQualityRating": 5,
+        "pricingTransparencyRating": 4,
+        "comment": "Irfan Khan was extremely knowledgeable. My XUV700 had an overheating scare on the flyover. He fixed the clamp and checked the full cooling loop.",
+        "createdAt": "2026-09-18T17:20:00Z"
+      }
+    ],
+    [
+      "rev-3",
+      {
+        "id": "rev-3",
+        "bookingId": "RR-2026-00109",
+        "customerId": "cust-4",
+        "customerName": "Sneha Patil",
+        "customerAvatar": "https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=200&q=80",
+        "mechanicId": "mech-3",
+        "overallRating": 5,
+        "responseTimeRating": 5,
+        "professionalismRating": 5,
+        "repairQualityRating": 5,
+        "pricingTransparencyRating": 5,
+        "comment": "Delivered fuel within 15 minutes of my breakdown. Friendly, polite, and completely honest billing.",
+        "createdAt": "2026-09-15T11:50:00Z"
+      }
+    ],
+    [
+      "rev-4",
+      {
+        "id": "rev-4",
+        "bookingId": "RR-2026-00098",
+        "customerId": "cust-5",
+        "customerName": "Vikas Nair",
+        "customerAvatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&q=80",
+        "mechanicId": "mech-10",
+        "overallRating": 5,
+        "responseTimeRating": 5,
+        "professionalismRating": 5,
+        "repairQualityRating": 5,
+        "pricingTransparencyRating": 5,
+        "comment": "Bleeding brakes on the street is tough work. Karan brought a full van workshop and had my Honda City safe to drive in under an hour.",
+        "createdAt": "2026-09-10T19:35:00Z"
+      }
+    ]
+  ],
+  "complaints": [
+    [
+      "comp-1",
+      {
+        "id": "comp-1",
+        "bookingId": "RR-2026-00072",
+        "customerId": "cust-7",
+        "customerName": "Rahul Mehta",
+        "mechanicId": "mech-2",
+        "mechanicName": "Vikram Jadhav",
+        "reason": "Billing clarification",
+        "description": "Customer inquired about 18% GST component on invoice. Resolved with tax breakdown explanation.",
+        "status": "resolved",
+        "createdAt": "2026-08-26T10:00:00Z",
+        "resolutionNote": "Explained statutory tax invoice regulations to customer. Case closed amicably."
+      }
+    ]
+  ],
+  "notifications": [
+    [
+      "notif-1",
+      {
+        "id": "notif-1",
+        "userId": "cust-1",
+        "title": "Mechanic En Route! 🚗",
+        "message": "Rajesh Solanki is 1.4 km away and arriving in approx 6 mins with jump-starter pack.",
+        "type": "info",
+        "bookingId": "RR-2026-00125",
+        "read": false,
+        "createdAt": "2026-09-25T21:51:00Z"
+      }
+    ],
+    [
+      "notif-2",
+      {
+        "id": "notif-2",
+        "userId": "cust-1",
+        "title": "Maintenance Reminder 🔧",
+        "message": "Your Hyundai Creta is due for regular engine oil & filter inspection (28,400 km).",
+        "type": "warning",
+        "read": true,
+        "createdAt": "2026-09-22T09:00:00Z"
+      }
+    ],
+    [
+      "notif-3",
+      {
+        "id": "notif-3",
+        "userId": "mech-1",
+        "title": "New Emergency Request Accepted! ⚡",
+        "message": "Rohan Sharma reported dead battery on Bandra Reclamation. Required: Jump Starter & Tester.",
+        "type": "info",
+        "bookingId": "RR-2026-00125",
+        "read": false,
+        "createdAt": "2026-09-25T21:46:30Z"
+      }
+    ],
+    [
+      "notif-4",
+      {
+        "id": "notif-4",
+        "userId": "mech-1",
+        "title": "Payout Deposited 💰",
+        "message": "₹2,450 for today’s roadside repairs settled to your bank account.",
+        "type": "success",
+        "read": true,
+        "createdAt": "2026-09-24T23:00:00Z"
+      }
+    ],
+    [
+      "notif-5",
+      {
+        "id": "notif-5",
+        "userId": "cust-2",
+        "title": "Repair In Progress 🛠️",
+        "message": "Mechanic Vikram Jadhav is installing vulcanized strip plugs for your right rear tyre.",
+        "type": "info",
+        "bookingId": "RR-2026-00124",
+        "read": false,
+        "createdAt": "2026-09-25T20:45:00Z"
+      }
+    ]
+  ],
+  "chatMessages": [
+    [
+      "RR-2026-00125",
+      [
+        {
+          "id": "msg-RR-2026-00125-1",
+          "bookingId": "RR-2026-00125",
+          "senderId": "system",
+          "senderRole": "system",
+          "text": "Booking RR-2026-00125 created and dispatched to nearby certified mechanics.",
+          "timestamp": "2026-09-25T21:45:00Z"
+        },
+        {
+          "id": "msg-RR-2026-00125-2",
+          "bookingId": "RR-2026-00125",
+          "senderId": "mech-1",
+          "senderRole": "mechanic",
+          "text": "Hello Rohan Sharma, I have received your request and gathered the necessary equipment. Heading towards you now!",
+          "timestamp": "2026-09-25T21:47:00.000Z"
+        }
+      ]
+    ],
+    [
+      "RR-2026-00124",
+      [
+        {
+          "id": "msg-RR-2026-00124-1",
+          "bookingId": "RR-2026-00124",
+          "senderId": "system",
+          "senderRole": "system",
+          "text": "Booking RR-2026-00124 created and dispatched to nearby certified mechanics.",
+          "timestamp": "2026-09-25T20:10:00Z"
+        },
+        {
+          "id": "msg-RR-2026-00124-2",
+          "bookingId": "RR-2026-00124",
+          "senderId": "mech-2",
+          "senderRole": "mechanic",
+          "text": "Hello Priya Deshmukh, I have received your request and gathered the necessary equipment. Heading towards you now!",
+          "timestamp": "2026-09-25T20:12:00.000Z"
+        }
+      ]
+    ],
+    [
+      "RR-2026-00120",
+      [
+        {
+          "id": "msg-RR-2026-00120-1",
+          "bookingId": "RR-2026-00120",
+          "senderId": "system",
+          "senderRole": "system",
+          "text": "Booking RR-2026-00120 created and dispatched to nearby certified mechanics.",
+          "timestamp": "2026-09-20T14:10:00Z"
+        },
+        {
+          "id": "msg-RR-2026-00120-2",
+          "bookingId": "RR-2026-00120",
+          "senderId": "mech-1",
+          "senderRole": "mechanic",
+          "text": "Hello Rohan Sharma, I have received your request and gathered the necessary equipment. Heading towards you now!",
+          "timestamp": "2026-09-20T14:12:00.000Z"
+        }
+      ]
+    ],
+    [
+      "RR-2026-00115",
+      [
+        {
+          "id": "msg-RR-2026-00115-1",
+          "bookingId": "RR-2026-00115",
+          "senderId": "system",
+          "senderRole": "system",
+          "text": "Booking RR-2026-00115 created and dispatched to nearby certified mechanics.",
+          "timestamp": "2026-09-18T16:00:00Z"
+        },
+        {
+          "id": "msg-RR-2026-00115-2",
+          "bookingId": "RR-2026-00115",
+          "senderId": "mech-4",
+          "senderRole": "mechanic",
+          "text": "Hello Amit Verma, I have received your request and gathered the necessary equipment. Heading towards you now!",
+          "timestamp": "2026-09-18T16:02:00.000Z"
+        }
+      ]
+    ],
+    [
+      "RR-2026-00109",
+      [
+        {
+          "id": "msg-RR-2026-00109-1",
+          "bookingId": "RR-2026-00109",
+          "senderId": "system",
+          "senderRole": "system",
+          "text": "Booking RR-2026-00109 created and dispatched to nearby certified mechanics.",
+          "timestamp": "2026-09-15T11:20:00Z"
+        },
+        {
+          "id": "msg-RR-2026-00109-2",
+          "bookingId": "RR-2026-00109",
+          "senderId": "mech-3",
+          "senderRole": "mechanic",
+          "text": "Hello Sneha Patil, I have received your request and gathered the necessary equipment. Heading towards you now!",
+          "timestamp": "2026-09-15T11:22:00.000Z"
+        }
+      ]
+    ],
+    [
+      "RR-2026-00098",
+      [
+        {
+          "id": "msg-RR-2026-00098-1",
+          "bookingId": "RR-2026-00098",
+          "senderId": "system",
+          "senderRole": "system",
+          "text": "Booking RR-2026-00098 created and dispatched to nearby certified mechanics.",
+          "timestamp": "2026-09-10T18:15:00Z"
+        },
+        {
+          "id": "msg-RR-2026-00098-2",
+          "bookingId": "RR-2026-00098",
+          "senderId": "mech-10",
+          "senderRole": "mechanic",
+          "text": "Hello Vikas Nair, I have received your request and gathered the necessary equipment. Heading towards you now!",
+          "timestamp": "2026-09-10T18:17:00.000Z"
+        }
+      ]
+    ],
+    [
+      "RR-2026-00085",
+      [
+        {
+          "id": "msg-RR-2026-00085-1",
+          "bookingId": "RR-2026-00085",
+          "senderId": "system",
+          "senderRole": "system",
+          "text": "Booking RR-2026-00085 created and dispatched to nearby certified mechanics.",
+          "timestamp": "2026-09-02T09:10:00Z"
+        },
+        {
+          "id": "msg-RR-2026-00085-2",
+          "bookingId": "RR-2026-00085",
+          "senderId": "mech-7",
+          "senderRole": "mechanic",
+          "text": "Hello Ananya Iyer, I have received your request and gathered the necessary equipment. Heading towards you now!",
+          "timestamp": "2026-09-02T09:12:00.000Z"
+        }
+      ]
+    ],
+    [
+      "RR-2026-00072",
+      [
+        {
+          "id": "msg-RR-2026-00072-1",
+          "bookingId": "RR-2026-00072",
+          "senderId": "system",
+          "senderRole": "system",
+          "text": "Booking RR-2026-00072 created and dispatched to nearby certified mechanics.",
+          "timestamp": "2026-08-25T19:30:00Z"
+        },
+        {
+          "id": "msg-RR-2026-00072-2",
+          "bookingId": "RR-2026-00072",
+          "senderId": "mech-2",
+          "senderRole": "mechanic",
+          "text": "Hello Rahul Mehta, I have received your request and gathered the necessary equipment. Heading towards you now!",
+          "timestamp": "2026-08-25T19:32:00.000Z"
+        }
+      ]
+    ]
+  ],
+  "maintenanceRecords": [
+    [
+      "maint-1",
+      {
+        "id": "maint-1",
+        "customerId": "cust-1",
+        "vehicleId": "veh-1",
+        "serviceType": "10,000 km Scheduled Service & Synthetic Oil Change",
+        "date": "2026-06-15",
+        "odometerKm": 20000,
+        "cost": 4800,
+        "notes": "Engine oil 5W-30 replaced, oil filter, air filter cleaned, brake calipers checked.",
+        "reminderMonths": 6,
+        "nextDueKm": 30000,
+        "nextDueDate": "2026-12-15"
+      }
+    ],
+    [
+      "maint-2",
+      {
+        "id": "maint-2",
+        "customerId": "cust-1",
+        "vehicleId": "veh-2",
+        "serviceType": "Royal Enfield 2nd Paid Service",
+        "date": "2026-07-20",
+        "odometerKm": 6000,
+        "cost": 2100,
+        "notes": "Liquid Gun semi-synthetic oil flush, spark plug clean, drive chain slack tightened.",
+        "reminderMonths": 4,
+        "nextDueKm": 10000,
+        "nextDueDate": "2026-11-20"
+      }
+    ],
+    [
+      "maint-3",
+      {
+        "id": "maint-3",
+        "customerId": "cust-2",
+        "vehicleId": "veh-3",
+        "serviceType": "Tata EV High Voltage Battery & Coolant Diagnostics",
+        "date": "2026-08-01",
+        "odometerKm": 12000,
+        "cost": 1600,
+        "notes": "State of Health (SOH) tested at 98.4%. Cabin air pollen filter replaced.",
+        "reminderMonths": 12,
+        "nextDueKm": 25000,
+        "nextDueDate": "2027-08-01"
+      }
+    ]
+  ],
+  "emergencyContacts": [
+    [
+      "ec-1",
+      {
+        "id": "ec-1",
+        "customerId": "cust-1",
+        "name": "Sunita Sharma (Spouse)",
+        "phone": "+91 98209 11990",
+        "relationship": "Spouse"
+      }
+    ],
+    [
+      "ec-2",
+      {
+        "id": "ec-2",
+        "customerId": "cust-1",
+        "name": "Dr. Alok Sharma (Brother)",
+        "phone": "+91 98203 44881",
+        "relationship": "Brother"
+      }
+    ],
+    [
+      "ec-3",
+      {
+        "id": "ec-3",
+        "customerId": "cust-2",
+        "name": "Nitin Deshmukh (Father)",
+        "phone": "+91 98220 55441",
+        "relationship": "Parent"
+      }
+    ]
+  ]
+}
