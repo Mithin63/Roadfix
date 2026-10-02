@@ -71,6 +71,8 @@ const candidatePaths = [
   path.resolve(process.cwd(), '../client/dist')
 ];
 const clientDistPath = candidatePaths.find(p => fs.existsSync(p));
+console.log(`[Static Files] Candidate paths tested: ${candidatePaths.join(', ')}`);
+console.log(`[Static Files] Client path resolved: ${clientDistPath || 'NONE FOUND'}`);
 
 if (clientDistPath) {
   console.log(`📦 Serving frontend build from: ${clientDistPath}`);
