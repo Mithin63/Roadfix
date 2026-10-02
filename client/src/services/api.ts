@@ -15,7 +15,10 @@ import {
   Invoice
 } from '../types';
 
-const API_BASE = '/api';
+const rawApiUrl = import.meta.env.VITE_API_URL || '';
+const API_BASE = rawApiUrl
+  ? (rawApiUrl.endsWith('/api') ? rawApiUrl : `${rawApiUrl.replace(/\/+$/, '')}/api`)
+  : '/api';
 
 async function fetchJson<T>(url: string, options: RequestInit = {}): Promise<T> {
   const token = localStorage.getItem('roadfix_token') || localStorage.getItem('roadrescue_token');
