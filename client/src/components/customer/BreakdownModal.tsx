@@ -35,7 +35,10 @@ import {
   Zap,
   ShieldAlert,
   Key,
-  Info
+  Info,
+  AlertCircle,
+  Trash2,
+  Volume2
 } from 'lucide-react';
 
 interface BreakdownModalProps {
@@ -77,12 +80,21 @@ export const BreakdownModal: React.FC<BreakdownModalProps> = ({
     color: 'White'
   });
 
-  // Step 3: Problem
-  const [problemType, setProblemType] = useState<BreakdownProblem>(preselectedProblem || 'battery_dead');
+  // Step 3: Problem (Multi-optional & Real Voice Speech Recognition)
+  const [problemTypes, setProblemTypes] = useState<BreakdownProblem[]>(
+    preselectedProblem ? [preselectedProblem] : ['battery_dead']
+  );
   const [problemDescription, setProblemDescription] = useState('');
   const [isRecordingVoice, setIsRecordingVoice] = useState(false);
   const [voiceRecorded, setVoiceRecorded] = useState(false);
+  const [voiceError, setVoiceError] = useState<string | null>(null);
   const [uploadedPhotoUrl, setUploadedPhotoUrl] = useState<string | null>(null);
+
+  const recognitionRef = React.useRef<any>(null);
+  const baseTextRef = React.useRef<string>('');
+
+  // Primary problem helper for single-value compatibility
+  const primaryProblemType = problemTypes.length > 0 ? problemTypes[0] : 'other';
 
   // Step 4: AI Diagnosis
   const [isDiagnosing, setIsDiagnosing] = useState(false);
@@ -96,6 +108,19 @@ export const BreakdownModal: React.FC<BreakdownModalProps> = ({
   // Step 6: Confirmation
   const [isSubmittingBooking, setIsSubmittingBooking] = useState(false);
 
+  // Clean up speech recognition on modal close or unmount
+  useEffect(() => {
+    return () => {
+      if (recognitionRef.current) {
+        try {
+          recognitionRef.current.stop();
+        } catch (e) {
+          // ignore
+        }
+      }
+    };
+  }, []);
+
   // Load customer's vehicles
   useEffect(() => {
     if (user && isOpen) {
@@ -107,7 +132,7 @@ export const BreakdownModal: React.FC<BreakdownModalProps> = ({
       });
     }
     if (preselectedProblem) {
-      setProblemType(preselectedProblem);
+      setProblemTypes(prev => prev.includes(preselectedProblem) ? prev : [preselectedProblem, ...prev.filter(p => p !== preselectedProblem)]);
     }
   }, [user, isOpen, preselectedProblem]);
 
@@ -133,18 +158,102 @@ export const BreakdownModal: React.FC<BreakdownModalProps> = ({
     }
   };
 
+  // Toggle problem type in multi-selection
+  const toggleProblemType = (id: BreakdownProblem) => {
+    setProblemTypes(prev => {
+      if (prev.includes(id)) {
+        // Deselect if already selected (allow selecting other or empty)
+        return prev.filter(p => p !== id);
+      } else {
+        // Multi-select: Add to selection
+        return [...prev, id];
+      }
+    });
+  };
+
+  // Voice speech-to-text recognition with Web Speech API & fallback
   const handleVoiceToggle = () => {
-    if (!isRecordingVoice) {
-      setIsRecordingVoice(true);
-      // Simulate real-time speech-to-text recording
-      setTimeout(() => {
-        setIsRecordingVoice(false);
-        setVoiceRecorded(true);
-        if (!problemDescription) {
-          setProblemDescription("The vehicle won't crank or start. All dashboard lights dim when I turn the key and there is a clicking sound.");
+    const SpeechRecognition =
+      (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
+
+    if (isRecordingVoice) {
+      // Stop recording
+      if (recognitionRef.current) {
+        try {
+          recognitionRef.current.stop();
+        } catch (err) {
+          console.error('Error stopping recognition:', err);
         }
-      }, 3500);
-    } else {
+      }
+      setIsRecordingVoice(false);
+      return;
+    }
+
+    if (!SpeechRecognition) {
+      setVoiceError('Speech recognition is not supported in this browser. You can type directly or use Chrome/Edge.');
+      // Optional fallback demo text to assist user if microphone is completely unsupported
+      if (!problemDescription) {
+        setProblemDescription("The vehicle won't crank or start, rapid clicking sound and smoke from under the hood.");
+        setVoiceRecorded(true);
+      }
+      return;
+    }
+
+    setVoiceError(null);
+    baseTextRef.current = problemDescription ? problemDescription.trim() + ' ' : '';
+
+    try {
+      const recognition = new SpeechRecognition();
+      recognition.continuous = true;
+      recognition.interimResults = true;
+      recognition.lang = navigator.language || 'en-IN';
+
+      recognition.onstart = () => {
+        setIsRecordingVoice(true);
+        setVoiceError(null);
+      };
+
+      recognition.onresult = (event: any) => {
+        let interim = '';
+        let final = '';
+
+        for (let i = event.resultIndex; i < event.results.length; ++i) {
+          const item = event.results[i];
+          if (item.isFinal) {
+            final += item[0].transcript + ' ';
+          } else {
+            interim += item[0].transcript;
+          }
+        }
+
+        const combined = ((baseTextRef.current || '') + final + interim).trim();
+        if (combined) {
+          setProblemDescription(combined);
+          setVoiceRecorded(true);
+        }
+      };
+
+      recognition.onerror = (event: any) => {
+        console.warn('Speech recognition error:', event.error);
+        if (event.error === 'not-allowed' || event.error === 'permission-denied') {
+          setVoiceError('Microphone permission was denied. Please allow microphone access in your browser.');
+        } else if (event.error === 'network') {
+          setVoiceError('Network error connecting to speech recognition service.');
+        } else if (event.error !== 'no-speech' && event.error !== 'aborted') {
+          setVoiceError(`Voice input error: ${event.error}`);
+        }
+        setIsRecordingVoice(false);
+      };
+
+      recognition.onend = () => {
+        setIsRecordingVoice(false);
+      };
+
+      recognitionRef.current = recognition;
+      recognition.start();
+    } catch (err: any) {
+      console.error('Failed to start speech recognition:', err);
+      setVoiceError(err?.message || 'Could not access microphone.');
       setIsRecordingVoice(false);
     }
   };
@@ -160,7 +269,7 @@ export const BreakdownModal: React.FC<BreakdownModalProps> = ({
     }
   };
 
-  // Run AI Diagnosis
+  // Run AI Diagnosis with multi-problem support
   const handleRunDiagnosis = async () => {
     const chosenVehicle = vehicles.find(v => v.id === selectedVehicleId) || {
       type: 'car' as VehicleCategory,
@@ -171,9 +280,12 @@ export const BreakdownModal: React.FC<BreakdownModalProps> = ({
     setIsDiagnosing(true);
     setCurrentStep(4);
 
+    const activeProblems = problemTypes.length > 0 ? problemTypes : ['other' as BreakdownProblem];
+
     try {
       const res = await api.diagnose({
-        problemType,
+        problemType: activeProblems[0],
+        problemTypes: activeProblems,
         description: problemDescription,
         vehicleType: chosenVehicle.type,
         vehicleMake: chosenVehicle.make,
@@ -195,6 +307,7 @@ export const BreakdownModal: React.FC<BreakdownModalProps> = ({
     setCurrentStep(5);
 
     const chosenVehicle = vehicles.find(v => v.id === selectedVehicleId);
+    const activeProblems = diagnosis.problemTypes || (problemTypes.length > 0 ? problemTypes : [diagnosis.problemType]);
 
     try {
       const res = await api.matchMechanics({
@@ -202,6 +315,7 @@ export const BreakdownModal: React.FC<BreakdownModalProps> = ({
         customerLng: coords.lng,
         vehicleType: chosenVehicle?.type || 'car',
         problemType: diagnosis.problemType,
+        problemTypes: activeProblems,
         requiredEquipment: diagnosis.requiredEquipment
       });
       setMatchedMechanics(res.matches || []);
@@ -222,11 +336,14 @@ export const BreakdownModal: React.FC<BreakdownModalProps> = ({
     setIsSubmittingBooking(true);
     try {
       const chosenVehicle = vehicles.find(v => v.id === selectedVehicleId);
+      const activeProblems = diagnosis.problemTypes || (problemTypes.length > 0 ? problemTypes : [diagnosis.problemType]);
+
       const res = await api.createBooking({
         customerId: user.id,
         mechanicId: selectedMechanic.mechanicId,
         vehicleId: selectedVehicleId,
         problemType: diagnosis.problemType,
+        problemTypes: activeProblems,
         problemDescription: problemDescription || diagnosis.problemTitle,
         customerLat: coords.lat,
         customerLng: coords.lng,
@@ -535,18 +652,26 @@ export const BreakdownModal: React.FC<BreakdownModalProps> = ({
           {/* STEP 3: PROBLEM DETAILS */}
           {currentStep === 3 && (
             <div className="space-y-5 animate-in fade-in">
-              <div>
-                <h3 className="text-base font-bold text-white flex items-center gap-2">
-                  <AlertTriangle className="w-4 h-4 text-amber-400" />
-                  What happened to your vehicle?
-                </h3>
-                <p className="text-xs text-slate-400 mt-0.5">
-                  Select the main category, describe the symptoms, or record a quick voice note.
-                </p>
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                <div>
+                  <h3 className="text-base font-bold text-white flex items-center gap-2">
+                    <AlertTriangle className="w-4 h-4 text-amber-400" />
+                    What happened to your vehicle?
+                  </h3>
+                  <p className="text-xs text-slate-400 mt-0.5">
+                    Select all issues that apply (multi-select), describe the symptoms, or record a live voice note.
+                  </p>
+                </div>
+                {problemTypes.length > 0 && (
+                  <span className="px-3 py-1 rounded-full bg-amber-500/15 border border-amber-500/40 text-amber-300 text-xs font-bold self-start sm:self-auto flex items-center gap-1.5 shadow-sm">
+                    <CheckCircle2 className="w-3.5 h-3.5 text-amber-400" />
+                    <span>{problemTypes.length} {problemTypes.length === 1 ? 'Issue' : 'Issues'} Selected</span>
+                  </span>
+                )}
               </div>
 
-              {/* Problem category pills */}
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+              {/* Multi-optional Problem category pills */}
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2.5">
                 {[
                   { id: 'vehicle_wont_start', label: "Won't Start", icon: Car },
                   { id: 'flat_tyre', label: 'Flat Tyre', icon: Disc },
@@ -561,66 +686,144 @@ export const BreakdownModal: React.FC<BreakdownModalProps> = ({
                   { id: 'other', label: 'Other Issue', icon: Wrench },
                 ].map((item) => {
                   const Icon = item.icon;
-                  const isSelected = problemType === item.id;
+                  const isSelected = problemTypes.includes(item.id as BreakdownProblem);
                   return (
                     <button
                       key={item.id}
                       type="button"
-                      onClick={() => setProblemType(item.id as BreakdownProblem)}
-                      className={`p-2.5 rounded-xl border text-xs font-semibold flex items-center gap-2 transition-all ${
+                      onClick={() => toggleProblemType(item.id as BreakdownProblem)}
+                      className={`p-3 rounded-xl border text-xs font-semibold flex items-center justify-between gap-2 transition-all cursor-pointer select-none text-left ${
                         isSelected
-                          ? 'bg-amber-500/20 border-amber-500 text-amber-300 shadow-md'
-                          : 'bg-slate-950/60 border-slate-800 hover:border-slate-700 text-slate-300'
+                          ? 'bg-amber-500/20 border-amber-400 text-amber-300 shadow-md shadow-amber-500/10 ring-1 ring-amber-400/60 font-bold'
+                          : 'bg-slate-950/60 border-slate-800 hover:border-slate-700 text-slate-300 hover:text-white'
                       }`}
                     >
-                      <Icon className="w-4 h-4 shrink-0" />
-                      <span className="truncate">{item.label}</span>
+                      <div className="flex items-center gap-2 min-w-0">
+                        <Icon className={`w-4 h-4 shrink-0 ${isSelected ? 'text-amber-400' : 'text-slate-400'}`} />
+                        <span className="truncate">{item.label}</span>
+                      </div>
+                      <div className="shrink-0">
+                        {isSelected ? (
+                          <div className="w-4 h-4 rounded-full bg-amber-500 flex items-center justify-center">
+                            <CheckCircle2 className="w-3.5 h-3.5 text-slate-950 stroke-[3]" />
+                          </div>
+                        ) : (
+                          <div className="w-4 h-4 rounded-full border border-slate-700 hover:border-slate-500" />
+                        )}
+                      </div>
                     </button>
                   );
                 })}
               </div>
 
-              {/* Text Description */}
+              {/* Text Description with Live Voice indicators */}
               <div>
-                <label className="text-xs font-semibold text-slate-300 block mb-1">
-                  Describe what you see or hear:
-                </label>
+                <div className="flex items-center justify-between mb-1.5">
+                  <label className="text-xs font-semibold text-slate-300 flex items-center gap-1.5">
+                    <span>Describe what you see or hear:</span>
+                    {isRecordingVoice && (
+                      <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-red-500/20 border border-red-500/40 text-[10px] text-red-400 font-bold animate-pulse">
+                        <span className="w-1.5 h-1.5 rounded-full bg-red-400 animate-ping" />
+                        Live Recording...
+                      </span>
+                    )}
+                  </label>
+                  {problemDescription && (
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setProblemDescription('');
+                        setVoiceRecorded(false);
+                      }}
+                      className="text-[11px] text-slate-400 hover:text-red-400 flex items-center gap-1 transition-colors"
+                    >
+                      <Trash2 className="w-3 h-3" />
+                      Clear
+                    </button>
+                  )}
+                </div>
                 <textarea
                   rows={3}
                   value={problemDescription}
                   onChange={(e) => setProblemDescription(e.target.value)}
-                  placeholder="e.g. Engine suddenly sputtered and died, smelling smoke or rapid clicking on start..."
-                  className="w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-slate-700 text-sm text-white focus:outline-none focus:border-amber-400"
+                  placeholder="e.g. Engine suddenly sputtered and died, smelling smoke, rapid clicking on start, or flat tyre on passenger side..."
+                  className={`w-full px-4 py-2.5 rounded-xl bg-slate-950 border text-sm text-white focus:outline-none transition-colors ${
+                    isRecordingVoice
+                      ? 'border-red-500 ring-1 ring-red-500/30'
+                      : 'border-slate-700 focus:border-amber-400'
+                  }`}
                 />
               </div>
 
               {/* Voice & Photo Inputs */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
-                {/* Voice recording button */}
-                <div className="p-3 rounded-xl bg-slate-950/60 border border-slate-800 flex items-center justify-between">
-                  <div className="flex items-center gap-2.5">
-                    <button
-                      type="button"
-                      onClick={handleVoiceToggle}
-                      className={`p-2.5 rounded-full transition-all ${
-                        isRecordingVoice
-                          ? 'bg-red-500 text-white animate-pulse'
-                          : voiceRecorded
-                          ? 'bg-emerald-500 text-white'
-                          : 'bg-slate-800 text-slate-300 hover:text-white'
-                      }`}
-                    >
-                      {isRecordingVoice ? <Mic className="w-4 h-4" /> : <MicOff className="w-4 h-4" />}
-                    </button>
-                    <div>
-                      <div className="text-xs font-bold text-white">
-                        {isRecordingVoice ? 'Listening...' : voiceRecorded ? 'Voice Note Transcribed' : 'Voice Description'}
-                      </div>
-                      <div className="text-[10px] text-slate-400">
-                        {isRecordingVoice ? 'Speak now into microphone' : 'Tap mic to speak problem'}
+                {/* Real-time Voice recording button */}
+                <div className={`p-3 rounded-xl border flex flex-col justify-between transition-all ${
+                  isRecordingVoice
+                    ? 'bg-red-950/30 border-red-500/60 ring-1 ring-red-500/30 shadow-lg shadow-red-500/10'
+                    : voiceRecorded
+                    ? 'bg-emerald-950/20 border-emerald-500/40'
+                    : 'bg-slate-950/60 border-slate-800'
+                }`}>
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2.5">
+                      <button
+                        type="button"
+                        onClick={handleVoiceToggle}
+                        title={isRecordingVoice ? 'Click to stop speaking' : 'Click to start voice recording'}
+                        className={`p-2.5 rounded-full transition-all cursor-pointer ${
+                          isRecordingVoice
+                            ? 'bg-red-500 text-white shadow-lg shadow-red-500/50 animate-bounce-subtle'
+                            : voiceRecorded
+                            ? 'bg-emerald-500 text-slate-950 font-bold hover:bg-emerald-400'
+                            : 'bg-slate-800 text-slate-300 hover:text-white hover:bg-amber-500 hover:text-slate-950'
+                        }`}
+                      >
+                        {isRecordingVoice ? <Mic className="w-4 h-4 animate-pulse" /> : voiceRecorded ? <CheckCircle2 className="w-4 h-4" /> : <Mic className="w-4 h-4" />}
+                      </button>
+                      <div>
+                        <div className="text-xs font-bold text-white flex items-center gap-1.5">
+                          <span>{isRecordingVoice ? 'Listening to voice...' : voiceRecorded ? 'Voice Note Transcribed' : 'Voice Description'}</span>
+                          {isRecordingVoice && (
+                            <div className="flex items-center gap-0.5">
+                              <span className="w-1 h-3 bg-red-400 rounded animate-pulse" />
+                              <span className="w-1 h-4 bg-red-500 rounded animate-pulse delay-75" />
+                              <span className="w-1 h-2 bg-red-400 rounded animate-pulse delay-150" />
+                            </div>
+                          )}
+                        </div>
+                        <div className="text-[10px] text-slate-400">
+                          {isRecordingVoice ? 'Speak now into microphone (tap again when done)' : voiceRecorded ? 'Tap mic to speak additional details' : 'Tap mic to speak your vehicle problem'}
+                        </div>
                       </div>
                     </div>
+
+                    {isRecordingVoice && (
+                      <button
+                        type="button"
+                        onClick={handleVoiceToggle}
+                        className="px-2.5 py-1 rounded-lg bg-red-500 hover:bg-red-400 text-white font-bold text-[11px] shrink-0 transition-colors"
+                      >
+                        Stop
+                      </button>
+                    )}
                   </div>
+
+                  {voiceError && (
+                    <div className="mt-2.5 p-2 rounded-lg bg-amber-500/10 border border-amber-500/30 text-amber-300 text-[11px] flex items-start justify-between gap-1.5">
+                      <div className="flex items-start gap-1.5">
+                        <AlertCircle className="w-3.5 h-3.5 text-amber-400 shrink-0 mt-0.5" />
+                        <span>{voiceError}</span>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() => setVoiceError(null)}
+                        className="text-amber-400 hover:text-amber-200 text-xs font-bold px-1"
+                      >
+                        ✕
+                      </button>
+                    </div>
+                  )}
                 </div>
 
                 {/* Photo Upload */}
@@ -634,7 +837,7 @@ export const BreakdownModal: React.FC<BreakdownModalProps> = ({
                         {uploadedPhotoUrl ? 'Photo Attached' : 'Upload Breakdown Photo'}
                       </div>
                       <div className="text-[10px] text-slate-400">
-                        {uploadedPhotoUrl ? 'Click to replace photo' : 'Damage, tyre, or engine bay'}
+                        {uploadedPhotoUrl ? 'Click to replace breakdown photo' : 'Damage, tyre, or engine bay image'}
                       </div>
                     </div>
                     <input
@@ -677,11 +880,12 @@ export const BreakdownModal: React.FC<BreakdownModalProps> = ({
                 </div>
 
                 <button
+                  disabled={problemTypes.length === 0}
                   onClick={handleRunDiagnosis}
-                  className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-amber-400 hover:from-amber-400 hover:to-amber-300 text-slate-950 font-bold text-xs flex items-center gap-2 shadow-lg shadow-amber-500/25"
+                  className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-amber-400 hover:from-amber-400 hover:to-amber-300 disabled:opacity-50 text-slate-950 font-bold text-xs flex items-center gap-2 shadow-lg shadow-amber-500/25 transition-transform hover:scale-[1.01]"
                 >
                   <Sparkles className="w-4 h-4 text-slate-950" />
-                  <span>Analyze with Roadfix AI</span>
+                  <span>Analyze with Roadfix AI ({problemTypes.length})</span>
                   <ChevronRight className="w-4 h-4" />
                 </button>
               </div>
@@ -976,8 +1180,12 @@ export const BreakdownModal: React.FC<BreakdownModalProps> = ({
                       <span className="font-semibold">{chosenVehicle?.make} {chosenVehicle?.model} ({chosenVehicle?.regNo})</span>
                     </div>
                     <div className="flex justify-between text-slate-300">
-                      <span className="text-slate-500">Problem:</span>
-                      <span className="font-semibold capitalize">{problemType.replace(/_/g, ' ')}</span>
+                      <span className="text-slate-500">Problem(s):</span>
+                      <span className="font-semibold capitalize truncate max-w-[220px]" title={problemTypes.map(p => p.replace(/_/g, ' ')).join(', ')}>
+                        {problemTypes.length > 0
+                          ? problemTypes.map(p => p.replace(/_/g, ' ')).join(', ')
+                          : primaryProblemType.replace(/_/g, ' ')}
+                      </span>
                     </div>
                     <div className="flex justify-between text-slate-300">
                       <span className="text-slate-500">Location:</span>

@@ -23,9 +23,9 @@ router.get('/', (req: Request, res: Response) => {
 
 // Match mechanics based on customer position, vehicle type, problem, and equipment
 router.post('/match', (req: Request, res: Response) => {
-  const { customerLat, customerLng, vehicleType, problemType, requiredEquipment } = req.body;
+  const { customerLat, customerLng, vehicleType, problemType, problemTypes, requiredEquipment } = req.body;
 
-  if (!customerLat || !customerLng || !vehicleType || !problemType) {
+  if (!customerLat || !customerLng || !vehicleType || (!problemType && (!problemTypes || problemTypes.length === 0))) {
     return res.status(400).json({ success: false, message: 'Missing parameters for mechanic matching' });
   }
 
@@ -33,7 +33,8 @@ router.post('/match', (req: Request, res: Response) => {
     customerLat: Number(customerLat),
     customerLng: Number(customerLng),
     vehicleType: vehicleType as VehicleCategory,
-    problemType: problemType as BreakdownProblem,
+    problemType: (problemType || (problemTypes && problemTypes[0]) || 'other') as BreakdownProblem,
+    problemTypes: Array.isArray(problemTypes) ? problemTypes : undefined,
     requiredEquipment: Array.isArray(requiredEquipment) ? requiredEquipment : []
   });
 

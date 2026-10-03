@@ -5,14 +5,15 @@ const router = Router();
 
 // Diagnose breakdown
 router.post('/diagnose', (req: Request, res: Response) => {
-  const { problemType, description, vehicleType, vehicleMake, vehicleModel, imageDataUri } = req.body;
+  const { problemType, problemTypes, description, vehicleType, vehicleMake, vehicleModel, imageDataUri } = req.body;
 
-  if (!problemType || !vehicleType) {
-    return res.status(400).json({ success: false, message: 'problemType and vehicleType are required' });
+  if ((!problemType && (!problemTypes || problemTypes.length === 0)) || !vehicleType) {
+    return res.status(400).json({ success: false, message: 'problemType (or problemTypes) and vehicleType are required' });
   }
 
   const diagnosis = performAIDiagnosis({
     problemType,
+    problemTypes,
     description: description || '',
     vehicleType,
     vehicleMake,

@@ -2,7 +2,8 @@ import { AIDiagnosis, BreakdownProblem, VehicleCategory } from '../types';
 import { PROBLEM_CATALOG } from '../data/seeds';
 
 export interface DiagnosisInput {
-  problemType: BreakdownProblem;
+  problemType?: BreakdownProblem;
+  problemTypes?: BreakdownProblem[];
   description: string;
   vehicleType: VehicleCategory;
   vehicleMake?: string;
@@ -11,133 +12,200 @@ export interface DiagnosisInput {
 }
 
 export function performAIDiagnosis(input: DiagnosisInput): AIDiagnosis {
-  const { problemType, description, vehicleType, vehicleMake, vehicleModel, imageDataUri } = input;
-  const catalogEntry = PROBLEM_CATALOG.find(p => p.id === problemType) || PROBLEM_CATALOG[PROBLEM_CATALOG.length - 1];
+  const { problemType, problemTypes, description, vehicleType, vehicleMake, vehicleModel, imageDataUri } = input;
+  
+  // Normalize problem types array
+  const selectedTypes: BreakdownProblem[] = (problemTypes && problemTypes.length > 0)
+    ? problemTypes
+    : [problemType || 'other'];
+
+  const primaryProblem = selectedTypes[0] || 'other';
+
+  // Find catalog entries for all selected problem types
+  const catalogEntries = selectedTypes.map(pt =>
+    PROBLEM_CATALOG.find(p => p.id === pt) || PROBLEM_CATALOG[PROBLEM_CATALOG.length - 1]
+  );
 
   const descLower = (description || '').toLowerCase();
 
-  // Smart equipment determination
-  const requiredEquipment = [...catalogEntry.requiredEquipment];
+  // Aggregate required equipment from all selected problems
+  const requiredEquipmentSet = new Set<string>();
+  catalogEntries.forEach(entry => {
+    entry.requiredEquipment.forEach(eq => requiredEquipmentSet.add(eq));
+  });
+
   const safeChecks: string[] = [];
   const possibleCauses: string[] = [];
-  let severity: AIDiagnosis['severity'] = catalogEntry.severity;
-  let safetyWarning: string | undefined = undefined;
+  const safetyWarnings: string[] = [];
 
-  let baseLabour = catalogEntry.labourEst;
+  // Determine aggregate severity (critical > high > medium > low)
+  const severityRank: Record<AIDiagnosis['severity'], number> = {
+    low: 1,
+    medium: 2,
+    high: 3,
+    critical: 4
+  };
+
+  let maxSeverityRank = 1;
+  let severity: AIDiagnosis['severity'] = 'medium';
+
+  catalogEntries.forEach(entry => {
+    const rank = severityRank[entry.severity] || 2;
+    if (rank > maxSeverityRank) {
+      maxSeverityRank = rank;
+      severity = entry.severity;
+    }
+  });
+
+  let baseLabour = 0;
   let estParts = 0;
-  let estTime = catalogEntry.timeEstMinutes;
+  let estTime = 0;
+  let baseService = 0;
 
-  if (problemType === 'battery_dead' || descLower.includes('battery') || descLower.includes('click')) {
-    possibleCauses.push(
-      'Deep discharge due to headlights, dashcam, or cabin light left on',
-      'Sulfated lead-acid plates or expired battery cells (typically 2-3 years lifespan)',
-      'Loose or corroded battery terminal cables inhibiting cold cranking amps',
-      'Alternator voltage regulator failure failing to sustain charge under load'
-    );
-    safeChecks.push(
-      'Turn off all electrical accessories: AC, headlights, infotainment system.',
-      'Check if dashboard warning battery symbol illuminates when key is in accessory mode.',
-      'Inspect if battery clamp terminals appear loose or covered in white/green sulfate powder.'
-    );
-    safetyWarning = 'Never attempt to jump-start a cracked or leaking battery. Do not use naked flames near lead-acid batteries.';
-    estParts = descLower.includes('replace') || descLower.includes('old') ? 3500 : 0;
-  } else if (problemType === 'flat_tyre' || descLower.includes('tyre') || descLower.includes('tire') || descLower.includes('puncture')) {
-    possibleCauses.push(
-      'Foreign object penetration (construction nail, screw, sharp glass)',
-      'Valve stem failure or leaking valve core seal',
-      'Bead unseating or rim deformation after high-speed pothole impact'
-    );
-    safeChecks.push(
-      'Guide vehicle safely onto the leftmost shoulder or flat parking zone.',
-      'Turn on hazard warning lights and place warning triangle 30 meters behind.',
-      'Confirm whether spare wheel and jack kit are present in trunk/boot.'
-    );
-    safetyWarning = 'Never crawl under a vehicle supported only by a scissor jack; always ensure wheels are chocked.';
-    estParts = 150; // Puncture strip or valve
-  } else if (problemType === 'overheating' || descLower.includes('heat') || descLower.includes('steam') || descLower.includes('coolant')) {
-    severity = 'critical';
-    possibleCauses.push(
-      'Radiator hose split or loosened tension clamp causing coolant loss',
-      'Radiator pressure cap spring failure allowing coolant to boil over',
-      'Cooling fan relay or electric motor burned out',
-      'Thermostat valve stuck in closed position'
-    );
-    safeChecks.push(
-      'Immediately turn off the engine and pull over to prevent cylinder head warpage.',
-      'Pop open the bonnet latch from inside the cabin, but DO NOT touch the hot hood or cap.',
-      'Look for visible puddles of brightly colored fluid (green, pink, or orange) underneath.'
-    );
-    safetyWarning = 'CRITICAL: NEVER open the radiator cap or coolant reservoir while engine is hot! Scalding pressurized steam can cause 3rd-degree burns.';
-    estParts = 650; // Coolant + clamp
-    estTime = 45;
-  } else if (problemType === 'brake_problem' || descLower.includes('brake')) {
-    severity = 'critical';
-    possibleCauses.push(
-      'Air intrusion in hydraulic brake lines causing spongy pedal feel',
-      'Worn brake friction pads down to metal backing plate',
-      'Brake master cylinder internal seal bypass or caliper bleed valve weep'
-    );
-    safeChecks.push(
-      'DO NOT attempt to drive in traffic if pedal sinks to floor.',
-      'Test handbrake/emergency brake hold at standstill.',
-      'Inspect brake fluid reservoir level under the hood (between MIN and MAX markings).'
-    );
-    safetyWarning = 'Driving with compromised hydraulic brakes presents an immediate danger to life. Professional towing or on-site bleeding required.';
-    estParts = 400;
-  } else if (problemType === 'fuel_problem' || descLower.includes('fuel') || descLower.includes('petrol') || descLower.includes('diesel')) {
-    severity = 'low';
-    possibleCauses.push(
-      'Fuel starvation / empty tank due to faulty fuel sender float',
-      'Fuel pump relay or in-tank pump strainer clogging'
-    );
-    safeChecks.push(
-      'Check fuel gauge indicator with ignition turned on.',
-      'Look around vehicle for any strong smell of spilled fuel or ruptured lines.'
-    );
-    safetyWarning = 'Do not smoke, vape, or produce sparks near the fuel filler neck.';
-    estParts = 300; // fuel cost
-  } else {
-    possibleCauses.push(
-      'Mechanical component fatigue or road vibration loosening fasteners',
-      'Electrical harness contact oxidation or blown fuse',
-      'Fuel / air / ignition timing mismatch'
-    );
-    safeChecks.push(
-      'Ensure vehicle is safely clear of moving road traffic with hazard flashers on.',
-      'Check fluid levels (oil, coolant) if safe to open engine bay.'
-    );
-  }
+  // Aggregate pricing and details per problem type
+  selectedTypes.forEach((pt, index) => {
+    const entry = catalogEntries[index];
+    // Apply bundled discount for additional problem types (full price for first, 60% for subsequent)
+    const factor = index === 0 ? 1 : 0.6;
+    baseLabour += Math.round(entry.labourEst * factor);
+    baseService += index === 0 ? entry.basePrice : Math.round(entry.basePrice * 0.5);
+    estTime += Math.round(entry.timeEstMinutes * factor);
+
+    if (pt === 'battery_dead' || descLower.includes('battery') || descLower.includes('click')) {
+      possibleCauses.push(
+        'Deep discharge due to headlights, dashcam, or cabin light left on',
+        'Sulfated lead-acid plates or expired battery cells (typically 2-3 years lifespan)',
+        'Loose or corroded battery terminal cables inhibiting cold cranking amps',
+        'Alternator voltage regulator failure failing to sustain charge under load'
+      );
+      safeChecks.push(
+        'Turn off all electrical accessories: AC, headlights, infotainment system.',
+        'Check if dashboard warning battery symbol illuminates when key is in accessory mode.',
+        'Inspect if battery clamp terminals appear loose or covered in white/green sulfate powder.'
+      );
+      safetyWarnings.push('Never attempt to jump-start a cracked or leaking battery. Do not use naked flames near lead-acid batteries.');
+      estParts += descLower.includes('replace') || descLower.includes('old') ? 3500 : 0;
+    } else if (pt === 'flat_tyre' || descLower.includes('tyre') || descLower.includes('tire') || descLower.includes('puncture')) {
+      possibleCauses.push(
+        'Foreign object penetration (construction nail, screw, sharp glass)',
+        'Valve stem failure or leaking valve core seal',
+        'Bead unseating or rim deformation after high-speed pothole impact'
+      );
+      safeChecks.push(
+        'Guide vehicle safely onto the leftmost shoulder or flat parking zone.',
+        'Turn on hazard warning lights and place warning triangle 30 meters behind.',
+        'Confirm whether spare wheel and jack kit are present in trunk/boot.'
+      );
+      safetyWarnings.push('Never crawl under a vehicle supported only by a scissor jack; always ensure wheels are chocked.');
+      estParts += 150; // Puncture strip or valve
+    } else if (pt === 'overheating' || descLower.includes('heat') || descLower.includes('steam') || descLower.includes('coolant')) {
+      severity = 'critical';
+      possibleCauses.push(
+        'Radiator hose split or loosened tension clamp causing coolant loss',
+        'Radiator pressure cap spring failure allowing coolant to boil over',
+        'Cooling fan relay or electric motor burned out',
+        'Thermostat valve stuck in closed position'
+      );
+      safeChecks.push(
+        'Immediately turn off the engine and pull over to prevent cylinder head warpage.',
+        'Pop open the bonnet latch from inside the cabin, but DO NOT touch the hot hood or cap.',
+        'Look for visible puddles of brightly colored fluid (green, pink, or orange) underneath.'
+      );
+      safetyWarnings.push('CRITICAL: NEVER open the radiator cap or coolant reservoir while engine is hot! Scalding pressurized steam can cause 3rd-degree burns.');
+      estParts += 650; // Coolant + clamp
+    } else if (pt === 'brake_problem' || descLower.includes('brake')) {
+      severity = 'critical';
+      possibleCauses.push(
+        'Air intrusion in hydraulic brake lines causing spongy pedal feel',
+        'Worn brake friction pads down to metal backing plate',
+        'Brake master cylinder internal seal bypass or caliper bleed valve weep'
+      );
+      safeChecks.push(
+        'DO NOT attempt to drive in traffic if pedal sinks to floor.',
+        'Test handbrake/emergency brake hold at standstill.',
+        'Inspect brake fluid reservoir level under the hood (between MIN and MAX markings).'
+      );
+      safetyWarnings.push('Driving with compromised hydraulic brakes presents an immediate danger to life. Professional towing or on-site bleeding required.');
+      estParts += 400;
+    } else if (pt === 'fuel_problem' || descLower.includes('fuel') || descLower.includes('petrol') || descLower.includes('diesel')) {
+      possibleCauses.push(
+        'Fuel starvation / empty tank due to faulty fuel sender float',
+        'Fuel pump relay or in-tank pump strainer clogging'
+      );
+      safeChecks.push(
+        'Check fuel gauge indicator with ignition turned on.',
+        'Look around vehicle for any strong smell of spilled fuel or ruptured lines.'
+      );
+      safetyWarnings.push('Do not smoke, vape, or produce sparks near the fuel filler neck.');
+      estParts += 300; // fuel cost
+    } else if (pt === 'vehicle_wont_start') {
+      possibleCauses.push(
+        'Starter motor relay or ignition coil circuit failure',
+        'Fuel pump failure preventing engine combustion',
+        'Neutral safety switch or clutch interlock switch sensor open'
+      );
+      safeChecks.push(
+        'Check battery voltage and observe dashboard warning indicators.',
+        'Ensure vehicle transmission is firmly in Park / Neutral.'
+      );
+    } else if (pt === 'electrical_problem') {
+      possibleCauses.push(
+        'Blown primary main fuse or fusebox relay fault',
+        'Damaged or shorted wiring harness',
+        'Alternator diode bridge failure'
+      );
+      safeChecks.push(
+        'Inspect the main under-hood fuse box for blown fuses.',
+        'Disconnect aftermarket accessories that may cause power draw.'
+      );
+    } else {
+      possibleCauses.push(
+        'Mechanical component fatigue or road vibration loosening fasteners',
+        'Electrical harness contact oxidation or blown fuse',
+        'Fuel / air / ignition timing mismatch'
+      );
+      safeChecks.push(
+        'Ensure vehicle is safely clear of moving road traffic with hazard flashers on.',
+        'Check fluid levels (oil, coolant) if safe to open engine bay.'
+      );
+    }
+  });
 
   // Adjust for vehicle type
   if (vehicleType === 'bike' || vehicleType === 'scooter') {
-    requiredEquipment.push('Motorcycle Paddock / Center Stand Tool', 'Compact Spoke / Hex Key Set');
+    requiredEquipmentSet.add('Motorcycle Paddock / Center Stand Tool');
+    requiredEquipmentSet.add('Compact Spoke / Hex Key Set');
     baseLabour = Math.round(baseLabour * 0.75);
   } else if (vehicleType === 'suv' || vehicleType === 'van') {
-    requiredEquipment.push('Heavy Duty 3-Ton Hydraulic Trolley Jack', 'High-Torque Telescopic Lug Wrench');
+    requiredEquipmentSet.add('Heavy Duty 3-Ton Hydraulic Trolley Jack');
+    requiredEquipmentSet.add('High-Torque Telescopic Lug Wrench');
     baseLabour = Math.round(baseLabour * 1.2);
   }
 
   // Image analysis tags if provided
   let imageAnalysisResult = undefined;
   if (imageDataUri) {
-    imageAnalysisResult = analyzeBreakdownImage(imageDataUri, problemType);
+    imageAnalysisResult = analyzeBreakdownImage(imageDataUri, primaryProblem);
   }
 
-  const baseService = catalogEntry.basePrice;
   const travel = 60;
-  const labour = baseLabour;
+  const labour = Math.max(150, baseLabour);
   const parts = estParts;
   const totalMin = baseService + travel + labour + parts;
   const totalMax = Math.round(totalMin * 1.35);
 
+  const problemLabels = catalogEntries.map(e => e.label).join(' & ');
+  const recommendedServices = catalogEntries.map(e => e.recommendedService).join(' + ');
+
   return {
     id: `diag-${Date.now()}`,
-    problemType,
-    problemTitle: `${catalogEntry.label} on ${vehicleMake || ''} ${vehicleModel || vehicleType.toUpperCase()}`.trim(),
-    possibleCauses,
+    problemType: primaryProblem,
+    problemTypes: selectedTypes,
+    problemTitle: `${problemLabels} on ${vehicleMake || ''} ${vehicleModel || vehicleType.toUpperCase()}`.trim(),
+    possibleCauses: Array.from(new Set(possibleCauses)),
     severity,
-    recommendedService: catalogEntry.recommendedService,
-    requiredEquipment: Array.from(new Set(requiredEquipment)),
+    recommendedService: recommendedServices,
+    requiredEquipment: Array.from(requiredEquipmentSet),
     estimatedCost: {
       baseService,
       travel,
@@ -146,9 +214,9 @@ export function performAIDiagnosis(input: DiagnosisInput): AIDiagnosis {
       totalMin,
       totalMax
     },
-    estimatedTimeMinutes: estTime,
-    safeChecks,
-    safetyWarning,
+    estimatedTimeMinutes: Math.max(25, estTime),
+    safeChecks: Array.from(new Set(safeChecks)),
+    safetyWarning: safetyWarnings.length > 0 ? safetyWarnings.join(' ') : undefined,
     disclaimer: 'AI-generated assessment based on reported symptoms — verified on-site by certified RoadRescue mechanic.',
     imageAnalysisResult
   };

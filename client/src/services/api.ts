@@ -90,7 +90,8 @@ export const api = {
     customerLat: number;
     customerLng: number;
     vehicleType: string;
-    problemType: string;
+    problemType?: string;
+    problemTypes?: string[];
     requiredEquipment: string[];
   }) =>
     fetchJson<{ success: boolean; matches: MechanicMatchResult[] }>('/mechanics/match', {
@@ -151,7 +152,8 @@ export const api = {
 
   // AI
   diagnose: (payload: {
-    problemType: string;
+    problemType?: string;
+    problemTypes?: string[];
     description: string;
     vehicleType: string;
     vehicleMake?: string;

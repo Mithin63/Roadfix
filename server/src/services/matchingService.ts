@@ -28,10 +28,15 @@ export function findMatchingMechanics(params: {
   customerLng: number;
   vehicleType: VehicleCategory;
   problemType: BreakdownProblem;
+  problemTypes?: BreakdownProblem[];
   requiredEquipment: string[];
 }): MechanicMatchResult[] {
-  const { customerLat, customerLng, vehicleType, problemType, requiredEquipment } = params;
+  const { customerLat, customerLng, vehicleType, problemType, problemTypes, requiredEquipment } = params;
   const allMechanics = db.getAllMechanics();
+
+  const selectedProblems: BreakdownProblem[] = (problemTypes && problemTypes.length > 0)
+    ? problemTypes
+    : [problemType || 'other'];
 
   const results: MechanicMatchResult[] = [];
 
@@ -57,8 +62,8 @@ export function findMatchingMechanics(params: {
       ? matchedEquipment.length / requiredEquipment.length
       : 1;
 
-    // Skill match
-    const problemKeywords = problemType.split('_');
+    // Skill match across all selected problems
+    const problemKeywords = selectedProblems.flatMap(pt => pt.split('_'));
     const matchedSkills = profile.skills.filter(skill =>
       problemKeywords.some(kw => skill.toLowerCase().includes(kw))
     );

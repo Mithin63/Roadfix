@@ -76,6 +76,7 @@ export type BreakdownProblem =
 export interface AIDiagnosis {
   id: string;
   problemType: BreakdownProblem;
+  problemTypes?: BreakdownProblem[];
   problemTitle: string;
   possibleCauses: string[];
   severity: 'low' | 'medium' | 'high' | 'critical';
@@ -160,6 +161,7 @@ export interface Booking {
     fuelType: FuelCategory;
   };
   problemType: BreakdownProblem;
+  problemTypes?: BreakdownProblem[];
   problemDescription: string;
   voiceNoteUrl?: string;
   mediaUrls: string[];

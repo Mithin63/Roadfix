@@ -1,6 +1,6 @@
 import { Router, Request, Response } from 'express';
 import { db, calculateDistanceKm } from '../services/db';
-import { Booking, BookingStatus, SparePart, AdditionalCharge } from '../types';
+import { Booking, BookingStatus, SparePart, AdditionalCharge, BreakdownProblem } from '../types';
 
 const router = Router();
 
@@ -45,6 +45,7 @@ router.post('/', (req: Request, res: Response) => {
     mechanicId,
     vehicleId,
     problemType,
+    problemTypes,
     problemDescription,
     voiceNoteUrl,
     mediaUrls,
@@ -54,9 +55,12 @@ router.post('/', (req: Request, res: Response) => {
     aiDiagnosis
   } = req.body;
 
-  if (!customerId || !mechanicId || !vehicleId || !problemType || !customerLat || !customerLng) {
+  if (!customerId || !mechanicId || !vehicleId || (!problemType && (!problemTypes || problemTypes.length === 0)) || !customerLat || !customerLng) {
     return res.status(400).json({ success: false, message: 'Missing required booking information' });
   }
+
+  const resolvedProblemType = (problemType || (problemTypes && problemTypes[0]) || 'other') as BreakdownProblem;
+  const resolvedProblemTypes = Array.isArray(problemTypes) ? problemTypes : [resolvedProblemType];
 
   const customer = db.getUser(customerId);
   const mechanic = db.getUser(mechanicId);
@@ -102,7 +106,8 @@ router.post('/', (req: Request, res: Response) => {
       regNo: vehicle.regNo,
       fuelType: vehicle.fuelType
     },
-    problemType,
+    problemType: resolvedProblemType,
+    problemTypes: resolvedProblemTypes,
     problemDescription: problemDescription || 'Roadside breakdown assistance requested',
     voiceNoteUrl,
     mediaUrls: Array.isArray(mediaUrls) ? mediaUrls : [],
