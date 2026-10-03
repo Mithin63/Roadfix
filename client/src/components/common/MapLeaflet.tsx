@@ -81,7 +81,7 @@ export const MapLeaflet: React.FC<MapLeafletProps> = ({
 
   // Update center when center prop changes
   useEffect(() => {
-    if (mapInstanceRef.current && center) {
+    if (mapInstanceRef.current && center && center[0] && center[1]) {
       mapInstanceRef.current.setView(center, zoom);
       setTimeout(() => {
         if (mapInstanceRef.current) {
@@ -124,7 +124,7 @@ export const MapLeaflet: React.FC<MapLeafletProps> = ({
     };
 
     // 1. Customer Marker
-    if (customerPoint) {
+    if (customerPoint && customerPoint.lat && customerPoint.lng) {
       bounds.push([customerPoint.lat, customerPoint.lng]);
       const customerIcon = createCustomIcon(
         '#ef4444',
@@ -135,16 +135,16 @@ export const MapLeaflet: React.FC<MapLeafletProps> = ({
       const marker = L.marker([customerPoint.lat, customerPoint.lng], { icon: customerIcon });
       marker.bindPopup(`
         <div style="padding: 4px;">
-          <div style="font-weight: 700; color: #f87171; font-size: 13px;">📍 Customer Location</div>
+          <div style="font-weight: 700; color: #f87171; font-size: 13px;">📍 Breakdown / Customer Site</div>
           <div style="font-weight: 600; font-size: 13px; color: #f1f5f9; margin-top: 2px;">${customerPoint.title || 'Your Vehicle'}</div>
-          <div style="font-size: 11px; color: #94a3b8; margin-top: 2px;">${customerPoint.subtitle || 'Reported breakdown site'}</div>
+          <div style="font-size: 11px; color: #94a3b8; margin-top: 2px;">${customerPoint.subtitle || 'Reported breakdown coordinates'}</div>
         </div>
       `);
       layer.addLayer(marker);
     }
 
     // 2. Mechanic Marker
-    if (mechanicPoint) {
+    if (mechanicPoint && mechanicPoint.lat && mechanicPoint.lng) {
       bounds.push([mechanicPoint.lat, mechanicPoint.lng]);
       const mechanicIcon = createCustomIcon(
         '#f59e0b',
@@ -165,33 +165,34 @@ export const MapLeaflet: React.FC<MapLeafletProps> = ({
 
     // 3. Nearby mechanics
     nearbyPoints.forEach(p => {
-      bounds.push([p.lat, p.lng]);
-      const icon = L.divIcon({
-        className: 'nearby-marker',
-        html: `
-          <div style="width: 28px; height: 28px; border-radius: 9999px; background: #0284c7; border: 2px solid #38bdf8; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 6px rgba(0,0,0,0.4);">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
-          </div>
-        `,
-        iconSize: [28, 28],
-        iconAnchor: [14, 14],
-        popupAnchor: [0, -14]
-      });
+      if (p.lat && p.lng) {
+        bounds.push([p.lat, p.lng]);
+        const icon = L.divIcon({
+          className: 'nearby-marker',
+          html: `
+            <div style="width: 28px; height: 28px; border-radius: 9999px; background: #0284c7; border: 2px solid #38bdf8; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 6px rgba(0,0,0,0.4);">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+            </div>
+          `,
+          iconSize: [28, 28],
+          iconAnchor: [14, 14],
+          popupAnchor: [0, -14]
+        });
 
-      const m = L.marker([p.lat, p.lng], { icon });
-      m.bindPopup(`
-        <div style="padding: 4px;">
-          <div style="font-weight: 700; color: #38bdf8; font-size: 12px;">Nearby Available Mechanic</div>
-          <div style="font-weight: 600; font-size: 13px; color: #f1f5f9; margin-top: 2px;">${p.title || 'Mechanic Workshop'}</div>
-          <div style="font-size: 11px; color: #94a3b8; margin-top: 2px;">${p.subtitle || 'Available for emergency dispatch'}</div>
-        </div>
-      `);
-      layer.addLayer(m);
+        const m = L.marker([p.lat, p.lng], { icon });
+        m.bindPopup(`
+          <div style="padding: 4px;">
+            <div style="font-weight: 700; color: #38bdf8; font-size: 12px;">Nearby Available Mechanic</div>
+            <div style="font-weight: 600; font-size: 13px; color: #f1f5f9; margin-top: 2px;">${p.title || 'Mechanic Workshop'}</div>
+            <div style="font-size: 11px; color: #94a3b8; margin-top: 2px;">${p.subtitle || 'Available for emergency dispatch'}</div>
+          </div>
+        `);
+        layer.addLayer(m);
+      }
     });
 
     // 4. Route Polyline if both customer and mechanic exist
     if (showRoute && customerPoint && mechanicPoint) {
-      // Simulate realistic route bends between the two points
       const p1: [number, number] = [mechanicPoint.lat, mechanicPoint.lng];
       const p2: [number, number] = [
         (mechanicPoint.lat * 2 + customerPoint.lat) / 3 + 0.002,
@@ -215,11 +216,13 @@ export const MapLeaflet: React.FC<MapLeafletProps> = ({
       routeLineRef.current = routeLine;
     }
 
-    // Auto fit bounds if multiple points
+    // Auto fit bounds or set view
     if (bounds.length > 1) {
       map.fitBounds(bounds as L.LatLngBoundsExpression, { padding: [40, 40], maxZoom: 16 });
+    } else if (bounds.length === 1 && customerPoint) {
+      map.setView([customerPoint.lat, customerPoint.lng], zoom);
     }
-  }, [customerPoint, mechanicPoint, nearbyPoints, showRoute]);
+  }, [customerPoint?.lat, customerPoint?.lng, mechanicPoint?.lat, mechanicPoint?.lng, nearbyPoints, showRoute, zoom]);
 
   // Cleanup on unmount
   useEffect(() => {

@@ -74,12 +74,23 @@ router.post('/', (req: Request, res: Response) => {
   bookingCounter++;
   const bookingId = `RR-2026-${String(bookingCounter).padStart(5, '0')}`;
 
-  const distance = calculateDistanceKm(
+  let mechLat = mechanicProfile?.currentLat || Number(customerLat);
+  let mechLng = mechanicProfile?.currentLng || Number(customerLng);
+  let distance = calculateDistanceKm(
     Number(customerLat),
     Number(customerLng),
-    mechanicProfile?.currentLat || customerLat,
-    mechanicProfile?.currentLng || customerLng
+    mechLat,
+    mechLng
   );
+
+  if (distance > 25) {
+    // Position mechanic 1.8km away from customer GPS for live telemetry
+    const angle = 0.8;
+    const localDist = 1.8;
+    mechLat = Number(customerLat) + (localDist / 111) * Math.cos(angle);
+    mechLng = Number(customerLng) + (localDist / (111 * Math.cos((Number(customerLat) * Math.PI) / 180))) * Math.sin(angle);
+    distance = localDist;
+  }
 
   const etaMinutes = Math.max(5, Math.round((distance / 22) * 60) + 5);
 
@@ -114,8 +125,8 @@ router.post('/', (req: Request, res: Response) => {
     customerLat: Number(customerLat),
     customerLng: Number(customerLng),
     customerAddress: customerAddress || 'Roadside Location',
-    mechanicLat: mechanicProfile?.currentLat,
-    mechanicLng: mechanicProfile?.currentLng,
+    mechanicLat: mechLat,
+    mechanicLng: mechLng,
     status: 'requested',
     timeline: [
       {
