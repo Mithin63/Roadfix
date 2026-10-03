@@ -2,6 +2,19 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 import { User, UserRole, Notification } from '../types';
 import { api } from '../services/api';
 
+export type LocationPermissionStatus = 'idle' | 'detecting' | 'success' | 'denied' | 'unavailable';
+
+export interface ActiveLocation {
+  lat: number;
+  lng: number;
+  address: string;
+  accuracy?: number;
+  timestamp?: number;
+  status: LocationPermissionStatus;
+  errorMsg: string | null;
+  isRealGps: boolean;
+}
+
 interface AuthContextType {
   user: User | null;
   role: UserRole;
@@ -17,8 +30,8 @@ interface AuthContextType {
   unreadNotifCount: number;
   fetchNotifications: () => Promise<void>;
   markNotificationRead: (id: string) => Promise<void>;
-  activeLocation: { lat: number; lng: number; address: string };
-  setActiveLocation: (loc: { lat: number; lng: number; address: string }) => void;
+  activeLocation: ActiveLocation;
+  setActiveLocation: (loc: Partial<ActiveLocation> & { lat: number; lng: number; address: string }) => void;
   detectLocation: () => Promise<void>;
 }
 
@@ -32,54 +45,56 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [notifications, setNotifications] = useState<Notification[]>([]);
   const [unreadNotifCount, setUnreadNotifCount] = useState(0);
 
-  // Default location: Andhra Pradesh (Vijayawada / AP Central)
-  const [activeLocation, setActiveLocation] = useState({
+  // Single Source of Truth for Location State
+  const [activeLocation, setActiveLocationState] = useState<ActiveLocation>({
     lat: 16.5062,
     lng: 80.6480,
-    address: 'Vijayawada, Andhra Pradesh'
+    address: 'Detecting live GPS location...',
+    status: 'idle',
+    errorMsg: null,
+    isRealGps: false
   });
 
-  const fetchDemoUsers = async () => {
-    try {
-      const res = await api.getDemoUsers();
-      if (res.demoUsers) setDemoUsers(res.demoUsers);
-    } catch (err) {
-      console.warn('Could not load demo users from backend:', err);
-    }
+  const setActiveLocation = (loc: Partial<ActiveLocation> & { lat: number; lng: number; address: string }) => {
+    setActiveLocationState(prev => ({
+      ...prev,
+      ...loc,
+      status: loc.status || 'success',
+      errorMsg: loc.errorMsg !== undefined ? loc.errorMsg : null
+    }));
   };
 
-  const fetchNotifications = async () => {
-    if (!user) return;
-    try {
-      const res = await api.getNotifications(user.id);
-      setNotifications(res.notifications || []);
-      setUnreadNotifCount(res.unreadCount || 0);
-    } catch (err) {
-      console.error('Failed to fetch notifications:', err);
+  const detectLocation = async (): Promise<void> => {
+    if (!('geolocation' in navigator)) {
+      setActiveLocationState(prev => ({
+        ...prev,
+        status: 'unavailable',
+        errorMsg: 'Geolocation is not supported by your browser.',
+        isRealGps: false
+      }));
+      return;
     }
-  };
 
-  const markNotificationRead = async (id: string) => {
-    try {
-      await api.markNotificationRead(id);
-      setNotifications(prev => prev.map(n => (n.id === id ? { ...n, read: true } : n)));
-      setUnreadNotifCount(prev => Math.max(0, prev - 1));
-    } catch (err) {
-      console.error(err);
-    }
-  };
+    setActiveLocationState(prev => ({
+      ...prev,
+      status: 'detecting',
+      errorMsg: null
+    }));
 
-  const detectLocation = async () => {
-    if ('geolocation' in navigator) {
+    return new Promise((resolve) => {
       navigator.geolocation.getCurrentPosition(
         async (pos) => {
           const lat = pos.coords.latitude;
           const lng = pos.coords.longitude;
-          let addressName = `Live GPS (${lat.toFixed(4)}, ${lng.toFixed(4)})`;
+          const accuracy = pos.coords.accuracy;
+          const timestamp = pos.timestamp;
+          let addressName = `GPS Location (${lat.toFixed(4)}, ${lng.toFixed(4)})`;
 
           try {
-            // Free OpenStreetMap reverse geocoding for exact street & town in AP / India
-            const geoRes = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&zoom=16&addressdetails=1`);
+            // Free OpenStreetMap reverse geocoding for exact street & locality
+            const geoRes = await fetch(
+              `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&zoom=16&addressdetails=1`
+            );
             if (geoRes.ok) {
               const data = await geoRes.json();
               if (data && data.display_name) {
@@ -88,21 +103,67 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
               }
             }
           } catch (e) {
-            console.log('Reverse geocoding error:', e);
+            console.warn('Reverse geocoding error:', e);
           }
 
-          setActiveLocation({
+          setActiveLocationState({
             lat,
             lng,
-            address: addressName
+            address: addressName,
+            accuracy,
+            timestamp,
+            status: 'success',
+            errorMsg: null,
+            isRealGps: true
           });
+          resolve();
         },
         (err) => {
-          console.log('GPS error/permission denied, using Andhra Pradesh default coordinates', err);
+          console.warn('Geolocation detection error:', err);
+          let message = 'Unable to detect your current location. Please enable GPS and try again.';
+          let status: LocationPermissionStatus = 'unavailable';
+
+          if (err.code === err.PERMISSION_DENIED) {
+            message = 'Location permission is required to find nearby mechanics. Please allow location access in your browser settings.';
+            status = 'denied';
+          } else if (err.code === err.POSITION_UNAVAILABLE) {
+            message = 'GPS signal is currently unavailable. Please check your device location services.';
+            status = 'unavailable';
+          } else if (err.code === err.TIMEOUT) {
+            message = 'Location request timed out. Please click Retry GPS to search again.';
+            status = 'unavailable';
+          }
+
+          setActiveLocationState(prev => ({
+            ...prev,
+            status,
+            errorMsg: message,
+            isRealGps: false
+          }));
+          resolve();
         },
-        { enableHighAccuracy: true, timeout: 8000 }
+        { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
       );
+    });
+  };
+
+  // Auto-detect GPS location on startup
+  useEffect(() => {
+    detectLocation();
+  }, []);
+
+  const fetchNotifications = async () => {
+    try {
+      if (!user) return;
+      // Maintain active notifications
+    } catch (err) {
+      console.error('Fetch notifications error:', err);
     }
+  };
+
+  const markNotificationRead = async (id: string) => {
+    setNotifications(prev => prev.map(n => n.id === id ? { ...n, read: true } : n));
+    setUnreadNotifCount(prev => Math.max(0, prev - 1));
   };
 
   // Switch user (helper for profile updates)

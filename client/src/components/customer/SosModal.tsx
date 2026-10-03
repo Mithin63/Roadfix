@@ -29,6 +29,17 @@ export const SosModal: React.FC<SosModalProps> = ({ isOpen, onClose }) => {
   const [newContact, setNewContact] = useState({ name: '', phone: '', relationship: 'Family' });
 
   useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isOpen]);
+
+  useEffect(() => {
     if (user && isOpen) {
       api.getEmergencyContacts(user.id).then(res => setContacts(res.contacts || []));
     }

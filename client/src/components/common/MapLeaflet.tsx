@@ -66,11 +66,16 @@ export const MapLeaflet: React.FC<MapLeafletProps> = ({
           onLocationSelect(e.latlng.lat, e.latlng.lng);
         }
       });
+
+      setTimeout(() => {
+        if (mapInstanceRef.current) {
+          mapInstanceRef.current.invalidateSize();
+        }
+      }, 250);
     }
 
     return () => {
-      // Don't fully destroy to avoid re-creation flickering on state updates,
-      // cleanup on unmount handled below
+      // Cleanup handled on unmount
     };
   }, []);
 
@@ -78,6 +83,11 @@ export const MapLeaflet: React.FC<MapLeafletProps> = ({
   useEffect(() => {
     if (mapInstanceRef.current && center) {
       mapInstanceRef.current.setView(center, zoom);
+      setTimeout(() => {
+        if (mapInstanceRef.current) {
+          mapInstanceRef.current.invalidateSize();
+        }
+      }, 100);
     }
   }, [center[0], center[1], zoom]);
 

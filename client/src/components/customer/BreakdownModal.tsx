@@ -41,6 +41,8 @@ import {
   Volume2
 } from 'lucide-react';
 
+import { VehicleFormFields, VehicleFormData } from '../common/VehicleFormFields';
+
 interface BreakdownModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -66,17 +68,17 @@ export const BreakdownModal: React.FC<BreakdownModalProps> = ({
     lng: activeLocation.lng
   });
 
-  // Step 2: Vehicle
+  // Step 2: Vehicle (Starts blank with auto-suggestions)
   const [vehicles, setVehicles] = useState<Vehicle[]>([]);
   const [selectedVehicleId, setSelectedVehicleId] = useState<string>('');
   const [showAddVehicle, setShowAddVehicle] = useState(false);
-  const [newVehicle, setNewVehicle] = useState({
-    type: 'car' as VehicleCategory,
+  const [newVehicle, setNewVehicle] = useState<VehicleFormData>({
+    type: '',
     make: '',
     model: '',
-    year: 2023,
+    year: '',
     regNo: '',
-    fuelType: 'petrol' as FuelCategory,
+    fuelType: '',
     color: 'White'
   });
 
@@ -108,6 +110,14 @@ export const BreakdownModal: React.FC<BreakdownModalProps> = ({
   // Step 6: Confirmation
   const [isSubmittingBooking, setIsSubmittingBooking] = useState(false);
 
+  // Sync coords if activeLocation changes
+  useEffect(() => {
+    if (activeLocation.lat && activeLocation.lng) {
+      setCoords({ lat: activeLocation.lat, lng: activeLocation.lng });
+      setLocationAddress(activeLocation.address);
+    }
+  }, [activeLocation]);
+
   // Clean up speech recognition on modal close or unmount
   useEffect(() => {
     return () => {
@@ -120,6 +130,18 @@ export const BreakdownModal: React.FC<BreakdownModalProps> = ({
       }
     };
   }, []);
+
+  // Lock body scroll when modal is open to prevent duplicate scrolling (Issue 1)
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isOpen]);
 
   // Load customer's vehicles
   useEffect(() => {
@@ -144,14 +166,29 @@ export const BreakdownModal: React.FC<BreakdownModalProps> = ({
 
   const handleAddNewVehicle = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!user || !newVehicle.make || !newVehicle.model || !newVehicle.regNo) return;
+    if (!user || !newVehicle.type || !newVehicle.make || !newVehicle.model || !newVehicle.regNo) return;
     try {
       const res = await api.addVehicle({
-        ...newVehicle,
+        type: newVehicle.type as VehicleCategory,
+        make: newVehicle.make,
+        model: newVehicle.model,
+        year: newVehicle.year || new Date().getFullYear(),
+        regNo: newVehicle.regNo.toUpperCase(),
+        fuelType: (newVehicle.fuelType || 'petrol') as FuelCategory,
+        color: newVehicle.color || 'White',
         customerId: user.id
       });
       setVehicles(prev => [...prev, res.vehicle]);
       setSelectedVehicleId(res.vehicle.id);
+      setNewVehicle({
+        type: '',
+        make: '',
+        model: '',
+        year: '',
+        regNo: '',
+        fuelType: '',
+        color: 'White'
+      });
       setShowAddVehicle(false);
     } catch (err) {
       console.error(err);
@@ -542,80 +579,26 @@ export const BreakdownModal: React.FC<BreakdownModalProps> = ({
 
               {/* Add New Vehicle Form */}
               {showAddVehicle && (
-                <form onSubmit={handleAddNewVehicle} className="p-4 rounded-2xl bg-slate-950/80 border border-slate-800 space-y-3">
-                  <h4 className="text-xs font-bold uppercase text-amber-400">Add Vehicle Details</h4>
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                    <div>
-                      <label className="text-[11px] text-slate-400">Vehicle Type</label>
-                      <select
-                        value={newVehicle.type}
-                        onChange={(e) => setNewVehicle({ ...newVehicle, type: e.target.value as any })}
-                        className="w-full mt-1 px-3 py-2 rounded-lg bg-slate-900 border border-slate-700 text-xs text-white"
-                      >
-                        <option value="bike">Bike</option>
-                        <option value="scooter">Scooter</option>
-                        <option value="car">Car (Hatchback/Sedan)</option>
-                        <option value="suv">SUV</option>
-                        <option value="auto">Auto Rickshaw</option>
-                        <option value="van">Van</option>
-                        <option value="other">Other</option>
-                      </select>
-                    </div>
-                    <div>
-                      <label className="text-[11px] text-slate-400">Manufacturer / Make</label>
-                      <input
-                        type="text"
-                        placeholder="e.g. Hyundai, Honda, Tata"
-                        value={newVehicle.make}
-                        onChange={(e) => setNewVehicle({ ...newVehicle, make: e.target.value })}
-                        className="w-full mt-1 px-3 py-2 rounded-lg bg-slate-900 border border-slate-700 text-xs text-white"
-                        required
-                      />
-                    </div>
-                    <div>
-                      <label className="text-[11px] text-slate-400">Model</label>
-                      <input
-                        type="text"
-                        placeholder="e.g. Creta, Activa, Nexon"
-                        value={newVehicle.model}
-                        onChange={(e) => setNewVehicle({ ...newVehicle, model: e.target.value })}
-                        className="w-full mt-1 px-3 py-2 rounded-lg bg-slate-900 border border-slate-700 text-xs text-white"
-                        required
-                      />
-                    </div>
-                    <div>
-                      <label className="text-[11px] text-slate-400">Registration Number</label>
-                      <input
-                        type="text"
-                        placeholder="e.g. MH 02 AB 1234"
-                        value={newVehicle.regNo}
-                        onChange={(e) => setNewVehicle({ ...newVehicle, regNo: e.target.value.toUpperCase() })}
-                        className="w-full mt-1 px-3 py-2 rounded-lg bg-slate-900 border border-slate-700 text-xs text-white uppercase font-mono"
-                        required
-                      />
-                    </div>
-                    <div>
-                      <label className="text-[11px] text-slate-400">Fuel Type</label>
-                      <select
-                        value={newVehicle.fuelType}
-                        onChange={(e) => setNewVehicle({ ...newVehicle, fuelType: e.target.value as any })}
-                        className="w-full mt-1 px-3 py-2 rounded-lg bg-slate-900 border border-slate-700 text-xs text-white"
-                      >
-                        <option value="petrol">Petrol</option>
-                        <option value="diesel">Diesel</option>
-                        <option value="electric">Electric (EV)</option>
-                        <option value="cng">CNG</option>
-                        <option value="hybrid">Hybrid</option>
-                      </select>
-                    </div>
-                    <div className="flex items-end">
-                      <button
-                        type="submit"
-                        className="w-full py-2 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs transition-colors"
-                      >
-                        Save & Select
-                      </button>
-                    </div>
+                <form onSubmit={handleAddNewVehicle} className="p-4 rounded-2xl bg-slate-950/80 border border-slate-800 space-y-4">
+                  <div className="flex items-center justify-between">
+                    <h4 className="text-xs font-bold uppercase text-amber-400">Add Vehicle Details</h4>
+                    <span className="text-[11px] text-slate-500">Auto-suggestions enabled</span>
+                  </div>
+
+                  <VehicleFormFields
+                    data={newVehicle}
+                    onChange={setNewVehicle}
+                    compact={true}
+                  />
+
+                  <div className="flex justify-end pt-2">
+                    <button
+                      type="submit"
+                      disabled={!newVehicle.type || !newVehicle.make || !newVehicle.model || !newVehicle.regNo}
+                      className="px-5 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 disabled:opacity-50 disabled:cursor-not-allowed text-slate-950 font-bold text-xs transition-colors shadow-lg shadow-amber-500/20"
+                    >
+                      Save & Select Vehicle
+                    </button>
                   </div>
                 </form>
               )}

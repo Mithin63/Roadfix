@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { api } from '../../services/api';
 import { Booking, BookingStatus, SparePart } from '../../types';
-import { MapLeaflet } from '../common/MapLeaflet';
 import {
   Wrench,
   Navigation,

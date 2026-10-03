@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { api } from '../../services/api';
-import { Vehicle, VehicleCategory, FuelCategory } from '../../types';
+import { Vehicle } from '../../types';
+import { VehicleFormFields, VehicleFormData } from '../common/VehicleFormFields';
 import { Car, Plus, Trash2, Calendar, Gauge, Fuel, ArrowLeft } from 'lucide-react';
 
 interface VehiclesViewProps {
@@ -13,15 +14,14 @@ export const VehiclesView: React.FC<VehiclesViewProps> = ({ onBack }) => {
   const [vehicles, setVehicles] = useState<Vehicle[]>([]);
   const [loading, setLoading] = useState(true);
   const [showAdd, setShowAdd] = useState(false);
-  const [newVehicle, setNewVehicle] = useState({
-    type: 'car' as VehicleCategory,
+  const [newVehicle, setNewVehicle] = useState<VehicleFormData>({
+    type: '',
     make: '',
     model: '',
-    year: 2023,
+    year: '',
     regNo: '',
-    fuelType: 'petrol' as FuelCategory,
-    color: 'White',
-    odometerKm: 15000
+    fuelType: '',
+    color: 'White'
   });
 
   const fetchVehicles = async () => {
@@ -43,11 +43,26 @@ export const VehiclesView: React.FC<VehiclesViewProps> = ({ onBack }) => {
 
   const handleAdd = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!user || !newVehicle.make || !newVehicle.model || !newVehicle.regNo) return;
+    if (!user || !newVehicle.type || !newVehicle.make || !newVehicle.model || !newVehicle.regNo) return;
     try {
       await api.addVehicle({
-        ...newVehicle,
+        type: newVehicle.type,
+        make: newVehicle.make,
+        model: newVehicle.model,
+        year: newVehicle.year || new Date().getFullYear(),
+        regNo: newVehicle.regNo.toUpperCase(),
+        fuelType: newVehicle.fuelType || 'petrol',
+        color: newVehicle.color || 'White',
         customerId: user.id
+      });
+      setNewVehicle({
+        type: '',
+        make: '',
+        model: '',
+        year: '',
+        regNo: '',
+        fuelType: '',
+        color: 'White'
       });
       setShowAdd(false);
       fetchVehicles();
@@ -97,87 +112,22 @@ export const VehiclesView: React.FC<VehiclesViewProps> = ({ onBack }) => {
 
       {showAdd && (
         <form onSubmit={handleAdd} className="p-5 rounded-2xl bg-slate-900 border border-slate-700 space-y-4">
-          <h3 className="text-sm font-bold text-white">Add New Vehicle</h3>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
-            <div>
-              <label className="text-slate-400 block mb-1">Vehicle Type</label>
-              <select
-                value={newVehicle.type}
-                onChange={(e) => setNewVehicle({ ...newVehicle, type: e.target.value as any })}
-                className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-700 text-white"
-              >
-                <option value="bike">Bike / Motorcycle</option>
-                <option value="scooter">Scooter / Moped</option>
-                <option value="car">Car (Sedan/Hatchback)</option>
-                <option value="suv">SUV</option>
-                <option value="auto">Auto Rickshaw</option>
-                <option value="van">Van</option>
-                <option value="other">Other</option>
-              </select>
-            </div>
-            <div>
-              <label className="text-slate-400 block mb-1">Make / Brand</label>
-              <input
-                type="text"
-                placeholder="e.g. Hyundai, Honda, Tata"
-                value={newVehicle.make}
-                onChange={(e) => setNewVehicle({ ...newVehicle, make: e.target.value })}
-                className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-700 text-white"
-                required
-              />
-            </div>
-            <div>
-              <label className="text-slate-400 block mb-1">Model</label>
-              <input
-                type="text"
-                placeholder="e.g. Creta, Activa, Nexon"
-                value={newVehicle.model}
-                onChange={(e) => setNewVehicle({ ...newVehicle, model: e.target.value })}
-                className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-700 text-white"
-                required
-              />
-            </div>
-            <div>
-              <label className="text-slate-400 block mb-1">Registration Number</label>
-              <input
-                type="text"
-                placeholder="e.g. MH 02 AB 1234"
-                value={newVehicle.regNo}
-                onChange={(e) => setNewVehicle({ ...newVehicle, regNo: e.target.value.toUpperCase() })}
-                className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-700 text-white uppercase font-mono"
-                required
-              />
-            </div>
-            <div>
-              <label className="text-slate-400 block mb-1">Fuel Type</label>
-              <select
-                value={newVehicle.fuelType}
-                onChange={(e) => setNewVehicle({ ...newVehicle, fuelType: e.target.value as any })}
-                className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-700 text-white"
-              >
-                <option value="petrol">Petrol</option>
-                <option value="diesel">Diesel</option>
-                <option value="electric">Electric (EV)</option>
-                <option value="cng">CNG</option>
-                <option value="hybrid">Hybrid</option>
-              </select>
-            </div>
-            <div>
-              <label className="text-slate-400 block mb-1">Odometer (km)</label>
-              <input
-                type="number"
-                value={newVehicle.odometerKm}
-                onChange={(e) => setNewVehicle({ ...newVehicle, odometerKm: Number(e.target.value) })}
-                className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-700 text-white"
-              />
-            </div>
+          <div className="flex items-center justify-between">
+            <h3 className="text-sm font-bold text-white">Add New Vehicle Details</h3>
+            <span className="text-[11px] text-slate-400">Searchable dropdowns • starts blank</span>
           </div>
-          <div className="flex justify-end gap-2 pt-2">
+          <VehicleFormFields
+            data={newVehicle}
+            onChange={setNewVehicle}
+            required={true}
+          />
+          <div className="flex justify-end pt-2">
             <button
               type="submit"
-              className="px-5 py-2 rounded-xl bg-amber-500 font-bold text-xs text-slate-950"
+              disabled={!newVehicle.type || !newVehicle.make || !newVehicle.model || !newVehicle.regNo}
+              className="px-6 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 disabled:opacity-50 text-slate-950 font-bold text-xs shadow-md transition-colors"
             >
-              Save Vehicle
+              Save Vehicle to Garage
             </button>
           </div>
         </form>

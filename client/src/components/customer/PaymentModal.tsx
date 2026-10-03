@@ -42,6 +42,17 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({
   const [paymentSuccess, setPaymentSuccess] = useState(false);
 
   useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isOpen]);
+
+  useEffect(() => {
     if (bookingId && isOpen) {
       setLoading(true);
       api.getBooking(bookingId)

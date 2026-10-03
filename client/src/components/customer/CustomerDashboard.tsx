@@ -125,15 +125,61 @@ export const CustomerDashboard: React.FC<CustomerDashboardProps> = ({
           <button
             type="button"
             onClick={detectLocation}
-            className="flex items-center gap-2 px-3.5 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700 hover:border-amber-500/50 text-xs text-slate-200 transition-colors shadow-md"
+            className={`flex items-center gap-2 px-3.5 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 border transition-colors shadow-md text-xs ${
+              activeLocation.status === 'denied' || activeLocation.status === 'unavailable'
+                ? 'border-red-500/50 text-red-300'
+                : 'border-slate-700 hover:border-amber-500/50 text-slate-200'
+            }`}
             title="Click to detect your exact GPS coordinates"
           >
-            <div className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping" />
-            <span>📍 <strong>{activeLocation.address}</strong></span>
-            <span className="text-[10px] text-amber-400 font-semibold underline ml-1">Refresh GPS</span>
+            <div className={`w-2.5 h-2.5 rounded-full ${
+              activeLocation.status === 'detecting'
+                ? 'bg-amber-400 animate-spin'
+                : activeLocation.status === 'denied' || activeLocation.status === 'unavailable'
+                ? 'bg-red-400'
+                : 'bg-emerald-400 animate-ping'
+            }`} />
+            <span>
+              {activeLocation.status === 'detecting'
+                ? '📍 Detecting your location...'
+                : `📍 ${activeLocation.address}`}
+            </span>
+            <span className="text-[10px] text-amber-400 font-semibold underline ml-1">
+              {activeLocation.status === 'denied' || activeLocation.status === 'unavailable' ? 'Retry GPS' : 'Refresh'}
+            </span>
           </button>
         </div>
       </div>
+
+      {/* GPS Status Alert Banner (When Permission Denied or Unavailable) */}
+      {(activeLocation.status === 'denied' || activeLocation.status === 'unavailable') && (
+        <div className="p-4 rounded-2xl bg-red-500/10 border border-red-500/40 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-lg">
+          <div className="flex items-center gap-3">
+            <div className="w-9 h-9 rounded-xl bg-red-500/20 border border-red-500/40 flex items-center justify-center shrink-0">
+              <AlertTriangle className="w-5 h-5 text-red-400" />
+            </div>
+            <div>
+              <h4 className="text-sm font-bold text-white">
+                {activeLocation.status === 'denied'
+                  ? 'Location access is required to find nearby mechanics'
+                  : 'Unable to detect your current GPS location'}
+              </h4>
+              <p className="text-xs text-slate-300 mt-0.5">
+                {activeLocation.status === 'denied'
+                  ? 'Please allow browser location permissions in your address bar to automatically detect mechanics around you.'
+                  : 'Please ensure device GPS/location services are enabled and try again.'}
+              </p>
+            </div>
+          </div>
+          <button
+            type="button"
+            onClick={detectLocation}
+            className="shrink-0 px-4 py-2 rounded-xl bg-red-500 hover:bg-red-400 text-slate-950 font-bold text-xs transition-colors shadow-md"
+          >
+            Retry Location
+          </button>
+        </div>
+      )}
 
       {/* ACTIVE BOOKING CARD (If any active breakdown) */}
       {activeBooking && (
@@ -279,7 +325,7 @@ export const CustomerDashboard: React.FC<CustomerDashboardProps> = ({
               <h3 className="text-base font-bold text-white">Nearby Mechanics Radar</h3>
             </div>
             <span className="text-xs text-slate-400">
-              {nearbyMechanics.length} active mobile units in Mumbai
+              {nearbyMechanics.length} active mobile units near {activeLocation.address.split(',')[0] || 'your area'}
             </span>
           </div>
 

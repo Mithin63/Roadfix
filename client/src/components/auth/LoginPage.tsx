@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import {
   Wrench,
@@ -23,6 +23,7 @@ import {
   Database
 } from 'lucide-react';
 import { VehicleCategory } from '../../types';
+import { VehicleFormFields, VehicleFormData } from '../common/VehicleFormFields';
 
 interface LoginPageProps {
   onSuccess?: () => void;
@@ -30,7 +31,7 @@ interface LoginPageProps {
 }
 
 export const LoginPage: React.FC<LoginPageProps> = ({ onSuccess, onClose }) => {
-  const { login, register } = useAuth();
+  const { login, register, activeLocation, detectLocation } = useAuth();
 
   const [mode, setMode] = useState<'login' | 'register'>('login');
   const [showPassword, setShowPassword] = useState(false);
@@ -48,22 +49,33 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onSuccess, onClose }) => {
   const [regEmail, setRegEmail] = useState('');
   const [regPhone, setRegPhone] = useState('');
   const [regPassword, setRegPassword] = useState('');
-  const [regAddress, setRegAddress] = useState('Bandra West, Mumbai');
+  const [regAddress, setRegAddress] = useState(activeLocation.isRealGps ? activeLocation.address : '');
 
-  // Customer vehicle fields
-  const [vehicleMake, setVehicleMake] = useState('Hyundai');
-  const [vehicleModel, setVehicleModel] = useState('Creta');
-  const [vehicleType, setVehicleType] = useState<VehicleCategory>('car');
-  const [vehicleRegNo, setVehicleRegNo] = useState('MH 02 EQ 8821');
+  // Customer vehicle fields (Starts completely blank - no hardcoded Hyundai/Creta)
+  const [vehicleData, setVehicleData] = useState<VehicleFormData>({
+    type: '',
+    make: '',
+    model: '',
+    year: '',
+    regNo: '',
+    fuelType: ''
+  });
 
   // Mechanic fields
-  const [workshopName, setWorkshopName] = useState('Roadfix Rapid Mobile Garage');
+  const [workshopName, setWorkshopName] = useState('');
   const [skills, setSkills] = useState<string[]>([
     'Battery Jumpstart',
     'Tyre Puncture & Replacement',
     'Brake Inspection',
     'Coolant & Hose Repair'
   ]);
+
+  // Sync detected location address into registration address when available
+  useEffect(() => {
+    if (activeLocation.isRealGps && !regAddress) {
+      setRegAddress(activeLocation.address);
+    }
+  }, [activeLocation]);
 
   const handleLoginSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -87,6 +99,19 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onSuccess, onClose }) => {
     e.preventDefault();
     setErrorMsg(null);
     setSuccessMsg(null);
+
+    if (regRole === 'customer') {
+      if (!vehicleData.type || !vehicleData.make || !vehicleData.model || !vehicleData.regNo) {
+        setErrorMsg('Please select vehicle type, manufacturer, model, and enter registration number.');
+        return;
+      }
+    }
+
+    if (regRole === 'mechanic' && !workshopName.trim()) {
+      setErrorMsg('Please enter your workshop or mobile service name.');
+      return;
+    }
+
     setLoading(true);
 
     try {
@@ -96,12 +121,16 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onSuccess, onClose }) => {
         phone: regPhone.trim(),
         password: regPassword,
         role: regRole,
-        address: regAddress.trim(),
-        vehicleType,
-        vehicleMake,
-        vehicleModel,
-        vehicleRegNo: vehicleRegNo.toUpperCase(),
-        workshopName,
+        address: regAddress.trim() || activeLocation.address,
+        lat: activeLocation.lat,
+        lng: activeLocation.lng,
+        vehicleType: vehicleData.type || 'car',
+        vehicleMake: vehicleData.make,
+        vehicleModel: vehicleData.model,
+        vehicleYear: vehicleData.year || new Date().getFullYear(),
+        vehicleRegNo: vehicleData.regNo.toUpperCase(),
+        vehicleFuelType: vehicleData.fuelType || 'petrol',
+        workshopName: workshopName.trim(),
         skills
       });
 
@@ -469,49 +498,41 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onSuccess, onClose }) => {
                   </div>
 
                   <div>
-                    <label className="text-[11px] font-bold text-slate-300 block mb-1">Base Location / City</label>
+                    <div className="flex items-center justify-between mb-1">
+                      <label className="text-[11px] font-bold text-slate-300">Current Location / Address</label>
+                      <button
+                        type="button"
+                        onClick={detectLocation}
+                        className="text-[10px] text-amber-400 hover:underline font-semibold flex items-center gap-1"
+                      >
+                        <span>📍 Auto-Detect GPS</span>
+                      </button>
+                    </div>
                     <input
                       type="text"
                       required
-                      placeholder="e.g. Bandra West, Mumbai"
+                      placeholder="Enter city or roadside location (or tap Auto-Detect GPS)"
                       value={regAddress}
                       onChange={(e) => setRegAddress(e.target.value)}
                       className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-700 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-amber-400"
                     />
                   </div>
 
-                  {/* Customer Vehicle Information */}
+                  {/* Customer Vehicle Information (Searchable Suggestions & Starts Blank) */}
                   {regRole === 'customer' && (
-                    <div className="p-3 rounded-2xl bg-slate-950/80 border border-slate-800 space-y-2">
-                      <span className="text-[10px] uppercase font-bold text-amber-400 block tracking-wider">
-                        Primary Vehicle (Saved to Database)
-                      </span>
-                      <div className="grid grid-cols-3 gap-2 text-xs">
-                        <select
-                          value={vehicleType}
-                          onChange={(e) => setVehicleType(e.target.value as any)}
-                          className="px-2 py-1.5 rounded-lg bg-slate-900 border border-slate-700 text-white text-[11px] focus:outline-none focus:border-amber-400"
-                        >
-                          <option value="car">Car</option>
-                          <option value="bike">Bike</option>
-                          <option value="scooter">Scooter</option>
-                          <option value="suv">SUV</option>
-                        </select>
-                        <input
-                          type="text"
-                          placeholder="Make/Model (Creta)"
-                          value={vehicleMake}
-                          onChange={(e) => setVehicleMake(e.target.value)}
-                          className="px-2 py-1.5 rounded-lg bg-slate-900 border border-slate-700 text-white text-[11px] focus:outline-none focus:border-amber-400"
-                        />
-                        <input
-                          type="text"
-                          placeholder="Plate No"
-                          value={vehicleRegNo}
-                          onChange={(e) => setVehicleRegNo(e.target.value.toUpperCase())}
-                          className="px-2 py-1.5 rounded-lg bg-slate-900 border border-slate-700 text-white text-[11px] font-mono focus:outline-none focus:border-amber-400"
-                        />
+                    <div className="p-4 rounded-2xl bg-slate-950/80 border border-slate-800 space-y-3">
+                      <div className="flex items-center justify-between">
+                        <span className="text-[10px] uppercase font-bold text-amber-400 block tracking-wider">
+                          Primary Vehicle Details
+                        </span>
+                        <span className="text-[10px] text-slate-400">Searchable dropdowns</span>
                       </div>
+                      <VehicleFormFields
+                        data={vehicleData}
+                        onChange={setVehicleData}
+                        required={true}
+                        compact={true}
+                      />
                     </div>
                   )}
 

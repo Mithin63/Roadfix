@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { api } from '../../services/api';
 import { User, Booking, Complaint } from '../../types';
-import { MapLeaflet } from '../common/MapLeaflet';
 import {
   BarChart3,
   Users,
