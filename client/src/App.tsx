@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { AuthProvider, useAuth } from './context/AuthContext';
+import { ThemeProvider, useTheme } from './context/ThemeContext';
 import { Navbar } from './components/common/Navbar';
 import { BottomNav } from './components/common/BottomNav';
 import { CustomerDashboard } from './components/customer/CustomerDashboard';
@@ -25,6 +26,7 @@ import { BreakdownProblem } from './types';
 
 const MainAppContent: React.FC = () => {
   const { role, user, isInitializing } = useAuth();
+  const { theme } = useTheme();
 
   // App splash screen animation state
   const [showSplash, setShowSplash] = useState(true);
@@ -129,9 +131,11 @@ const MainAppContent: React.FC = () => {
   }
 
   // 3. AFTER LOGIN: OPEN FULL APPLICATION
+  const isDark = theme === 'dark';
+
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col font-sans selection:bg-amber-500 selection:text-slate-950 relative overflow-x-hidden">
-      {/* Ambient Highway Video Background Layer */}
+    <div className="min-h-screen bg-[var(--bg-main)] text-[var(--text-main)] flex flex-col font-sans selection:bg-[#FFB51B] selection:text-[#080D1C] relative overflow-x-hidden transition-colors duration-200">
+      {/* Ambient Highway Video Background Layer (Uses user-uploaded bgvd video) */}
       <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
         <video
           src="/bg-highway.mp4"
@@ -139,10 +143,22 @@ const MainAppContent: React.FC = () => {
           loop
           muted
           playsInline
-          className="w-full h-full object-cover opacity-45 scale-105"
+          className="w-full h-full object-cover opacity-50 dark:opacity-40 light:opacity-20 scale-105 transition-opacity duration-300"
         />
-        <div className="absolute inset-0 bg-slate-950/60 backdrop-blur-[1px]" />
-        <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-slate-950/80" />
+        <div 
+          className="absolute inset-0 backdrop-blur-[1px] transition-colors duration-300"
+          style={{
+            backgroundColor: isDark ? 'rgba(8, 13, 28, 0.65)' : 'rgba(245, 247, 251, 0.82)'
+          }}
+        />
+        <div 
+          className="absolute inset-0 transition-all duration-300"
+          style={{
+            background: isDark
+              ? 'linear-gradient(to top, #080D1C 0%, rgba(8,13,28,0.4) 50%, #080D1C 100%)'
+              : 'linear-gradient(to top, #F5F7FB 0%, rgba(245,247,251,0.4) 50%, #F5F7FB 100%)'
+          }}
+        />
       </div>
 
       {/* Top Navbar */}
@@ -323,9 +339,11 @@ const MainAppContent: React.FC = () => {
 
 export function App() {
   return (
-    <AuthProvider>
-      <MainAppContent />
-    </AuthProvider>
+    <ThemeProvider>
+      <AuthProvider>
+        <MainAppContent />
+      </AuthProvider>
+    </ThemeProvider>
   );
 }
 
