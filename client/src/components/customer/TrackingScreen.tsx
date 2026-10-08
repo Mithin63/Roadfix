@@ -132,16 +132,16 @@ export const TrackingScreen: React.FC<TrackingScreenProps> = ({
   if (!booking) {
     return (
       <div className="p-8 text-center space-y-4 max-w-md mx-auto">
-        <div className="w-12 h-12 rounded-full bg-slate-800 text-slate-400 flex items-center justify-center mx-auto">
+        <div className="w-12 h-12 rounded-full bg-[#111A2E] border border-[#1E2C48] text-[#94A3B8] flex items-center justify-center mx-auto">
           <Navigation className="w-6 h-6" />
         </div>
-        <h3 className="text-base font-bold text-white">No Active Roadside Booking</h3>
-        <p className="text-xs text-slate-400">
+        <h3 className="text-base font-extrabold text-[#F1F5F9] font-heading">No Active Roadside Booking</h3>
+        <p className="text-xs text-[#94A3B8]">
           You currently don't have an ongoing roadside assistance request.
         </p>
         <button
           onClick={onBackToHome}
-          className="px-6 py-2.5 rounded-xl bg-amber-500 text-slate-950 font-bold text-xs flex items-center gap-1.5 mx-auto"
+          className="px-6 py-2.5 rounded-xl bg-[#FFB51B] hover:bg-[#FFD166] text-[#080D1C] font-extrabold text-xs flex items-center gap-1.5 mx-auto btn-primary-amber"
         >
           <ArrowLeft className="w-4 h-4" />
           <span>Return to Dashboard</span>
@@ -167,9 +167,9 @@ export const TrackingScreen: React.FC<TrackingScreenProps> = ({
       <div className="flex items-center justify-between gap-3">
         <button
           onClick={onBackToHome}
-          className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-300 hover:text-white border border-slate-800 text-xs font-bold transition-colors shadow-md"
+          className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-[#111A2E] hover:bg-[#1E2C48] text-[#94A3B8] hover:text-[#F1F5F9] border border-[#1E2C48] text-xs font-bold transition-colors shadow-md font-heading"
         >
-          <ArrowLeft className="w-4 h-4 text-amber-400" />
+          <ArrowLeft className="w-4 h-4 text-[#FFB51B]" />
           <span>← Back to Dashboard</span>
         </button>
 
@@ -179,9 +179,9 @@ export const TrackingScreen: React.FC<TrackingScreenProps> = ({
             href={googleMapsRouteUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-amber-300 border border-amber-500/30 text-xs font-bold transition-all shadow-md"
+            className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#111A2E] hover:bg-[#1E2C48] text-[#FFD166] border border-[#FFB51B]/30 text-xs font-bold transition-all shadow-md"
           >
-            <MapPin className="w-3.5 h-3.5 text-red-400" />
+            <MapPin className="w-3.5 h-3.5 text-[#FFB51B]" />
             <span>Open in Google Maps ↗</span>
           </a>
 
@@ -204,13 +204,13 @@ export const TrackingScreen: React.FC<TrackingScreenProps> = ({
           <div className="flex items-center gap-2.5">
             <XCircle className="w-5 h-5 text-red-400 shrink-0" />
             <div>
-              <div className="font-bold text-sm text-white">This Roadside Request was Cancelled</div>
-              <div className="text-xs text-slate-400 mt-0.5">No charges will be levied. You can request fresh assistance anytime.</div>
+              <div className="font-extrabold text-sm text-[#F1F5F9] font-heading">This Roadside Request was Cancelled</div>
+              <div className="text-xs text-[#94A3B8] mt-0.5">No charges will be levied. You can request fresh assistance anytime.</div>
             </div>
           </div>
           <button
             onClick={onBackToHome}
-            className="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs self-start sm:self-auto"
+            className="px-4 py-2 rounded-xl bg-[#111A2E] hover:bg-[#1E2C48] text-[#F1F5F9] font-bold text-xs self-start sm:self-auto"
           >
             Return to Dashboard
           </button>
@@ -218,24 +218,24 @@ export const TrackingScreen: React.FC<TrackingScreenProps> = ({
       )}
 
       {/* Top Header Card */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-5 rounded-3xl bg-slate-900 border border-slate-800 shadow-xl">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-5 rounded-3xl bg-[#111A2E] border border-[#1E2C48] shadow-xl">
         <div className="flex items-start gap-4">
-          <div className="w-12 h-12 rounded-2xl bg-amber-500/20 border border-amber-500/40 flex items-center justify-center shrink-0">
-            <Navigation className="w-6 h-6 text-amber-400 animate-pulse" />
+          <div className="w-12 h-12 rounded-2xl bg-[#FFB51B]/15 border border-[#FFB51B]/30 flex items-center justify-center shrink-0">
+            <Navigation className="w-6 h-6 text-[#FFB51B] animate-pulse" />
           </div>
           <div>
             <div className="flex items-center gap-2 flex-wrap">
-              <span className="font-mono text-xs font-bold text-amber-400 bg-amber-500/10 px-2.5 py-0.5 rounded-lg border border-amber-500/20">
+              <span className="font-mono text-xs font-bold text-[#FFB51B] bg-[#FFB51B]/10 px-2.5 py-0.5 rounded-lg border border-[#FFB51B]/20">
                 {booking.id}
               </span>
-              <span className="text-xs px-2.5 py-0.5 rounded-lg bg-slate-800 text-slate-300 font-semibold capitalize">
+              <span className="text-xs px-2.5 py-0.5 rounded-lg bg-[#080D1C] text-[#94A3B8] border border-[#1E2C48] font-semibold capitalize font-heading">
                 {booking.vehicleInfo.make} {booking.vehicleInfo.model} ({booking.vehicleInfo.regNo})
               </span>
             </div>
-            <h2 className="text-lg sm:text-xl font-extrabold text-white mt-1">
+            <h2 className="text-lg sm:text-xl font-extrabold text-[#F1F5F9] font-heading mt-1">
               Live Status: {booking.status.replace(/_/g, ' ').toUpperCase()}
             </h2>
-            <p className="text-xs text-slate-400">
+            <p className="text-xs text-[#94A3B8]">
               {booking.customerAddress}
             </p>
           </div>
@@ -245,7 +245,7 @@ export const TrackingScreen: React.FC<TrackingScreenProps> = ({
         <div className="flex items-center gap-2 flex-wrap shrink-0">
           <button
             onClick={() => setSimulatedCall(true)}
-            className="px-3.5 py-2 rounded-xl bg-emerald-600/20 hover:bg-emerald-600/30 text-emerald-400 border border-emerald-500/40 text-xs font-bold flex items-center gap-1.5 transition-colors"
+            className="px-3.5 py-2 rounded-xl bg-[#10B981]/15 hover:bg-[#10B981]/25 text-[#10B981] border border-[#10B981]/40 text-xs font-bold flex items-center gap-1.5 transition-colors"
           >
             <PhoneCall className="w-3.5 h-3.5" />
             <span>Call Mechanic</span>
@@ -253,7 +253,7 @@ export const TrackingScreen: React.FC<TrackingScreenProps> = ({
 
           <button
             onClick={() => onOpenChat(booking.id)}
-            className="px-3.5 py-2 rounded-xl bg-indigo-600/20 hover:bg-indigo-600/30 text-indigo-400 border border-indigo-500/40 text-xs font-bold flex items-center gap-1.5 transition-colors"
+            className="px-3.5 py-2 rounded-xl bg-[#38BDF8]/15 hover:bg-[#38BDF8]/25 text-[#38BDF8] border border-[#38BDF8]/40 text-xs font-bold flex items-center gap-1.5 transition-colors"
           >
             <MessageSquare className="w-3.5 h-3.5" />
             <span>Chat</span>
@@ -261,9 +261,9 @@ export const TrackingScreen: React.FC<TrackingScreenProps> = ({
 
           <button
             onClick={handleShareTrip}
-            className="px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 text-xs font-semibold flex items-center gap-1.5 transition-colors"
+            className="px-3.5 py-2 rounded-xl bg-[#080D1C] hover:bg-[#1E2C48] text-[#94A3B8] hover:text-[#F1F5F9] border border-[#1E2C48] text-xs font-semibold flex items-center gap-1.5 transition-colors"
           >
-            {copiedLink ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Share2 className="w-3.5 h-3.5" />}
+            {copiedLink ? <Check className="w-3.5 h-3.5 text-[#10B981]" /> : <Share2 className="w-3.5 h-3.5" />}
             <span>{copiedLink ? 'Link Copied!' : 'Share Trip'}</span>
           </button>
         </div>
@@ -271,31 +271,31 @@ export const TrackingScreen: React.FC<TrackingScreenProps> = ({
 
       {/* ADDITIONAL CHARGE APPROVAL ALERT (Section 10) */}
       {pendingCharges && pendingCharges.length > 0 && (
-        <div className="p-4 rounded-2xl bg-amber-500/15 border-2 border-amber-500 space-y-3 glow-amber">
-          <div className="flex items-center gap-2 text-amber-400 font-bold text-sm">
+        <div className="p-4 rounded-2xl bg-[#FFB51B]/15 border-2 border-[#FFB51B] space-y-3">
+          <div className="flex items-center gap-2 text-[#FFB51B] font-bold text-sm font-heading">
             <AlertTriangle className="w-5 h-5 shrink-0" />
             <span>Action Required: Mechanic Requested Additional Work & Charges</span>
           </div>
-          <p className="text-xs text-slate-300">
+          <p className="text-xs text-[#94A3B8]">
             Before proceeding, please review and approve or reject the following additional parts / labor:
           </p>
           <div className="space-y-2">
             {pendingCharges.map((chg) => (
-              <div key={chg.id} className="p-3 rounded-xl bg-slate-900 border border-slate-700 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+              <div key={chg.id} className="p-3 rounded-xl bg-[#080D1C] border border-[#1E2C48] flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                 <div>
-                  <div className="text-xs font-bold text-white">{chg.description}</div>
-                  <div className="text-xs font-black text-amber-400 mt-0.5">₹{chg.amount}</div>
+                  <div className="text-xs font-bold text-[#F1F5F9]">{chg.description}</div>
+                  <div className="text-xs font-black text-[#FFB51B] font-mono mt-0.5">₹{chg.amount}</div>
                 </div>
                 <div className="flex items-center gap-2">
                   <button
                     onClick={() => handleApproveCharge(chg.id, false)}
-                    className="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold"
+                    className="px-3 py-1.5 rounded-lg bg-[#1E2C48] hover:bg-[#2A3E66] text-[#94A3B8] text-xs font-semibold"
                   >
                     Reject
                   </button>
                   <button
                     onClick={() => handleApproveCharge(chg.id, true)}
-                    className="px-4 py-1.5 rounded-lg bg-emerald-500 hover:bg-emerald-400 text-slate-950 text-xs font-bold"
+                    className="px-4 py-1.5 rounded-lg bg-[#10B981] hover:bg-emerald-400 text-[#080D1C] text-xs font-extrabold"
                   >
                     Approve Charge
                   </button>
@@ -336,36 +336,36 @@ export const TrackingScreen: React.FC<TrackingScreenProps> = ({
           />
 
           {/* Mechanic Card */}
-          <div className="p-4 rounded-2xl bg-slate-900 border border-slate-800 flex items-center justify-between gap-4">
+          <div className="p-4 rounded-2xl bg-[#111A2E] border border-[#1E2C48] flex items-center justify-between gap-4">
             <div className="flex items-center gap-3.5">
               <img
                 src={booking.mechanicAvatar || 'https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&w=200&q=80'}
                 alt={booking.mechanicName || 'Mechanic'}
-                className="w-12 h-12 rounded-xl object-cover ring-2 ring-slate-700 shrink-0"
+                className="w-12 h-12 rounded-xl object-cover ring-2 ring-[#FFB51B]/40 shrink-0"
               />
               <div>
                 <div className="flex items-center gap-2">
-                  <h4 className="text-sm font-bold text-white">{booking.mechanicName || 'Assigned Technician'}</h4>
-                  <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 flex items-center gap-0.5">
+                  <h4 className="text-sm font-extrabold text-[#F1F5F9] font-heading">{booking.mechanicName || 'Assigned Technician'}</h4>
+                  <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-[#10B981]/20 text-[#10B981] border border-[#10B981]/30 flex items-center gap-0.5">
                     <ShieldCheck className="w-3 h-3" />
                     Verified
                   </span>
                 </div>
-                <p className="text-xs text-slate-400">Roadfix Mobile Rescue Unit</p>
-                <div className="text-xs text-amber-400 font-semibold mt-1">
+                <p className="text-xs text-[#94A3B8]">Roadfix Mobile Rescue Unit</p>
+                <div className="text-xs text-[#FFB51B] font-semibold mt-1">
                   📞 {booking.mechanicPhone || '+91 98205 77112'}
                 </div>
               </div>
             </div>
 
             <div className="text-right">
-              <div className="text-[10px] text-slate-400 uppercase tracking-wider">Estimated Arrival</div>
-              <div className="text-lg font-black text-emerald-400">
+              <div className="text-[10px] text-[#94A3B8] uppercase tracking-wider font-heading">Estimated Arrival</div>
+              <div className="text-lg font-black text-[#10B981]">
                 {booking.status === 'arrived' || booking.status === 'diagnosis_started' || booking.status === 'repair_in_progress' || booking.status === 'repair_completed'
                   ? 'On-Site'
                   : `~${booking.etaMinutes} Mins`}
               </div>
-              <div className="text-[10px] text-slate-400">
+              <div className="text-[10px] text-[#94A3B8]">
                 {booking.distanceKm} km away
               </div>
             </div>
@@ -375,12 +375,12 @@ export const TrackingScreen: React.FC<TrackingScreenProps> = ({
         {/* Right Column: 9-Step Timeline & Bill Summary */}
         <div className="space-y-4">
           {/* Timeline */}
-          <div className="p-5 rounded-2xl bg-slate-900 border border-slate-800 space-y-4">
-            <h3 className="text-xs font-bold uppercase tracking-wider text-amber-400">
+          <div className="p-5 rounded-2xl bg-[#111A2E] border border-[#1E2C48] space-y-4">
+            <h3 className="text-xs font-bold uppercase tracking-wider text-[#FFB51B] font-heading">
               Assistance Progress Timeline
             </h3>
 
-            <div className="space-y-3 relative pl-4 border-l-2 border-slate-800">
+            <div className="space-y-3 relative pl-4 border-l-2 border-[#1E2C48]">
               {statusSteps.map((step, idx) => {
                 const isPassed = currentStepIndex >= idx;
                 const isCurrent = currentStepIndex === idx;
@@ -391,26 +391,26 @@ export const TrackingScreen: React.FC<TrackingScreenProps> = ({
                     <div
                       className={`absolute -left-[23px] top-0.5 w-3.5 h-3.5 rounded-full border-2 transition-all ${
                         isCurrent
-                          ? 'bg-amber-400 border-white ring-4 ring-amber-400/20 animate-pulse'
+                          ? 'bg-[#FFB51B] border-white ring-4 ring-[#FFB51B]/20 animate-pulse'
                           : isPassed
-                          ? 'bg-emerald-500 border-emerald-400'
-                          : 'bg-slate-950 border-slate-700'
+                          ? 'bg-[#10B981] border-emerald-400'
+                          : 'bg-[#080D1C] border-[#1E2C48]'
                       }`}
                     />
 
                     <div>
                       <h4
-                        className={`text-xs font-bold ${
+                        className={`text-xs font-bold font-heading ${
                           isCurrent
-                            ? 'text-amber-400'
+                            ? 'text-[#FFB51B]'
                             : isPassed
-                            ? 'text-white'
-                            : 'text-slate-500'
+                            ? 'text-[#F1F5F9]'
+                            : 'text-[#64748B]'
                         }`}
                       >
                         {idx + 1}. {step.label}
                       </h4>
-                      <p className="text-[11px] text-slate-400 mt-0.5">
+                      <p className="text-[11px] text-[#94A3B8] mt-0.5">
                         {step.desc}
                       </p>
                     </div>
@@ -421,17 +421,17 @@ export const TrackingScreen: React.FC<TrackingScreenProps> = ({
           </div>
 
           {/* Bill summary & Payment triggers */}
-          <div className="p-5 rounded-2xl bg-slate-900 border border-slate-800 space-y-3">
+          <div className="p-5 rounded-2xl bg-[#111A2E] border border-[#1E2C48] space-y-3">
             <div className="flex items-center justify-between">
-              <span className="text-xs text-slate-400 uppercase font-bold tracking-wider">
+              <span className="text-xs text-[#94A3B8] uppercase font-bold tracking-wider font-heading">
                 {booking.pricing.isFinal ? 'Final Total Bill' : 'Current Estimated Cost'}
               </span>
-              <span className="text-lg font-black text-amber-400 font-mono">
+              <span className="text-lg font-black text-[#FFB51B] font-mono">
                 ₹{booking.pricing.total}
               </span>
             </div>
 
-            <div className="space-y-1.5 text-xs text-slate-400 border-t border-slate-800/80 pt-2">
+            <div className="space-y-1.5 text-xs text-[#94A3B8] border-t border-[#1E2C48] pt-2">
               <div className="flex justify-between">
                 <span>Base Service</span>
                 <span className="font-mono">₹{booking.pricing.baseService}</span>
@@ -451,7 +451,7 @@ export const TrackingScreen: React.FC<TrackingScreenProps> = ({
                 </div>
               )}
               {booking.pricing.additionalCharges > 0 && (
-                <div className="flex justify-between text-amber-300">
+                <div className="flex justify-between text-[#FFD166]">
                   <span>Approved Additional Charges</span>
                   <span className="font-mono">₹{booking.pricing.additionalCharges}</span>
                 </div>
@@ -462,7 +462,7 @@ export const TrackingScreen: React.FC<TrackingScreenProps> = ({
             {booking.status === 'repair_completed' && (
               <button
                 onClick={() => onOpenPayment(booking.id)}
-                className="w-full py-3 rounded-xl bg-gradient-to-r from-emerald-500 to-emerald-400 hover:from-emerald-400 hover:to-emerald-300 text-slate-950 font-black text-sm flex items-center justify-center gap-2 shadow-xl shadow-emerald-500/25 transition-transform hover:scale-[1.02]"
+                className="w-full py-3 rounded-xl bg-[#10B981] hover:bg-emerald-400 text-[#080D1C] font-extrabold text-sm flex items-center justify-center gap-2 shadow-xl shadow-emerald-500/25 transition-transform hover:scale-[1.02]"
               >
                 <CreditCard className="w-4 h-4" />
                 <span>Repair Finished — Pay Now (₹{booking.pricing.total})</span>
@@ -472,20 +472,20 @@ export const TrackingScreen: React.FC<TrackingScreenProps> = ({
             {/* If payment completed, show invoice & rate button */}
             {booking.status === 'payment_completed' && (
               <div className="space-y-2 pt-2">
-                <div className="p-2.5 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-bold text-center flex items-center justify-center gap-1.5">
+                <div className="p-2.5 rounded-xl bg-[#10B981]/15 border border-[#10B981]/30 text-[#10B981] text-xs font-bold text-center flex items-center justify-center gap-1.5 font-heading">
                   <CheckCircle2 className="w-4 h-4" />
                   Payment Completed & Settled
                 </div>
                 <button
                   onClick={() => onOpenPayment(booking.id)}
-                  className="w-full py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs flex items-center justify-center gap-2"
+                  className="w-full py-2.5 rounded-xl bg-[#080D1C] hover:bg-[#1E2C48] border border-[#1E2C48] text-[#F1F5F9] font-bold text-xs flex items-center justify-center gap-2 transition-colors"
                 >
                   <FileText className="w-4 h-4" />
                   View Digital Tax Invoice
                 </button>
                 <button
                   onClick={() => onOpenReview(booking.id)}
-                  className="w-full py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs flex items-center justify-center gap-2"
+                  className="w-full py-2.5 rounded-xl bg-[#FFB51B] hover:bg-[#FFD166] text-[#080D1C] font-extrabold text-xs flex items-center justify-center gap-2 btn-primary-amber"
                 >
                   Rate & Review Mechanic
                 </button>
@@ -497,19 +497,19 @@ export const TrackingScreen: React.FC<TrackingScreenProps> = ({
 
       {/* Simulated Phone Call Modal */}
       {simulatedCall && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm">
-          <div className="w-full max-w-sm rounded-3xl bg-slate-900 border border-slate-700 p-6 text-center space-y-4 shadow-2xl animate-in zoom-in-95">
-            <div className="w-16 h-16 rounded-full bg-emerald-500/20 border-2 border-emerald-400 flex items-center justify-center mx-auto text-emerald-400 animate-pulse">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#080D1C]/80 backdrop-blur-sm">
+          <div className="w-full max-w-sm rounded-3xl bg-[#111A2E] border border-[#1E2C48] p-6 text-center space-y-4 shadow-2xl animate-in zoom-in-95">
+            <div className="w-16 h-16 rounded-full bg-[#10B981]/20 border-2 border-[#10B981] flex items-center justify-center mx-auto text-[#10B981] animate-pulse">
               <PhoneCall className="w-8 h-8" />
             </div>
             <div>
-              <h3 className="text-base font-bold text-white">Calling {booking.mechanicName}...</h3>
-              <p className="text-xs text-slate-400 mt-1">{booking.mechanicPhone || '+91 98205 77112'}</p>
-              <p className="text-[11px] text-amber-400 mt-2 font-mono">Simulated In-App Roadfix Voice Link Connected</p>
+              <h3 className="text-base font-extrabold text-[#F1F5F9] font-heading">Calling {booking.mechanicName}...</h3>
+              <p className="text-xs text-[#94A3B8] mt-1">{booking.mechanicPhone || '+91 98205 77112'}</p>
+              <p className="text-[11px] text-[#FFB51B] mt-2 font-mono">Simulated In-App Roadfix Voice Link Connected</p>
             </div>
             <button
               onClick={() => setSimulatedCall(false)}
-              className="w-full py-2.5 rounded-xl bg-red-600 hover:bg-red-500 text-white font-bold text-xs"
+              className="w-full py-2.5 rounded-xl bg-red-600 hover:bg-red-500 text-white font-bold text-xs transition-colors"
             >
               End Call
             </button>
@@ -519,28 +519,28 @@ export const TrackingScreen: React.FC<TrackingScreenProps> = ({
 
       {/* Cancel Request Confirmation Modal */}
       {showCancelModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm animate-in fade-in">
-          <div className="w-full max-w-md rounded-3xl bg-slate-900 border border-red-500/40 p-6 space-y-4 shadow-2xl animate-in zoom-in-95">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#080D1C]/80 backdrop-blur-sm animate-in fade-in">
+          <div className="w-full max-w-md rounded-3xl bg-[#111A2E] border border-red-500/40 p-6 space-y-4 shadow-2xl animate-in zoom-in-95">
             <div className="flex items-center gap-3">
               <div className="w-12 h-12 rounded-2xl bg-red-500/20 border border-red-500/30 flex items-center justify-center text-red-400 shrink-0">
                 <AlertTriangle className="w-6 h-6" />
               </div>
               <div>
-                <h3 className="text-base font-bold text-white">Cancel Roadside Assistance?</h3>
-                <p className="text-xs text-slate-400">Request: <span className="font-mono text-amber-400">{booking.id}</span></p>
+                <h3 className="text-base font-extrabold text-[#F1F5F9] font-heading">Cancel Roadside Assistance?</h3>
+                <p className="text-xs text-[#94A3B8]">Request: <span className="font-mono text-[#FFB51B]">{booking.id}</span></p>
               </div>
             </div>
 
-            <p className="text-xs text-slate-300">
+            <p className="text-xs text-[#94A3B8]">
               Are you sure you want to cancel this breakdown request? The assigned mechanic ({booking.mechanicName || 'Technician'}) will be notified immediately.
             </p>
 
             <div className="space-y-2">
-              <label className="text-xs font-semibold text-slate-300 block">Select Cancellation Reason:</label>
+              <label className="text-xs font-semibold text-[#F1F5F9] block">Select Cancellation Reason:</label>
               <select
                 value={cancelReason}
                 onChange={(e) => setCancelReason(e.target.value)}
-                className="w-full px-3 py-2.5 rounded-xl bg-slate-950 border border-slate-700 text-xs text-white focus:outline-none focus:border-red-400"
+                className="w-full px-3 py-2.5 rounded-xl bg-[#080D1C] border border-[#1E2C48] text-xs text-[#F1F5F9] focus:outline-none focus:border-red-400 field-input"
               >
                 <option value="Vehicle started / problem resolved on my own">Vehicle started / problem resolved on my own</option>
                 <option value="Found another local mechanic nearby">Found another local mechanic nearby</option>
@@ -551,10 +551,10 @@ export const TrackingScreen: React.FC<TrackingScreenProps> = ({
               </select>
             </div>
 
-            <div className="flex items-center justify-end gap-3 pt-3 border-t border-slate-800">
+            <div className="flex items-center justify-end gap-3 pt-3 border-t border-[#1E2C48]">
               <button
                 onClick={() => setShowCancelModal(false)}
-                className="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold"
+                className="px-4 py-2 rounded-xl bg-[#080D1C] hover:bg-[#1E2C48] text-[#94A3B8] text-xs font-semibold"
               >
                 Keep Request
               </button>

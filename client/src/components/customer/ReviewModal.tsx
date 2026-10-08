@@ -96,16 +96,16 @@ export const ReviewModal: React.FC<ReviewModalProps> = ({
   );
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md">
-      <div className="w-full max-w-md bg-slate-900 border border-slate-700 rounded-3xl shadow-2xl p-6 text-left space-y-4 animate-in zoom-in-95">
-        <div className="flex items-center justify-between pb-3 border-b border-slate-800">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#080D1C]/80 backdrop-blur-md">
+      <div className="w-full max-w-md bg-[#111A2E] border border-[#1E2C48] rounded-3xl shadow-2xl p-6 text-left space-y-4 animate-in zoom-in-95">
+        <div className="flex items-center justify-between pb-3 border-b border-[#1E2C48]">
           <div>
-            <h3 className="text-base font-extrabold text-white">Rate & Review Mechanic</h3>
-            <p className="text-[11px] text-slate-400">Help the community with your feedback</p>
+            <h3 className="text-base font-extrabold text-[#F1F5F9] font-heading">Rate & Review Mechanic</h3>
+            <p className="text-[11px] text-[#94A3B8]">Help the community with your feedback</p>
           </div>
           <button
             onClick={onClose}
-            className="p-1.5 rounded-lg text-slate-400 hover:text-white"
+            className="p-1.5 rounded-lg text-[#94A3B8] hover:text-[#F1F5F9] hover:bg-[#1E2C48] transition-colors"
           >
             <X className="w-4 h-4" />
           </button>
@@ -113,9 +113,9 @@ export const ReviewModal: React.FC<ReviewModalProps> = ({
 
         {submitted ? (
           <div className="py-8 text-center space-y-2">
-            <CheckCircle2 className="w-12 h-12 text-emerald-400 mx-auto animate-bounce" />
-            <h4 className="text-base font-bold text-white">Thank You for Your Review!</h4>
-            <p className="text-xs text-slate-400">Your rating has been published to the mechanic profile.</p>
+            <CheckCircle2 className="w-12 h-12 text-[#10B981] mx-auto animate-bounce" />
+            <h4 className="text-base font-extrabold text-[#F1F5F9] font-heading">Thank You for Your Review!</h4>
+            <p className="text-xs text-[#94A3B8]">Your rating has been published to the mechanic profile.</p>
           </div>
         ) : (
           <form onSubmit={handleSubmit} className="space-y-4">
@@ -148,20 +148,20 @@ export const ReviewModal: React.FC<ReviewModalProps> = ({
             </div>
 
             <div>
-              <label className="text-xs text-slate-400 block mb-1">Written Review</label>
+              <label className="text-xs text-[#94A3B8] block mb-1 font-medium">Written Review</label>
               <textarea
                 rows={3}
                 value={comment}
                 onChange={(e) => setComment(e.target.value)}
                 placeholder="Share your experience (e.g. fast arrival, clear explanation of parts, respectful demeanor)..."
-                className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-700 text-xs text-white focus:outline-none focus:border-amber-400"
+                className="w-full px-3 py-2 rounded-xl bg-[#080D1C] border border-[#1E2C48] text-xs text-[#F1F5F9] placeholder-[#64748B] field-input"
               />
             </div>
 
             <button
               disabled={isSubmitting}
               type="submit"
-              className="w-full py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs shadow-lg shadow-amber-500/20 transition-colors"
+              className="w-full py-2.5 rounded-xl bg-[#FFB51B] hover:bg-[#FFD166] text-[#080D1C] font-extrabold text-xs shadow-lg shadow-[#FFB51B]/20 btn-primary-amber"
             >
               {isSubmitting ? 'Submitting...' : 'Submit Service Rating'}
             </button>

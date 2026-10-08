@@ -47,7 +47,7 @@ export const BottomNav: React.FC<BottomNavProps> = ({ currentTab, setCurrentTab 
   const tabs = role === 'admin' ? adminTabs : role === 'mechanic' ? mechanicTabs : customerTabs;
 
   return (
-    <nav className="sm:hidden fixed bottom-0 left-0 right-0 z-40 bg-slate-950/95 backdrop-blur-lg border-t border-slate-800 px-2 py-1.5 flex justify-around items-center">
+    <nav className="sm:hidden fixed bottom-0 left-0 right-0 z-40 bg-[#080D1C]/95 backdrop-blur-xl border-t border-[#1E2C48] px-2 py-1.5 flex justify-around items-center shadow-2xl">
       {tabs.map((tab) => {
         const Icon = tab.icon;
         const isActive = currentTab === tab.id;
@@ -55,16 +55,16 @@ export const BottomNav: React.FC<BottomNavProps> = ({ currentTab, setCurrentTab 
           <button
             key={tab.id}
             onClick={() => setCurrentTab(tab.id)}
-            className={`flex flex-col items-center justify-center py-1 px-2.5 rounded-xl transition-all ${
+            className={`flex flex-col items-center justify-center py-1 px-3 rounded-xl transition-all active:scale-95 ${
               isActive
-                ? 'text-amber-400 font-bold'
+                ? 'text-[#FFB51B] font-extrabold'
                 : 'text-slate-400 hover:text-slate-200'
             }`}
           >
-            <div className={`p-1 rounded-lg ${isActive ? 'bg-amber-500/10' : ''}`}>
-              <Icon className="w-5 h-5" />
+            <div className={`p-1.5 rounded-xl transition-all ${isActive ? 'bg-[#FFB51B]/15 shadow-[0_0_12px_rgba(255,181,27,0.25)] text-[#FFB51B]' : ''}`}>
+              <Icon className="w-4 h-4" />
             </div>
-            <span className="text-[10px] mt-0.5 tracking-tight">{tab.label}</span>
+            <span className="text-[10px] mt-0.5 tracking-tight font-heading">{tab.label}</span>
           </button>
         );
       })}

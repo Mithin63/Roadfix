@@ -130,7 +130,21 @@ const MainAppContent: React.FC = () => {
 
   // 3. AFTER LOGIN: OPEN FULL APPLICATION
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col font-sans selection:bg-amber-500 selection:text-slate-950">
+    <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col font-sans selection:bg-amber-500 selection:text-slate-950 relative overflow-x-hidden">
+      {/* Ambient Highway Video Background Layer */}
+      <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+        <video
+          src="/bg-highway.mp4"
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="w-full h-full object-cover opacity-45 scale-105"
+        />
+        <div className="absolute inset-0 bg-slate-950/60 backdrop-blur-[1px]" />
+        <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-slate-950/80" />
+      </div>
+
       {/* Top Navbar */}
       <Navbar
         onOpenSos={() => setIsSosModalOpen(true)}

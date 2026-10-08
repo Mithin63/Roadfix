@@ -124,31 +124,31 @@ export const MechanicJobScreen: React.FC<MechanicJobScreenProps> = ({
 
   if (loading || !booking) {
     return (
-      <div className="py-20 text-center text-xs text-slate-400">Loading job details...</div>
+      <div className="py-20 text-center text-xs text-[#94A3B8]">Loading job details...</div>
     );
   }
 
   return (
     <div className="space-y-6 pb-12 animate-in fade-in text-left">
       {/* Header Bar */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-5 rounded-3xl bg-slate-900 border border-slate-800 shadow-xl">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-5 rounded-3xl bg-[#111A2E] border border-[#1E2C48] shadow-xl">
         <div className="flex items-center gap-3">
           <button
             onClick={onBack}
-            className="p-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300"
+            className="p-2 rounded-xl bg-[#080D1C] hover:bg-[#1E2C48] text-[#94A3B8] hover:text-[#F1F5F9] transition-colors"
           >
             <ChevronLeft className="w-5 h-5" />
           </button>
           <div>
             <div className="flex items-center gap-2">
-              <span className="font-mono text-xs font-bold text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded">
+              <span className="font-mono text-xs font-bold text-[#FFB51B] bg-[#FFB51B]/10 px-2 py-0.5 rounded border border-[#FFB51B]/20">
                 {booking.id}
               </span>
-              <span className="text-xs uppercase font-bold px-2 py-0.5 rounded bg-slate-800 text-slate-300">
+              <span className="text-xs uppercase font-bold px-2 py-0.5 rounded bg-[#080D1C] text-[#94A3B8] border border-[#1E2C48] font-heading">
                 {booking.status.replace(/_/g, ' ')}
               </span>
             </div>
-            <h2 className="text-lg font-black text-white mt-1">
+            <h2 className="text-lg font-extrabold text-[#F1F5F9] font-heading mt-1">
               {booking.customerName} • {booking.vehicleInfo.make} {booking.vehicleInfo.model}
             </h2>
           </div>
@@ -159,15 +159,15 @@ export const MechanicJobScreen: React.FC<MechanicJobScreenProps> = ({
             href={`https://www.google.com/maps/dir/?api=1&origin=${booking.mechanicLat || 19.0760},${booking.mechanicLng || 72.8777}&destination=${booking.customerLat},${booking.customerLng}`}
             target="_blank"
             rel="noreferrer"
-            className="px-3.5 py-2 rounded-xl bg-cyan-600/20 hover:bg-cyan-600/30 text-cyan-400 border border-cyan-500/40 text-xs font-bold flex items-center gap-1.5 transition-colors"
+            className="px-3.5 py-2 rounded-xl bg-[#38BDF8]/15 hover:bg-[#38BDF8]/25 text-[#38BDF8] border border-[#38BDF8]/40 text-xs font-bold flex items-center gap-1.5 transition-colors"
           >
-            <MapPin className="w-3.5 h-3.5 text-red-400" />
+            <MapPin className="w-3.5 h-3.5 text-[#FFB51B]" />
             <span>Open Google Maps ↗</span>
           </a>
 
           <button
             onClick={() => onOpenChat(booking.id)}
-            className="px-3.5 py-2 rounded-xl bg-indigo-600/20 hover:bg-indigo-600/30 text-indigo-400 border border-indigo-500/40 text-xs font-bold flex items-center gap-1.5"
+            className="px-3.5 py-2 rounded-xl bg-[#1E2C48] hover:bg-[#2A3E66] text-[#F1F5F9] border border-[#1E2C48] text-xs font-bold flex items-center gap-1.5 transition-colors"
           >
             <span>Chat</span>
           </button>
@@ -188,8 +188,8 @@ export const MechanicJobScreen: React.FC<MechanicJobScreenProps> = ({
       </div>
 
       {/* STATUS CONTROLLER BUTTONS (Section 10) */}
-      <div className="p-5 rounded-3xl bg-slate-900 border border-slate-800 space-y-3">
-        <h3 className="text-xs font-bold uppercase tracking-wider text-amber-400">
+      <div className="p-5 rounded-3xl bg-[#111A2E] border border-[#1E2C48] space-y-3">
+        <h3 className="text-xs font-bold uppercase tracking-wider text-[#FFB51B] font-heading">
           Job Status Progression Workflow
         </h3>
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
@@ -197,8 +197,8 @@ export const MechanicJobScreen: React.FC<MechanicJobScreenProps> = ({
             onClick={() => handleUpdateStatus('arrived', 'Mechanic has arrived at breakdown site')}
             className={`p-3 rounded-xl border text-xs font-bold transition-all ${
               ['arrived', 'diagnosis_started', 'repair_in_progress', 'repair_completed', 'payment_completed'].includes(booking.status)
-                ? 'bg-emerald-500/20 border-emerald-500/40 text-emerald-400'
-                : 'bg-slate-950 border-slate-700 hover:border-amber-500 text-slate-300'
+                ? 'bg-[#10B981]/20 border-[#10B981]/40 text-[#10B981]'
+                : 'bg-[#080D1C] border-[#1E2C48] hover:border-[#FFB51B] text-[#94A3B8] hover:text-[#F1F5F9]'
             }`}
           >
             1. Arrived on Site
@@ -208,8 +208,8 @@ export const MechanicJobScreen: React.FC<MechanicJobScreenProps> = ({
             onClick={() => handleUpdateStatus('diagnosis_started', 'On-site physical and OBD2 diagnostics underway')}
             className={`p-3 rounded-xl border text-xs font-bold transition-all ${
               ['diagnosis_started', 'repair_in_progress', 'repair_completed', 'payment_completed'].includes(booking.status)
-                ? 'bg-emerald-500/20 border-emerald-500/40 text-emerald-400'
-                : 'bg-slate-950 border-slate-700 hover:border-amber-500 text-slate-300'
+                ? 'bg-[#10B981]/20 border-[#10B981]/40 text-[#10B981]'
+                : 'bg-[#080D1C] border-[#1E2C48] hover:border-[#FFB51B] text-[#94A3B8] hover:text-[#F1F5F9]'
             }`}
           >
             2. Diagnosis Started
@@ -219,8 +219,8 @@ export const MechanicJobScreen: React.FC<MechanicJobScreenProps> = ({
             onClick={() => handleUpdateStatus('repair_in_progress', 'Roadside component replacement & repair in progress')}
             className={`p-3 rounded-xl border text-xs font-bold transition-all ${
               ['repair_in_progress', 'repair_completed', 'payment_completed'].includes(booking.status)
-                ? 'bg-emerald-500/20 border-emerald-500/40 text-emerald-400'
-                : 'bg-slate-950 border-slate-700 hover:border-amber-500 text-slate-300'
+                ? 'bg-[#10B981]/20 border-[#10B981]/40 text-[#10B981]'
+                : 'bg-[#080D1C] border-[#1E2C48] hover:border-[#FFB51B] text-[#94A3B8] hover:text-[#F1F5F9]'
             }`}
           >
             3. Repair Started
@@ -230,8 +230,8 @@ export const MechanicJobScreen: React.FC<MechanicJobScreenProps> = ({
             onClick={() => handleUpdateStatus('repair_completed', 'Roadside repair successfully completed and verified')}
             className={`p-3 rounded-xl border text-xs font-bold transition-all ${
               ['repair_completed', 'payment_completed'].includes(booking.status)
-                ? 'bg-emerald-500/20 border-emerald-500/40 text-emerald-400'
-                : 'bg-amber-500 text-slate-950 font-black'
+                ? 'bg-[#10B981]/20 border-[#10B981]/40 text-[#10B981]'
+                : 'bg-[#FFB51B] hover:bg-[#FFD166] text-[#080D1C] font-extrabold btn-primary-amber'
             }`}
           >
             4. Repair Completed
@@ -244,50 +244,50 @@ export const MechanicJobScreen: React.FC<MechanicJobScreenProps> = ({
         {/* Left Column: Customer & AI Diagnosis */}
         <div className="lg:col-span-2 space-y-5">
           {/* Customer & Vehicle Info */}
-          <div className="p-5 rounded-3xl bg-slate-900 border border-slate-800 space-y-3">
-            <h3 className="text-xs font-bold uppercase tracking-wider text-slate-300">
+          <div className="p-5 rounded-3xl bg-[#111A2E] border border-[#1E2C48] space-y-3">
+            <h3 className="text-xs font-bold uppercase tracking-wider text-[#94A3B8] font-heading">
               Customer & Incident Information
             </h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
               <div>
-                <span className="text-slate-500 text-[10px] uppercase font-bold block">Customer Contact</span>
-                <p className="font-bold text-white text-sm mt-0.5">{booking.customerName}</p>
-                <p className="text-amber-400 font-mono font-medium">{booking.customerPhone}</p>
-                <p className="text-slate-400 mt-1">{booking.customerAddress}</p>
+                <span className="text-[#64748B] text-[10px] uppercase font-bold block">Customer Contact</span>
+                <p className="font-extrabold text-[#F1F5F9] text-sm mt-0.5 font-heading">{booking.customerName}</p>
+                <p className="text-[#FFB51B] font-mono font-medium">{booking.customerPhone}</p>
+                <p className="text-[#94A3B8] mt-1">{booking.customerAddress}</p>
               </div>
               <div>
-                <span className="text-slate-500 text-[10px] uppercase font-bold block">Vehicle Specifications</span>
-                <p className="font-bold text-white text-sm mt-0.5">{booking.vehicleInfo.make} {booking.vehicleInfo.model}</p>
-                <p className="font-mono text-cyan-400">{booking.vehicleInfo.regNo}</p>
-                <p className="text-slate-400 mt-1 capitalize">Type: {booking.vehicleInfo.type} • Fuel: {booking.vehicleInfo.fuelType}</p>
+                <span className="text-[#64748B] text-[10px] uppercase font-bold block">Vehicle Specifications</span>
+                <p className="font-extrabold text-[#F1F5F9] text-sm mt-0.5 font-heading">{booking.vehicleInfo.make} {booking.vehicleInfo.model}</p>
+                <p className="font-mono text-[#38BDF8]">{booking.vehicleInfo.regNo}</p>
+                <p className="text-[#94A3B8] mt-1 capitalize">Type: {booking.vehicleInfo.type} • Fuel: {booking.vehicleInfo.fuelType}</p>
               </div>
             </div>
 
             {/* Reported Problem & AI Assessment */}
-            <div className="pt-3 border-t border-slate-800 space-y-2 text-xs">
-              <span className="text-[10px] uppercase font-bold text-amber-400">
+            <div className="pt-3 border-t border-[#1E2C48] space-y-2 text-xs">
+              <span className="text-[10px] uppercase font-bold text-[#FFB51B] font-heading">
                 Customer Problem Description:
               </span>
-              <p className="text-slate-200 bg-slate-950 p-3 rounded-xl border border-slate-800">
+              <p className="text-[#F1F5F9] bg-[#080D1C] p-3 rounded-xl border border-[#1E2C48]">
                 "{booking.problemDescription}"
               </p>
 
               {booking.mediaUrls && booking.mediaUrls.length > 0 && (
                 <div className="pt-2">
-                  <span className="text-[10px] text-slate-400 uppercase font-bold block mb-1">Uploaded Photo/Video:</span>
-                  <img src={booking.mediaUrls[0]} alt="Breakdown" className="w-48 h-32 object-cover rounded-xl border border-slate-700" />
+                  <span className="text-[10px] text-[#94A3B8] uppercase font-bold block mb-1">Uploaded Photo/Video:</span>
+                  <img src={booking.mediaUrls[0]} alt="Breakdown" className="w-48 h-32 object-cover rounded-xl border border-[#1E2C48]" />
                 </div>
               )}
             </div>
 
             {/* Recommended Equipment Checklist */}
-            <div className="pt-3 border-t border-slate-800 space-y-1.5 text-xs">
-              <span className="text-[10px] uppercase font-bold text-slate-400">
+            <div className="pt-3 border-t border-[#1E2C48] space-y-1.5 text-xs">
+              <span className="text-[10px] uppercase font-bold text-[#94A3B8] font-heading">
                 AI Pre-Dispatched Equipment Checklist:
               </span>
               <div className="flex flex-wrap gap-1.5">
                 {booking.aiDiagnosis?.requiredEquipment.map((eq, i) => (
-                  <span key={i} className="text-[11px] px-2.5 py-1 rounded-lg bg-slate-950 border border-slate-800 text-amber-300 font-medium">
+                  <span key={i} className="text-[11px] px-2.5 py-1 rounded-lg bg-[#080D1C] border border-[#1E2C48] text-[#FFD166] font-medium">
                     ✓ {eq}
                   </span>
                 ))}
@@ -296,48 +296,48 @@ export const MechanicJobScreen: React.FC<MechanicJobScreenProps> = ({
           </div>
 
           {/* Mechanic Notes & Work Performed Form */}
-          <div className="p-5 rounded-3xl bg-slate-900 border border-slate-800 space-y-4">
-            <h3 className="text-xs font-bold uppercase tracking-wider text-slate-300">
+          <div className="p-5 rounded-3xl bg-[#111A2E] border border-[#1E2C48] space-y-4">
+            <h3 className="text-xs font-bold uppercase tracking-wider text-[#94A3B8] font-heading">
               On-Site Inspection & Diagnostic Log
             </h3>
             <div className="space-y-3 text-xs">
               <div>
-                <label className="text-slate-400 block mb-1">Mechanic Diagnostic Findings</label>
+                <label className="text-[#94A3B8] block mb-1">Mechanic Diagnostic Findings</label>
                 <textarea
                   rows={2}
                   value={diagnosisNotes}
                   onChange={(e) => setDiagnosisNotes(e.target.value)}
                   placeholder="e.g. Battery tested 10.2V under cranking load, loose negative ground terminal..."
-                  className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-700 text-white"
+                  className="w-full px-3 py-2 rounded-xl bg-[#080D1C] border border-[#1E2C48] text-[#F1F5F9] field-input"
                 />
               </div>
 
               <div>
-                <label className="text-slate-400 block mb-1">Work Performed / Solution</label>
+                <label className="text-[#94A3B8] block mb-1">Work Performed / Solution</label>
                 <textarea
                   rows={2}
                   value={workPerformed}
                   onChange={(e) => setWorkPerformed(e.target.value)}
                   placeholder="e.g. Cleaned battery post with wire brush, performed jump start booster pack..."
-                  className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-700 text-white"
+                  className="w-full px-3 py-2 rounded-xl bg-[#080D1C] border border-[#1E2C48] text-[#F1F5F9] field-input"
                 />
               </div>
 
               <div className="flex items-center justify-between pt-1">
                 <div className="w-48">
-                  <label className="text-slate-400 block mb-1">Labour Charge (₹)</label>
+                  <label className="text-[#94A3B8] block mb-1">Labour Charge (₹)</label>
                   <input
                     type="number"
                     value={labourCharge}
                     onChange={(e) => setLabourCharge(Number(e.target.value))}
-                    className="w-full px-3 py-1.5 rounded-xl bg-slate-950 border border-slate-700 text-white font-mono"
+                    className="w-full px-3 py-1.5 rounded-xl bg-[#080D1C] border border-[#1E2C48] text-[#F1F5F9] font-mono field-input"
                   />
                 </div>
 
                 <button
                   type="button"
                   onClick={handleSaveNotesAndLabour}
-                  className="px-5 py-2 rounded-xl bg-amber-500 font-bold text-slate-950 text-xs self-end"
+                  className="px-5 py-2 rounded-xl bg-[#FFB51B] hover:bg-[#FFD166] font-extrabold text-[#080D1C] text-xs self-end btn-primary-amber"
                 >
                   Save Log
                 </button>
@@ -349,8 +349,8 @@ export const MechanicJobScreen: React.FC<MechanicJobScreenProps> = ({
         {/* Right Column: Spare Parts, Additional Charges & Final Price */}
         <div className="space-y-5">
           {/* Spare Parts Section */}
-          <div className="p-5 rounded-3xl bg-slate-900 border border-slate-800 space-y-4">
-            <h3 className="text-xs font-bold uppercase tracking-wider text-amber-400">
+          <div className="p-5 rounded-3xl bg-[#111A2E] border border-[#1E2C48] space-y-4">
+            <h3 className="text-xs font-bold uppercase tracking-wider text-[#FFB51B] font-heading">
               Spare Parts Installed ({booking.spareParts?.length || 0})
             </h3>
 
@@ -358,25 +358,25 @@ export const MechanicJobScreen: React.FC<MechanicJobScreenProps> = ({
             <div className="space-y-1.5 max-h-36 overflow-y-auto">
               {booking.spareParts && booking.spareParts.length > 0 ? (
                 booking.spareParts.map((p, idx) => (
-                  <div key={idx} className="p-2.5 rounded-xl bg-slate-950 border border-slate-800 flex justify-between text-xs">
-                    <span className="text-slate-300">{p.name} (x{p.quantity})</span>
-                    <span className="font-mono text-amber-400 font-bold">₹{p.price * p.quantity}</span>
+                  <div key={idx} className="p-2.5 rounded-xl bg-[#080D1C] border border-[#1E2C48] flex justify-between text-xs">
+                    <span className="text-[#F1F5F9]">{p.name} (x{p.quantity})</span>
+                    <span className="font-mono text-[#FFB51B] font-bold">₹{p.price * p.quantity}</span>
                   </div>
                 ))
               ) : (
-                <div className="text-[11px] text-slate-500 text-center py-2">No spare parts added yet.</div>
+                <div className="text-[11px] text-[#64748B] text-center py-2">No spare parts added yet.</div>
               )}
             </div>
 
             {/* Add Part Form */}
-            <form onSubmit={handleAddSparePart} className="pt-2 border-t border-slate-800 space-y-2 text-xs">
-              <span className="text-[10px] uppercase font-bold text-slate-400 block">+ Add Spare Part</span>
+            <form onSubmit={handleAddSparePart} className="pt-2 border-t border-[#1E2C48] space-y-2 text-xs">
+              <span className="text-[10px] uppercase font-bold text-[#94A3B8] block font-heading">+ Add Spare Part</span>
               <input
                 type="text"
                 placeholder="Part name (e.g. 15A Blade Fuse, Plug Strip)"
                 value={partName}
                 onChange={(e) => setPartName(e.target.value)}
-                className="w-full px-3 py-1.5 rounded-lg bg-slate-950 border border-slate-700 text-white"
+                className="w-full px-3 py-1.5 rounded-lg bg-[#080D1C] border border-[#1E2C48] text-[#F1F5F9] field-input"
                 required
               />
               <div className="grid grid-cols-2 gap-2">
@@ -385,7 +385,7 @@ export const MechanicJobScreen: React.FC<MechanicJobScreenProps> = ({
                   placeholder="Qty"
                   value={partQty}
                   onChange={(e) => setPartQty(Number(e.target.value))}
-                  className="px-3 py-1.5 rounded-lg bg-slate-950 border border-slate-700 text-white font-mono"
+                  className="px-3 py-1.5 rounded-lg bg-[#080D1C] border border-[#1E2C48] text-[#F1F5F9] font-mono field-input"
                   min={1}
                 />
                 <input
@@ -393,13 +393,13 @@ export const MechanicJobScreen: React.FC<MechanicJobScreenProps> = ({
                   placeholder="Price (₹)"
                   value={partPrice || ''}
                   onChange={(e) => setPartPrice(Number(e.target.value))}
-                  className="px-3 py-1.5 rounded-lg bg-slate-950 border border-slate-700 text-white font-mono"
+                  className="px-3 py-1.5 rounded-lg bg-[#080D1C] border border-[#1E2C48] text-[#F1F5F9] font-mono field-input"
                   required
                 />
               </div>
               <button
                 type="submit"
-                className="w-full py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-amber-300 font-bold"
+                className="w-full py-2 rounded-lg bg-[#1E2C48] hover:bg-[#2A3E66] text-[#FFD166] font-bold transition-colors"
               >
                 Add Part to Bill
               </button>
@@ -407,14 +407,14 @@ export const MechanicJobScreen: React.FC<MechanicJobScreenProps> = ({
           </div>
 
           {/* Additional Charges Requiring Customer Approval (Section 10) */}
-          <div className="p-5 rounded-3xl bg-slate-900 border border-slate-800 space-y-3">
+          <div className="p-5 rounded-3xl bg-[#111A2E] border border-[#1E2C48] space-y-3">
             <div className="flex items-center justify-between">
-              <h3 className="text-xs font-bold uppercase tracking-wider text-slate-200">
+              <h3 className="text-xs font-bold uppercase tracking-wider text-[#F1F5F9] font-heading">
                 Additional Charges
               </h3>
               <button
                 onClick={() => setShowAddCharge(!showAddCharge)}
-                className="text-xs text-amber-400 hover:text-amber-300 font-bold"
+                className="text-xs text-[#FFB51B] hover:text-[#FFD166] font-bold"
               >
                 {showAddCharge ? 'Cancel' : '+ Request'}
               </button>
@@ -424,33 +424,33 @@ export const MechanicJobScreen: React.FC<MechanicJobScreenProps> = ({
             <div className="space-y-1.5">
               {booking.additionalCharges && booking.additionalCharges.length > 0 ? (
                 booking.additionalCharges.map((chg) => (
-                  <div key={chg.id} className="p-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs flex justify-between items-center">
+                  <div key={chg.id} className="p-2.5 rounded-xl bg-[#080D1C] border border-[#1E2C48] text-xs flex justify-between items-center">
                     <div>
-                      <div className="text-white font-medium">{chg.description}</div>
-                      <div className="text-[10px] text-slate-400 font-mono">₹{chg.amount}</div>
+                      <div className="text-[#F1F5F9] font-medium">{chg.description}</div>
+                      <div className="text-[10px] text-[#94A3B8] font-mono">₹{chg.amount}</div>
                     </div>
                     <span className={`text-[10px] font-bold px-2 py-0.5 rounded ${
                       chg.approvedByCustomer
-                        ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30'
-                        : 'bg-yellow-500/20 text-yellow-400 border border-yellow-500/30'
+                        ? 'bg-[#10B981]/20 text-[#10B981] border border-[#10B981]/30'
+                        : 'bg-[#FFD166]/20 text-[#FFD166] border border-[#FFD166]/30'
                     }`}>
                       {chg.approvedByCustomer ? 'Approved' : 'Pending Approval'}
                     </span>
                   </div>
                 ))
               ) : (
-                <div className="text-[11px] text-slate-500 text-center py-2">No additional charges requested.</div>
+                <div className="text-[11px] text-[#64748B] text-center py-2">No additional charges requested.</div>
               )}
             </div>
 
             {showAddCharge && (
-              <form onSubmit={handleRequestCharge} className="p-3 rounded-xl bg-slate-950 border border-slate-800 space-y-2 text-xs">
+              <form onSubmit={handleRequestCharge} className="p-3 rounded-xl bg-[#080D1C] border border-[#1E2C48] space-y-2 text-xs">
                 <input
                   type="text"
                   placeholder="Charge description (e.g. Broken valve stem replacement)"
                   value={chargeDesc}
                   onChange={(e) => setChargeDesc(e.target.value)}
-                  className="w-full px-3 py-1.5 rounded-lg bg-slate-900 border border-slate-700 text-white"
+                  className="w-full px-3 py-1.5 rounded-lg bg-[#111A2E] border border-[#1E2C48] text-[#F1F5F9] field-input"
                   required
                 />
                 <input
@@ -458,12 +458,12 @@ export const MechanicJobScreen: React.FC<MechanicJobScreenProps> = ({
                   placeholder="Amount (₹)"
                   value={chargeAmount || ''}
                   onChange={(e) => setChargeAmount(Number(e.target.value))}
-                  className="w-full px-3 py-1.5 rounded-lg bg-slate-900 border border-slate-700 text-white font-mono"
+                  className="w-full px-3 py-1.5 rounded-lg bg-[#111A2E] border border-[#1E2C48] text-[#F1F5F9] font-mono field-input"
                   required
                 />
                 <button
                   type="submit"
-                  className="w-full py-1.5 rounded-lg bg-amber-500 font-bold text-slate-950"
+                  className="w-full py-2 rounded-lg bg-[#FFB51B] hover:bg-[#FFD166] font-extrabold text-[#080D1C] btn-primary-amber"
                 >
                   Send for Customer Approval
                 </button>
@@ -472,17 +472,17 @@ export const MechanicJobScreen: React.FC<MechanicJobScreenProps> = ({
           </div>
 
           {/* Final Bill Summary */}
-          <div className="p-5 rounded-3xl bg-slate-950 border border-slate-800 space-y-3 text-xs">
+          <div className="p-5 rounded-3xl bg-[#080D1C] border border-[#1E2C48] space-y-3 text-xs">
             <div className="flex justify-between items-center">
-              <span className="text-slate-400 font-bold uppercase tracking-wider text-[11px]">
+              <span className="text-[#94A3B8] font-bold uppercase tracking-wider text-[11px] font-heading">
                 Final Total Bill
               </span>
-              <span className="text-xl font-black text-amber-400 font-mono">
+              <span className="text-xl font-black text-[#FFB51B] font-mono">
                 ₹{booking.pricing.total}
               </span>
             </div>
 
-            <div className="space-y-1 text-slate-400 border-t border-slate-800 pt-2">
+            <div className="space-y-1 text-[#94A3B8] border-t border-[#1E2C48] pt-2">
               <div className="flex justify-between">
                 <span>Base Service:</span>
                 <span className="font-mono">₹{booking.pricing.baseService}</span>
@@ -500,7 +500,7 @@ export const MechanicJobScreen: React.FC<MechanicJobScreenProps> = ({
                 <span className="font-mono">₹{booking.pricing.parts}</span>
               </div>
               {booking.pricing.additionalCharges > 0 && (
-                <div className="flex justify-between text-amber-300">
+                <div className="flex justify-between text-[#FFD166]">
                   <span>Approved Add-ons:</span>
                   <span className="font-mono">₹{booking.pricing.additionalCharges}</span>
                 </div>
@@ -508,7 +508,7 @@ export const MechanicJobScreen: React.FC<MechanicJobScreenProps> = ({
             </div>
 
             {booking.status === 'repair_completed' && (
-              <div className="p-2.5 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 font-bold text-center">
+              <div className="p-2.5 rounded-xl bg-[#10B981]/15 border border-[#10B981]/30 text-[#10B981] font-bold text-center font-heading">
                 Repair Completed — Waiting for Customer Payment
               </div>
             )}

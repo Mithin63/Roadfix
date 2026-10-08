@@ -18,10 +18,10 @@ interface RoadfixSplashScreenProps {
 
 export const RoadfixSplashScreen: React.FC<RoadfixSplashScreenProps> = ({
   onComplete,
-  minDurationMs = 2800
+  minDurationMs = 1800
 }) => {
   const [progress, setProgress] = useState(0);
-  const [stageText, setStageText] = useState('Initializing Roadfix Core Engine...');
+  const [stageText, setStageText] = useState('Initializing Roadfix Network...');
   const [isFinishing, setIsFinishing] = useState(false);
 
   useEffect(() => {
@@ -31,16 +31,14 @@ export const RoadfixSplashScreen: React.FC<RoadfixSplashScreenProps> = ({
       const pct = Math.min(100, Math.floor((elapsed / minDurationMs) * 100));
       setProgress(pct);
 
-      if (pct < 25) {
-        setStageText('Initializing Roadfix Core Engine...');
-      } else if (pct < 55) {
-        setStageText('Connecting to Roadfix Secure Fleet Database...');
-      } else if (pct < 80) {
-        setStageText('Syncing 24/7 Roadside Emergency Dispatch Network...');
-      } else if (pct < 98) {
-        setStageText('Calibrating Live GPS Telematics & Certified Mechanics...');
+      if (pct < 30) {
+        setStageText('Initializing Roadside Assistance Core...');
+      } else if (pct < 65) {
+        setStageText('Connecting Verified Mechanics & Telematics...');
+      } else if (pct < 95) {
+        setStageText('Locating Active Dispatch Hubs...');
       } else {
-        setStageText('Roadfix Operational • Welcome');
+        setStageText('Roadfix Operational • Ready');
       }
 
       if (pct >= 100) {
@@ -48,57 +46,47 @@ export const RoadfixSplashScreen: React.FC<RoadfixSplashScreenProps> = ({
         setIsFinishing(true);
         setTimeout(() => {
           onComplete();
-        }, 500);
+        }, 300);
       }
-    }, 40);
+    }, 30);
 
     return () => clearInterval(interval);
   }, [minDurationMs, onComplete]);
 
   const handleSkip = () => {
     setIsFinishing(true);
-    setTimeout(onComplete, 200);
+    setTimeout(onComplete, 150);
   };
 
   return (
     <div
-      className={`fixed inset-0 z-50 flex flex-col items-center justify-between bg-slate-950 text-slate-100 overflow-hidden transition-opacity duration-500 selection:bg-amber-500 selection:text-slate-950 ${
-        isFinishing ? 'opacity-0 pointer-events-none scale-105' : 'opacity-100'
+      className={`fixed inset-0 z-50 flex flex-col items-center justify-between bg-[#080D1C] text-[#F1F5F9] overflow-hidden transition-opacity duration-300 ${
+        isFinishing ? 'opacity-0 pointer-events-none' : 'opacity-100'
       }`}
     >
-      {/* Background Animated Glows & Radar Rings */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        {/* Radial ambient gradient lights */}
-        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-b from-amber-500/20 via-amber-600/10 to-transparent rounded-full blur-3xl animate-pulse" />
-        <div className="absolute bottom-10 right-10 w-96 h-96 bg-blue-600/10 rounded-full blur-3xl" />
-        <div className="absolute top-10 left-10 w-80 h-80 bg-orange-600/10 rounded-full blur-3xl" />
-
-        {/* Subtle grid pattern */}
-        <div
-          className="absolute inset-0 opacity-[0.03]"
-          style={{
-            backgroundImage:
-              'linear-gradient(to right, #ffffff 1px, transparent 1px), linear-gradient(to bottom, #ffffff 1px, transparent 1px)',
-            backgroundSize: '40px 40px'
-          }}
+      {/* Background Highway Ambient Layer */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden z-0">
+        <video
+          src="/bg-highway.mp4"
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="absolute inset-0 w-full h-full object-cover opacity-30 mix-blend-screen"
         />
-
-        {/* Concentric radar rings */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[520px] h-[520px] rounded-full border border-amber-500/10 animate-ping opacity-20 pointer-events-none" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[380px] h-[380px] rounded-full border border-amber-500/15 pointer-events-none" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[240px] h-[240px] rounded-full border border-dashed border-amber-500/20 animate-spin pointer-events-none" style={{ animationDuration: '30s' }} />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#080D1C] via-[#080D1C]/80 to-[#080D1C]" />
       </div>
 
       {/* Top Header Bar */}
       <div className="w-full max-w-5xl mx-auto px-6 pt-6 flex items-center justify-between relative z-10">
-        <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-slate-900/90 border border-slate-800 text-[11px] text-slate-300">
-          <Radio className="w-3.5 h-3.5 text-emerald-400 animate-pulse" />
-          <span>ROADFIX FLEET NETWORK • LIVE</span>
+        <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-[#111A2E] border border-[#1E2C48] text-xs text-[#94A3B8]">
+          <Radio className="w-3.5 h-3.5 text-[#10B981] animate-pulse" />
+          <span className="font-semibold tracking-wide text-slate-200">ROADFIX NETWORK • LIVE</span>
         </div>
 
         <button
           onClick={handleSkip}
-          className="text-xs text-slate-400 hover:text-white transition-colors flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-900/60 border border-slate-800/80 hover:border-slate-700"
+          className="text-xs text-[#94A3B8] hover:text-white transition-colors flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-[#111A2E] border border-[#1E2C48] hover:border-[#FFB51B]/50 font-medium cursor-pointer"
         >
           <span>Skip Intro</span>
           <ArrowRight className="w-3.5 h-3.5" />
@@ -107,102 +95,89 @@ export const RoadfixSplashScreen: React.FC<RoadfixSplashScreenProps> = ({
 
       {/* Center Branding & Loading Content */}
       <div className="w-full max-w-xl mx-auto px-6 py-8 flex flex-col items-center text-center relative z-10">
-        {/* Holographic Logo Emblem with Pulse */}
+        {/* Emblem */}
         <div className="relative mb-6">
-          <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-3xl bg-gradient-to-tr from-amber-500 via-amber-400 to-amber-600 p-1 shadow-2xl shadow-amber-500/30 transform hover:scale-105 transition-transform duration-300">
-            <div className="w-full h-full bg-slate-950 rounded-[22px] flex items-center justify-center relative overflow-hidden">
-              {/* Inner ambient shine */}
-              <div className="absolute inset-0 bg-gradient-to-tr from-amber-500/10 to-transparent" />
+          <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl bg-gradient-to-tr from-[#FFB51B] to-[#FFD166] p-0.5 shadow-xl shadow-[#FFB51B]/20">
+            <div className="w-full h-full bg-[#080D1C] rounded-[14px] flex items-center justify-center relative overflow-hidden">
               <div className="relative flex items-center justify-center">
-                <Wrench className="w-12 h-12 text-amber-400 animate-bounce duration-1000" />
-                <Zap className="w-6 h-6 text-amber-300 absolute -bottom-1 -right-1" />
+                <Wrench className="w-10 h-10 text-[#FFB51B]" />
+                <Zap className="w-5 h-5 text-[#FFD166] absolute -bottom-1 -right-1" />
               </div>
             </div>
           </div>
-
-          {/* Animated decorative ring badge */}
-          <div className="absolute -inset-2 rounded-[28px] border border-amber-500/40 animate-pulse pointer-events-none" />
         </div>
 
-        {/* Template App Name */}
+        {/* Title & Tagline */}
         <div className="space-y-2">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/15 border border-amber-500/40 text-amber-300 text-xs font-bold uppercase tracking-widest shadow-inner">
-            <Sparkles className="w-3.5 h-3.5 text-amber-400 animate-spin" style={{ animationDuration: '6s' }} />
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#FFB51B]/15 border border-[#FFB51B]/30 text-[#FFB51B] text-xs font-bold uppercase tracking-wider">
+            <Sparkles className="w-3.5 h-3.5 text-[#FFB51B]" />
             <span>24/7 Smart Roadside Assistance</span>
           </div>
 
-          <h1 className="text-4xl sm:text-6xl font-black tracking-tight text-white flex items-center justify-center gap-2">
-            <span className="bg-gradient-to-r from-amber-400 via-amber-200 to-amber-500 bg-clip-text text-transparent drop-shadow-sm">
-              Roadfix
-            </span>
+          <h1 className="font-heading text-4xl sm:text-5xl font-extrabold tracking-tight text-[#F1F5F9]">
+            Roadfix <span className="text-[#FFB51B]">24/7</span>
           </h1>
 
-          <p className="text-xs sm:text-sm text-slate-300 max-w-md mx-auto leading-relaxed">
+          <p className="text-xs sm:text-sm text-[#94A3B8] max-w-md mx-auto leading-relaxed">
             Emergency Vehicle Breakdown Rescue, Certified Mechanics & Smart Telematics Dispatch
           </p>
         </div>
 
-        {/* Core Feature Badges (Template Preview) */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 w-full mt-8 mb-8">
-          <div className="p-2.5 rounded-2xl bg-slate-900/80 border border-slate-800 text-center flex flex-col items-center gap-1 backdrop-blur-md">
-            <Clock className="w-4 h-4 text-amber-400" />
+        {/* Feature Badges */}
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 w-full mt-6 mb-6">
+          <div className="p-3 rounded-xl bg-[#111A2E] border border-[#1E2C48] text-center flex flex-col items-center gap-1 shadow-sm">
+            <Clock className="w-4 h-4 text-[#FFB51B]" />
             <span className="text-[11px] font-bold text-white">15-Min Arrival</span>
-            <span className="text-[9px] text-slate-400">Fast Dispatch</span>
+            <span className="text-[10px] text-[#94A3B8]">Fast Dispatch</span>
           </div>
 
-          <div className="p-2.5 rounded-2xl bg-slate-900/80 border border-slate-800 text-center flex flex-col items-center gap-1 backdrop-blur-md">
-            <Navigation className="w-4 h-4 text-blue-400" />
+          <div className="p-3 rounded-xl bg-[#111A2E] border border-[#1E2C48] text-center flex flex-col items-center gap-1 shadow-sm">
+            <Navigation className="w-4 h-4 text-[#38BDF8]" />
             <span className="text-[11px] font-bold text-white">Live GPS</span>
-            <span className="text-[9px] text-slate-400">Real-Time Radar</span>
+            <span className="text-[10px] text-[#94A3B8]">Real-Time Radar</span>
           </div>
 
-          <div className="p-2.5 rounded-2xl bg-slate-900/80 border border-slate-800 text-center flex flex-col items-center gap-1 backdrop-blur-md">
-            <Sparkles className="w-4 h-4 text-indigo-400" />
+          <div className="p-3 rounded-xl bg-[#111A2E] border border-[#1E2C48] text-center flex flex-col items-center gap-1 shadow-sm">
+            <Sparkles className="w-4 h-4 text-[#FFD166]" />
             <span className="text-[11px] font-bold text-white">AI Diagnosis</span>
-            <span className="text-[9px] text-slate-400">Instant Scan</span>
+            <span className="text-[10px] text-[#94A3B8]">Instant Scan</span>
           </div>
 
-          <div className="p-2.5 rounded-2xl bg-slate-900/80 border border-slate-800 text-center flex flex-col items-center gap-1 backdrop-blur-md">
-            <Shield className="w-4 h-4 text-emerald-400" />
+          <div className="p-3 rounded-xl bg-[#111A2E] border border-[#1E2C48] text-center flex flex-col items-center gap-1 shadow-sm">
+            <Shield className="w-4 h-4 text-[#10B981]" />
             <span className="text-[11px] font-bold text-white">Certified Pros</span>
-            <span className="text-[9px] text-slate-400">100% Verified</span>
+            <span className="text-[10px] text-[#94A3B8]">100% Verified</span>
           </div>
         </div>
 
-        {/* Dynamic Loading Animation & Progress Bar */}
-        <div className="w-full max-w-md space-y-3">
+        {/* Progress Bar */}
+        <div className="w-full max-w-md space-y-2.5">
           <div className="flex items-center justify-between text-xs">
-            <span className="text-slate-300 font-medium flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-amber-400 animate-ping" />
-              <span className="truncate max-w-[260px] sm:max-w-none">{stageText}</span>
+            <span className="text-[#94A3B8] font-medium flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-[#FFB51B] animate-pulse" />
+              <span className="truncate">{stageText}</span>
             </span>
-            <span className="font-mono font-bold text-amber-400">{progress}%</span>
+            <span className="font-mono font-bold text-[#FFB51B]">{progress}%</span>
           </div>
 
-          {/* Progress bar container */}
-          <div className="w-full h-2 rounded-full bg-slate-900 border border-slate-800 p-0.5 overflow-hidden shadow-inner">
+          <div className="w-full h-1.5 rounded-full bg-[#111A2E] border border-[#1E2C48] overflow-hidden">
             <div
-              className="h-full rounded-full bg-gradient-to-r from-amber-500 via-amber-400 to-amber-300 transition-all duration-150 ease-out shadow-lg shadow-amber-500/50"
+              className="h-full rounded-full bg-gradient-to-r from-[#FFB51B] to-[#FFD166] transition-all duration-100 ease-out"
               style={{ width: `${progress}%` }}
             />
-          </div>
-
-          <div className="flex items-center justify-center gap-2 pt-1 text-[11px] text-slate-400">
-            <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
-            <span>Database Secured • Real-Time Assistance Active</span>
           </div>
         </div>
       </div>
 
-      {/* Footer Branding Info */}
-      <div className="w-full max-w-5xl mx-auto px-6 pb-6 text-center text-xs text-slate-400 relative z-10 flex flex-col sm:flex-row items-center justify-between gap-2 border-t border-slate-900/80 pt-4">
+      {/* Footer */}
+      <div className="w-full max-w-5xl mx-auto px-6 pb-6 text-center text-xs text-[#94A3B8] relative z-10 flex flex-col sm:flex-row items-center justify-between gap-2 border-t border-[#1E2C48] pt-4">
         <div>
           <span className="font-semibold text-slate-300">Roadfix</span> © 2026 Emergency Vehicle Assistance Network
         </div>
         <div className="flex items-center gap-3 text-[11px]">
-          <span className="text-slate-400">ISO 9001 Certified Dispatch</span>
+          <span>ISO 9001 Certified Dispatch</span>
           <span>•</span>
-          <span className="text-emerald-400 font-medium">Pan-India Support</span>
+          <span className="text-[#10B981] font-medium">Pan-India Support</span>
         </div>
       </div>
     </div>

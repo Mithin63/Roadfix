@@ -401,19 +401,19 @@ export const BreakdownModal: React.FC<BreakdownModalProps> = ({
   const chosenVehicle = vehicles.find(v => v.id === selectedVehicleId);
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-slate-950/80 backdrop-blur-md overflow-y-auto">
-      <div className="relative w-full max-w-4xl bg-slate-900 border border-slate-700 rounded-3xl shadow-2xl overflow-hidden my-auto flex flex-col max-h-[92vh]">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-[#080D1C]/85 backdrop-blur-md overflow-y-auto">
+      <div className="relative w-full max-w-4xl bg-[#111A2E] border border-[#1E2C48] rounded-3xl shadow-2xl overflow-hidden my-auto flex flex-col max-h-[92vh]">
         {/* Header with Step indicator */}
-        <div className="p-4 sm:p-5 border-b border-slate-800 bg-slate-950/60 flex items-center justify-between">
+        <div className="p-4 sm:p-5 border-b border-[#1E2C48] bg-[#080D1C]/90 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl bg-amber-500/20 border border-amber-500/40 flex items-center justify-center">
-              <AlertTriangle className="w-5 h-5 text-amber-400" />
+            <div className="w-9 h-9 rounded-xl bg-[#FFB51B]/15 border border-[#FFB51B]/30 flex items-center justify-center">
+              <AlertTriangle className="w-5 h-5 text-[#FFB51B]" />
             </div>
             <div>
-              <h2 className="text-base sm:text-lg font-extrabold text-white">
+              <h2 className="text-base sm:text-lg font-extrabold text-[#F1F5F9] font-heading">
                 Roadside Assistance Request
               </h2>
-              <p className="text-[11px] text-slate-400">
+              <p className="text-[11px] text-[#94A3B8]">
                 Step {currentStep} of 6: {
                   currentStep === 1 ? 'Location Detection' :
                   currentStep === 2 ? 'Select Vehicle' :
@@ -427,16 +427,16 @@ export const BreakdownModal: React.FC<BreakdownModalProps> = ({
 
           <button
             onClick={onClose}
-            className="p-2 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800 transition-colors"
+            className="p-2 rounded-xl text-[#94A3B8] hover:text-[#F1F5F9] hover:bg-[#1E2C48] transition-colors"
           >
             <X className="w-5 h-5" />
           </button>
         </div>
 
         {/* Progress Bar */}
-        <div className="w-full bg-slate-800 h-1.5">
+        <div className="w-full bg-[#080D1C] h-1.5">
           <div
-            className="bg-amber-500 h-1.5 transition-all duration-300"
+            className="bg-[#FFB51B] h-1.5 transition-all duration-300"
             style={{ width: `${(currentStep / 6) * 100}%` }}
           />
         </div>

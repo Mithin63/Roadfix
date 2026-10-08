@@ -96,24 +96,24 @@ export const ImageDamageModal: React.FC<ImageDamageModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-slate-950/80 backdrop-blur-md overflow-y-auto">
-      <div className="w-full max-w-2xl bg-slate-900 border border-slate-700 rounded-3xl shadow-2xl p-6 text-left space-y-5 my-auto animate-in zoom-in-95">
-        <div className="flex items-center justify-between pb-3 border-b border-slate-800">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-[#080D1C]/80 backdrop-blur-md overflow-y-auto">
+      <div className="w-full max-w-2xl bg-[#111A2E] border border-[#1E2C48] rounded-3xl shadow-2xl p-6 text-left space-y-5 my-auto animate-in zoom-in-95">
+        <div className="flex items-center justify-between pb-3 border-b border-[#1E2C48]">
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl bg-amber-500/20 border border-amber-500/40 flex items-center justify-center text-amber-400">
+            <div className="w-10 h-10 rounded-xl bg-[#FFB51B]/15 border border-[#FFB51B]/30 flex items-center justify-center text-[#FFB51B]">
               <Camera className="w-5 h-5" />
             </div>
             <div>
-              <h3 className="text-base font-extrabold text-white">
-                Image-Based Damage Analysis
+              <h3 className="text-base font-black text-slate-100 font-heading">
+                Computer Vision Damage Diagnostics
               </h3>
-              <p className="text-[11px] text-slate-400">Computer Vision component diagnostics</p>
+              <p className="text-[11px] text-slate-400">AI Component Telematics & Structural Assessment</p>
             </div>
           </div>
 
           <button
             onClick={onClose}
-            className="p-1.5 rounded-lg text-slate-400 hover:text-white"
+            className="p-1.5 rounded-xl text-slate-400 hover:text-slate-100 hover:bg-[#1E2C48] transition-all"
           >
             <X className="w-4 h-4" />
           </button>
@@ -121,10 +121,10 @@ export const ImageDamageModal: React.FC<ImageDamageModalProps> = ({
 
         {/* Upload or pick preset */}
         <div className="space-y-3">
-          <label className="border-2 border-dashed border-slate-700 hover:border-amber-500/60 rounded-2xl p-6 flex flex-col items-center justify-center cursor-pointer bg-slate-950/50 hover:bg-slate-950 transition-all text-center">
-            <Upload className="w-8 h-8 text-amber-400 mb-2" />
-            <span className="text-xs font-bold text-white">Upload Vehicle Damage Photo</span>
-            <span className="text-[10px] text-slate-400 mt-0.5">Supports PNG, JPG, WebP</span>
+          <label className="border-2 border-dashed border-[#1E2C48] hover:border-[#FFB51B]/60 rounded-2xl p-6 flex flex-col items-center justify-center cursor-pointer bg-[#080D1C]/70 hover:bg-[#080D1C] transition-all text-center group">
+            <Upload className="w-8 h-8 text-[#FFB51B] mb-2 group-hover:scale-110 transition-transform" />
+            <span className="text-xs font-bold text-slate-100 font-heading">Upload Vehicle Damage Photo</span>
+            <span className="text-[10px] text-slate-400 mt-0.5 font-mono">Supports PNG, JPG, WebP</span>
             <input
               type="file"
               accept="image/*"
@@ -135,22 +135,22 @@ export const ImageDamageModal: React.FC<ImageDamageModalProps> = ({
 
           {/* Sample quick test presets */}
           <div>
-            <span className="text-[10px] uppercase font-bold text-slate-400 block mb-1.5">
-              Or Try A Sample Incident Photo:
+            <span className="text-[10px] uppercase font-bold text-slate-400 block mb-2 tracking-wider">
+              Or Benchmark With Diagnostic Preset:
             </span>
-            <div className="grid grid-cols-3 gap-2">
+            <div className="grid grid-cols-3 gap-2.5">
               {samplePresets.map((p, idx) => (
                 <button
                   key={idx}
                   onClick={() => handleSelectPreset(p)}
-                  className="p-2 rounded-xl bg-slate-950 border border-slate-800 hover:border-amber-500 text-left transition-all"
+                  className="p-2.5 rounded-2xl bg-[#080D1C] border border-[#1E2C48] hover:border-[#FFB51B] text-left transition-all active:scale-95 group"
                 >
                   <img
                     src={p.url}
                     alt={p.title}
-                    className="w-full h-16 object-cover rounded-lg mb-1.5"
+                    className="w-full h-16 object-cover rounded-xl mb-2 group-hover:opacity-90 transition-opacity"
                   />
-                  <div className="text-[11px] font-semibold text-white truncate">{p.title}</div>
+                  <div className="text-[11px] font-bold text-slate-200 truncate font-heading">{p.title}</div>
                 </button>
               ))}
             </div>
@@ -159,45 +159,45 @@ export const ImageDamageModal: React.FC<ImageDamageModalProps> = ({
 
         {/* Selected Image & Analysis Result */}
         {selectedImage && (
-          <div className="p-4 rounded-2xl bg-slate-950 border border-slate-800 space-y-3">
+          <div className="p-4 rounded-2xl bg-[#080D1C] border border-[#1E2C48] space-y-3">
             <div className="flex flex-col sm:flex-row gap-4 items-start">
-              <div className="w-full sm:w-44 h-32 rounded-xl overflow-hidden border border-slate-700 shrink-0">
+              <div className="w-full sm:w-44 h-32 rounded-xl overflow-hidden border border-[#1E2C48] shrink-0">
                 <img src={selectedImage} alt="Analysis Target" className="w-full h-full object-cover" />
               </div>
 
               <div className="flex-1 space-y-2 text-xs">
                 {analyzing ? (
                   <div className="py-6 text-center space-y-2">
-                    <div className="w-6 h-6 border-2 border-amber-400 border-t-transparent rounded-full animate-spin mx-auto" />
+                    <div className="w-6 h-6 border-2 border-[#FFB51B] border-t-transparent rounded-full animate-spin mx-auto" />
                     <p className="text-slate-400 text-xs">Analyzing damage geometry and component tags...</p>
                   </div>
                 ) : analysisResult ? (
                   <div className="space-y-2">
                     <div className="flex items-center justify-between">
-                      <span className="text-emerald-400 font-bold flex items-center gap-1">
+                      <span className="text-[#10B981] font-bold flex items-center gap-1">
                         <CheckCircle2 className="w-4 h-4" />
-                        AI Damage Assessment: {Math.round(analysisResult.confidence * 100)}% Confidence
+                        AI Telematics: {Math.round(analysisResult.confidence * 100)}% Confidence
                       </span>
-                      <span className="text-amber-400 font-bold font-mono">
+                      <span className="text-[#FFB51B] font-bold font-mono">
                         {analysisResult.estimatedCostRange}
                       </span>
                     </div>
 
-                    <p className="text-slate-200 font-medium">
+                    <p className="text-slate-100 font-medium">
                       {analysisResult.identifiedDamage}
                     </p>
 
                     <div className="flex flex-wrap gap-1.5 pt-1">
                       {analysisResult.tags.map((tag: string, i: number) => (
-                        <span key={i} className="text-[10px] px-2 py-0.5 rounded bg-slate-800 text-slate-300 font-mono">
+                        <span key={i} className="text-[10px] px-2.5 py-0.5 rounded-lg bg-[#111A2E] text-[#38BDF8] border border-[#1E2C48] font-mono">
                           #{tag}
                         </span>
                       ))}
                     </div>
 
-                    <div className="text-[11px] text-amber-400/90 italic pt-1 flex items-center gap-1">
+                    <div className="text-[11px] text-[#FFD166] italic pt-1 flex items-center gap-1 font-sans">
                       <Info className="w-3.5 h-3.5 shrink-0" />
-                      <span>AI-generated assessment — mechanic confirmation required.</span>
+                      <span>AI pre-dispatch assessment — certified mechanic will verify on site.</span>
                     </div>
                   </div>
                 ) : null}
@@ -205,15 +205,15 @@ export const ImageDamageModal: React.FC<ImageDamageModalProps> = ({
             </div>
 
             {analysisResult && (
-              <div className="pt-3 border-t border-slate-800 flex justify-end gap-2">
+              <div className="pt-3 border-t border-[#1E2C48] flex justify-end gap-2">
                 <button
                   onClick={() => {
                     onProceedToBooking(analysisResult.suggestedProblem);
                     onClose();
                   }}
-                  className="px-5 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs shadow-lg shadow-amber-500/20"
+                  className="px-5 py-2.5 rounded-xl bg-[#FFB51B] hover:bg-[#FFD166] text-[#080D1C] font-extrabold text-xs shadow-[0_0_18px_rgba(255,181,27,0.3)] transition-all active:scale-95 flex items-center gap-1.5"
                 >
-                  Request Mechanic for this Issue &rarr;
+                  Request Dispatch for this Issue &rarr;
                 </button>
               </div>
             )}

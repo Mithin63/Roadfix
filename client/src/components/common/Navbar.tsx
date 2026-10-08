@@ -52,42 +52,42 @@ export const Navbar: React.FC<NavbarProps> = ({
   const [showNotifications, setShowNotifications] = useState(false);
 
   return (
-    <header className="sticky top-0 z-40 w-full glass-panel border-b border-slate-800/80 bg-slate-950/80 backdrop-blur-md">
+    <header className="sticky top-0 z-40 w-full border-b border-[#1E2C48] bg-[#080D1C]/90 backdrop-blur-md shadow-md">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
         {/* Logo and Brand */}
         <div className="flex items-center gap-6">
           <button
             onClick={() => setCurrentTab('home')}
-            className="flex items-center gap-2.5 text-left group"
+            className="flex items-center gap-2.5 text-left group transition-transform duration-180 hover:scale-[1.02]"
           >
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-amber-500 to-amber-600 p-0.5 shadow-lg shadow-amber-500/20 group-hover:scale-105 transition-transform">
-              <div className="w-full h-full bg-slate-950 rounded-[10px] flex items-center justify-center">
-                <Wrench className="w-5 h-5 text-amber-400 group-hover:text-amber-300 transition-colors" />
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-[#FFB51B] to-[#FFD166] p-0.5 shadow-md shadow-[#FFB51B]/20">
+              <div className="w-full h-full bg-[#080D1C] rounded-[10px] flex items-center justify-center">
+                <Wrench className="w-5 h-5 text-[#FFB51B]" />
               </div>
             </div>
             <div>
               <div className="flex items-center gap-1.5">
-                <span className="font-extrabold text-lg tracking-tight bg-gradient-to-r from-amber-400 via-amber-200 to-white bg-clip-text text-transparent">
+                <span className="font-heading font-extrabold text-lg tracking-tight text-[#F1F5F9]">
                   Roadfix
                 </span>
-                <span className="px-1.5 py-0.5 text-[10px] font-black uppercase tracking-wider rounded bg-amber-500/20 text-amber-300 border border-amber-500/30">
+                <span className="px-1.5 py-0.5 text-[10px] font-extrabold uppercase tracking-wider rounded bg-[#FFB51B]/15 text-[#FFB51B] border border-[#FFB51B]/30">
                   24/7
                 </span>
               </div>
-              <p className="text-[10px] text-slate-400 hidden sm:block font-medium">
+              <p className="text-[10px] text-[#94A3B8] hidden sm:block font-medium">
                 Emergency Breakdown Assistance
               </p>
             </div>
           </button>
 
-          {/* Location Badge */}
+          {/* Location Badge with Cyan GPS Telematics */}
           <button
             onClick={detectLocation}
             title="Click to detect current GPS location"
-            className="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-lg bg-slate-900 border border-slate-800 text-xs text-slate-300 hover:border-slate-700 hover:text-white transition-all max-w-[220px]"
+            className="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-xl bg-[#111A2E] border border-[#1E2C48] text-xs text-[#F1F5F9] hover:border-[#38BDF8]/60 transition-all duration-180 max-w-[240px]"
           >
-            <MapPin className="w-3.5 h-3.5 text-amber-400 shrink-0 animate-pulse" />
-            <span className="truncate">{activeLocation.address}</span>
+            <MapPin className="w-3.5 h-3.5 text-[#38BDF8] shrink-0" />
+            <span className="truncate text-[11px] font-medium text-slate-200">{activeLocation.address}</span>
           </button>
         </div>
 
@@ -96,9 +96,9 @@ export const Navbar: React.FC<NavbarProps> = ({
           {/* AI Vehicle Assistant button */}
           <button
             onClick={onOpenAiAssistant}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-indigo-950/60 hover:bg-indigo-900/60 text-indigo-300 border border-indigo-500/30 text-xs font-semibold shadow-sm transition-all hover:border-indigo-400"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#111A2E] hover:bg-[#17233D] text-[#38BDF8] border border-[#1E2C48] hover:border-[#38BDF8]/50 text-xs font-semibold shadow-sm transition-all duration-180"
           >
-            <Bot className="w-3.5 h-3.5 text-indigo-400" />
+            <Bot className="w-3.5 h-3.5 text-[#38BDF8]" />
             <span className="hidden sm:inline">AI Vehicle Assistant</span>
             <span className="sm:hidden">AI Helper</span>
           </button>
@@ -106,18 +106,18 @@ export const Navbar: React.FC<NavbarProps> = ({
           {/* AI Damage Visual Scanner */}
           <button
             onClick={onOpenDamageAnalysis}
-            className="hidden lg:flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-800 text-xs font-medium transition-all"
+            className="hidden lg:flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#111A2E] hover:bg-[#17233D] text-[#F1F5F9] border border-[#1E2C48] hover:border-[#FFB51B]/50 text-xs font-medium transition-all duration-180"
           >
-            <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+            <Sparkles className="w-3.5 h-3.5 text-[#FFB51B]" />
             <span>AI Damage Scan</span>
           </button>
 
-          {/* Emergency SOS Button */}
+          {/* Emergency SOS Button (Red reserved exclusively for SOS) */}
           <button
             onClick={onOpenSos}
-            className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-red-600/90 hover:bg-red-600 text-white text-xs font-bold tracking-wide shadow-lg shadow-red-600/25 border border-red-500 animate-pulse-fast transition-all"
+            className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-[#DC2626] hover:bg-[#EF4444] text-white text-xs font-extrabold tracking-wide shadow-md shadow-red-600/30 border border-red-500 transition-all duration-180 cursor-pointer"
           >
-            <span className="w-2 h-2 rounded-full bg-white animate-ping" />
+            <span className="w-2 h-2 rounded-full bg-white" />
             <span>SOS</span>
           </button>
         </div>

@@ -59,6 +59,13 @@ export const api = {
       body: JSON.stringify(payload)
     }),
   getMe: () => fetchJson<{ success: boolean; user: User }>('/auth/me'),
+  getRegisteredUsers: () =>
+    fetchJson<{
+      success: boolean;
+      totalRegistered: number;
+      serverEngine: string;
+      registrations: any[];
+    }>('/auth/registered-users'),
   updateProfile: (payload: any) =>
     fetchJson<{ success: boolean; message: string; user: User }>('/auth/profile', {
       method: 'PUT',

@@ -108,19 +108,19 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-slate-950/85 backdrop-blur-md overflow-y-auto">
-      <div className="relative w-full max-w-2xl bg-slate-900 border border-slate-700 rounded-3xl shadow-2xl overflow-hidden my-auto flex flex-col max-h-[92vh]">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-[#080D1C]/80 backdrop-blur-md overflow-y-auto">
+      <div className="relative w-full max-w-2xl bg-[#111A2E] border border-[#1E2C48] rounded-3xl shadow-2xl overflow-hidden my-auto flex flex-col max-h-[92vh] animate-in zoom-in-95">
         {/* Header */}
-        <div className="p-4 sm:p-5 border-b border-slate-800 bg-slate-950/60 flex items-center justify-between">
+        <div className="p-4 sm:p-5 border-b border-[#1E2C48] bg-[#080D1C]/90 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-amber-500/20 border border-amber-500/40 flex items-center justify-center">
-              <CreditCard className="w-5 h-5 text-amber-400" />
+            <div className="w-10 h-10 rounded-xl bg-[#FFB51B]/15 border border-[#FFB51B]/30 flex items-center justify-center text-[#FFB51B]">
+              <CreditCard className="w-5 h-5" />
             </div>
             <div>
-              <h2 className="text-base sm:text-lg font-extrabold text-white">
+              <h2 className="text-base sm:text-lg font-extrabold text-[#F1F5F9] font-heading">
                 {paymentSuccess ? 'Digital Tax Invoice & Receipt' : 'Secure Roadside Settlement'}
               </h2>
-              <p className="text-[11px] text-slate-400 font-mono">
+              <p className="text-[11px] text-[#94A3B8] font-mono">
                 Booking ID: {booking?.id}
               </p>
             </div>
@@ -128,7 +128,7 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({
 
           <button
             onClick={onClose}
-            className="p-2 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800 transition-colors"
+            className="p-2 rounded-xl text-[#94A3B8] hover:text-[#F1F5F9] hover:bg-[#1E2C48] transition-colors"
           >
             <X className="w-5 h-5" />
           </button>
@@ -137,63 +137,63 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({
         {/* Content */}
         <div className="p-5 sm:p-6 overflow-y-auto space-y-6 flex-1 text-left">
           {loading ? (
-            <div className="py-16 text-center text-xs text-slate-400">Loading invoice details...</div>
+            <div className="py-16 text-center text-xs text-[#94A3B8]">Loading invoice details...</div>
           ) : paymentSuccess && invoice ? (
             /* DIGITAL INVOICE RECEIPT VIEW */
             <div className="space-y-5 animate-in fade-in" id="printable-invoice">
-              <div className="p-5 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 flex items-center gap-3 text-emerald-400">
+              <div className="p-5 rounded-2xl bg-[#10B981]/15 border border-[#10B981]/30 flex items-center gap-3 text-[#10B981]">
                 <CheckCircle2 className="w-6 h-6 shrink-0" />
                 <div>
-                  <h4 className="text-sm font-bold">Payment Successfully Settled</h4>
-                  <p className="text-xs text-slate-300">
+                  <h4 className="text-sm font-extrabold font-heading">Payment Successfully Settled</h4>
+                  <p className="text-xs text-[#94A3B8]">
                     A digital copy has been recorded in your vehicle repair history.
                   </p>
                 </div>
               </div>
 
               {/* Printable Invoice Sheet */}
-              <div className="p-6 rounded-2xl bg-slate-950 border border-slate-800 space-y-4 font-sans text-xs">
-                <div className="flex justify-between items-start border-b border-slate-800 pb-4">
+              <div className="p-6 rounded-2xl bg-[#080D1C] border border-[#1E2C48] space-y-4 font-sans text-xs">
+                <div className="flex justify-between items-start border-b border-[#1E2C48] pb-4">
                   <div>
-                    <h3 className="text-base font-black text-white">Roadfix</h3>
-                    <p className="text-[11px] text-slate-400">24x7 Roadside Assistance Network</p>
-                    <p className="text-[10px] text-slate-500 mt-1">GSTIN: 27AABCR9912Q1Z4</p>
+                    <h3 className="text-base font-extrabold text-[#F1F5F9] font-heading">Roadfix</h3>
+                    <p className="text-[11px] text-[#94A3B8]">24x7 Roadside Assistance Network</p>
+                    <p className="text-[10px] text-[#64748B] mt-1">GSTIN: 27AABCR9912Q1Z4</p>
                   </div>
                   <div className="text-right">
-                    <span className="text-xs font-mono font-bold text-amber-400">{invoice.invoiceNumber}</span>
-                    <p className="text-[11px] text-slate-400 mt-0.5">Date: {new Date(invoice.serviceDate).toLocaleDateString()}</p>
-                    <span className="inline-block mt-1 px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-400 font-bold uppercase text-[10px]">
+                    <span className="text-xs font-mono font-bold text-[#FFB51B]">{invoice.invoiceNumber}</span>
+                    <p className="text-[11px] text-[#94A3B8] mt-0.5">Date: {new Date(invoice.serviceDate).toLocaleDateString()}</p>
+                    <span className="inline-block mt-1 px-2 py-0.5 rounded bg-[#10B981]/20 text-[#10B981] font-bold uppercase text-[10px]">
                       PAID • {invoice.paymentMethod}
                     </span>
                   </div>
                 </div>
 
-                <div className="grid grid-cols-2 gap-4 text-slate-300 py-1">
+                <div className="grid grid-cols-2 gap-4 text-[#94A3B8] py-1">
                   <div>
-                    <span className="text-slate-500 text-[10px] uppercase font-bold block">Billed To</span>
-                    <p className="font-semibold text-white mt-0.5">{invoice.customerName}</p>
-                    <p className="text-slate-400">{invoice.customerPhone}</p>
-                    <p className="text-slate-400">{invoice.vehicleInfo}</p>
+                    <span className="text-[#64748B] text-[10px] uppercase font-bold block">Billed To</span>
+                    <p className="font-semibold text-[#F1F5F9] mt-0.5">{invoice.customerName}</p>
+                    <p className="text-[#94A3B8]">{invoice.customerPhone}</p>
+                    <p className="text-[#94A3B8]">{invoice.vehicleInfo}</p>
                   </div>
                   <div>
-                    <span className="text-slate-500 text-[10px] uppercase font-bold block">Assigned Workshop</span>
-                    <p className="font-semibold text-white mt-0.5">{invoice.mechanicWorkshop}</p>
-                    <p className="text-slate-400">Technician: {invoice.mechanicName}</p>
+                    <span className="text-[#64748B] text-[10px] uppercase font-bold block">Assigned Workshop</span>
+                    <p className="font-semibold text-[#F1F5F9] mt-0.5">{invoice.mechanicWorkshop}</p>
+                    <p className="text-[#94A3B8]">Technician: {invoice.mechanicName}</p>
                   </div>
                 </div>
 
                 {/* Itemized Table */}
-                <div className="border border-slate-800 rounded-xl overflow-hidden mt-3">
+                <div className="border border-[#1E2C48] rounded-xl overflow-hidden mt-3">
                   <table className="w-full text-left">
-                    <thead className="bg-slate-900 text-slate-400 font-bold text-[10px] uppercase border-b border-slate-800">
+                    <thead className="bg-[#111A2E] text-[#94A3B8] font-bold text-[10px] uppercase border-b border-[#1E2C48]">
                       <tr>
                         <th className="p-2.5">Service / Component Item</th>
                         <th className="p-2.5 text-right">Amount (₹)</th>
                       </tr>
                     </thead>
-                    <tbody className="divide-y divide-slate-800/80">
+                    <tbody className="divide-y divide-[#1E2C48]">
                       {invoice.items.map((item, idx) => (
-                        <tr key={idx} className="text-slate-300">
+                        <tr key={idx} className="text-[#F1F5F9]">
                           <td className="p-2.5">{item.description}</td>
                           <td className="p-2.5 text-right font-mono font-medium">₹{item.amount}</td>
                         </tr>
@@ -203,18 +203,18 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({
                 </div>
 
                 {/* Subtotals & Taxes */}
-                <div className="space-y-1.5 pt-2 border-t border-slate-800 text-right">
-                  <div className="flex justify-between text-slate-400">
+                <div className="space-y-1.5 pt-2 border-t border-[#1E2C48] text-right">
+                  <div className="flex justify-between text-[#94A3B8]">
                     <span>Subtotal:</span>
                     <span className="font-mono">₹{invoice.subtotal}</span>
                   </div>
-                  <div className="flex justify-between text-slate-400">
+                  <div className="flex justify-between text-[#94A3B8]">
                     <span>GST (18% Statutory Rate):</span>
                     <span className="font-mono">₹{invoice.tax}</span>
                   </div>
-                  <div className="flex justify-between text-sm font-extrabold text-white pt-1 border-t border-slate-800">
+                  <div className="flex justify-between text-sm font-extrabold text-[#F1F5F9] pt-1 border-t border-[#1E2C48]">
                     <span>Total Settled:</span>
-                    <span className="text-amber-400 font-mono">₹{invoice.total}</span>
+                    <span className="text-[#FFB51B] font-mono">₹{invoice.total}</span>
                   </div>
                 </div>
               </div>
@@ -223,14 +223,14 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({
               <div className="flex items-center justify-end gap-3 pt-2">
                 <button
                   onClick={handlePrint}
-                  className="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-semibold text-xs flex items-center gap-1.5 transition-colors"
+                  className="px-4 py-2 rounded-xl bg-[#1E2C48] hover:bg-[#2A3E66] text-[#F1F5F9] font-semibold text-xs flex items-center gap-1.5 transition-colors"
                 >
                   <Printer className="w-4 h-4" />
                   Print Receipt
                 </button>
                 <button
                   onClick={onClose}
-                  className="px-6 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs"
+                  className="px-6 py-2 rounded-xl bg-[#FFB51B] hover:bg-[#FFD166] text-[#080D1C] font-extrabold text-xs btn-primary-amber"
                 >
                   Done
                 </button>
@@ -240,17 +240,17 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({
             /* PAYMENT SELECTION FLOW */
             <div className="space-y-6">
               {/* Bill Overview */}
-              <div className="p-4 rounded-2xl bg-slate-950 border border-slate-800 space-y-3">
+              <div className="p-4 rounded-2xl bg-[#080D1C] border border-[#1E2C48] space-y-3">
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-bold uppercase text-amber-400 tracking-wider">
+                  <span className="text-xs font-bold uppercase text-[#FFB51B] tracking-wider font-heading">
                     Total Amount Due
                   </span>
-                  <span className="text-2xl font-black text-white font-mono">
+                  <span className="text-2xl font-black text-[#F1F5F9] font-mono">
                     ₹{booking?.pricing.total}
                   </span>
                 </div>
 
-                <div className="space-y-1 text-xs text-slate-400 border-t border-slate-800 pt-2">
+                <div className="space-y-1 text-xs text-[#94A3B8] border-t border-[#1E2C48] pt-2">
                   <div className="flex justify-between">
                     <span>Base Callout Fee:</span>
                     <span className="font-mono">₹{booking?.pricing.baseService}</span>
@@ -270,7 +270,7 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({
                     </div>
                   ) : null}
                   {booking?.pricing.additionalCharges ? (
-                    <div className="flex justify-between text-amber-300">
+                    <div className="flex justify-between text-[#FFD166]">
                       <span>Approved Additional Charges:</span>
                       <span className="font-mono">₹{booking.pricing.additionalCharges}</span>
                     </div>
@@ -280,7 +280,7 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({
 
               {/* Payment Methods */}
               <div className="space-y-3">
-                <label className="text-xs font-bold uppercase tracking-wider text-slate-300 block">
+                <label className="text-xs font-bold uppercase tracking-wider text-[#F1F5F9] block font-heading">
                   Select Payment Gateway
                 </label>
 
@@ -300,8 +300,8 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({
                         onClick={() => setSelectedMethod(m.id as any)}
                         className={`p-3 rounded-2xl border text-center transition-all flex flex-col items-center justify-center gap-1.5 ${
                           isSelected
-                            ? 'bg-amber-500/20 border-amber-500 text-amber-300 shadow-md'
-                            : 'bg-slate-950/60 border-slate-800 text-slate-400 hover:text-slate-200'
+                            ? 'bg-[#FFB51B]/20 border-[#FFB51B] text-[#FFD166] shadow-md'
+                            : 'bg-[#080D1C] border-[#1E2C48] text-[#94A3B8] hover:text-[#F1F5F9]'
                         }`}
                       >
                         <Icon className="w-5 h-5" />
@@ -314,7 +314,7 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({
 
               {/* Dynamic Payment Method Fields */}
               {selectedMethod === 'upi' && (
-                <div className="p-4 rounded-2xl bg-slate-950/80 border border-slate-800 space-y-3">
+                <div className="p-4 rounded-2xl bg-[#080D1C] border border-[#1E2C48] space-y-3">
                   <div className="flex flex-col sm:flex-row items-center gap-4">
                     {/* Simulated QR Code */}
                     <div className="w-28 h-28 bg-white p-2 rounded-xl flex items-center justify-center shrink-0 shadow-md">
@@ -334,7 +334,7 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({
                     </div>
 
                     <div className="space-y-2 flex-1 w-full text-left">
-                      <div className="text-xs text-slate-300">
+                      <div className="text-xs text-[#94A3B8]">
                         Scan with <strong>Google Pay, PhonePe, Paytm, or BHIM</strong>, or enter VPA ID:
                       </div>
                       <input
@@ -342,7 +342,7 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({
                         value={upiId}
                         onChange={(e) => setUpiId(e.target.value)}
                         placeholder="yourname@okhdfcbank"
-                        className="w-full px-3 py-2 rounded-xl bg-slate-900 border border-slate-700 text-xs text-white"
+                        className="w-full px-3 py-2 rounded-xl bg-[#111A2E] border border-[#1E2C48] text-xs text-[#F1F5F9] field-input"
                       />
                     </div>
                   </div>
@@ -350,33 +350,33 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({
               )}
 
               {selectedMethod === 'card' && (
-                <div className="p-4 rounded-2xl bg-slate-950/80 border border-slate-800 space-y-3">
+                <div className="p-4 rounded-2xl bg-[#080D1C] border border-[#1E2C48] space-y-3">
                   <div>
-                    <label className="text-[11px] text-slate-400">Card Number</label>
+                    <label className="text-[11px] text-[#94A3B8]">Card Number</label>
                     <input
                       type="text"
                       value={cardInfo.number}
                       onChange={(e) => setCardInfo({ ...cardInfo, number: e.target.value })}
-                      className="w-full mt-1 px-3 py-2 rounded-xl bg-slate-900 border border-slate-700 text-xs text-white font-mono"
+                      className="w-full mt-1 px-3 py-2 rounded-xl bg-[#111A2E] border border-[#1E2C48] text-xs text-[#F1F5F9] font-mono field-input"
                     />
                   </div>
                   <div className="grid grid-cols-2 gap-3">
                     <div>
-                      <label className="text-[11px] text-slate-400">Expiry (MM/YY)</label>
+                      <label className="text-[11px] text-[#94A3B8]">Expiry (MM/YY)</label>
                       <input
                         type="text"
                         value={cardInfo.exp}
                         onChange={(e) => setCardInfo({ ...cardInfo, exp: e.target.value })}
-                        className="w-full mt-1 px-3 py-2 rounded-xl bg-slate-900 border border-slate-700 text-xs text-white"
+                        className="w-full mt-1 px-3 py-2 rounded-xl bg-[#111A2E] border border-[#1E2C48] text-xs text-[#F1F5F9] field-input"
                       />
                     </div>
                     <div>
-                      <label className="text-[11px] text-slate-400">CVV</label>
+                      <label className="text-[11px] text-[#94A3B8]">CVV</label>
                       <input
                         type="password"
                         value={cardInfo.cvv}
                         onChange={(e) => setCardInfo({ ...cardInfo, cvv: e.target.value })}
-                        className="w-full mt-1 px-3 py-2 rounded-xl bg-slate-900 border border-slate-700 text-xs text-white"
+                        className="w-full mt-1 px-3 py-2 rounded-xl bg-[#111A2E] border border-[#1E2C48] text-xs text-[#F1F5F9] field-input"
                       />
                     </div>
                   </div>
@@ -384,9 +384,9 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({
               )}
 
               {selectedMethod === 'cash' && (
-                <div className="p-4 rounded-2xl bg-slate-950/80 border border-slate-800 text-xs text-slate-300 space-y-1">
-                  <p className="font-semibold text-white">Cash Settlement to Mechanic</p>
-                  <p className="text-slate-400">
+                <div className="p-4 rounded-2xl bg-[#080D1C] border border-[#1E2C48] text-xs text-[#94A3B8] space-y-1">
+                  <p className="font-semibold text-[#F1F5F9]">Cash Settlement to Mechanic</p>
+                  <p className="text-[#94A3B8]">
                     Hand ₹{booking?.pricing.total} cash directly to the mechanic after on-site testing. Mechanic will mark payment received on their device.
                   </p>
                 </div>
@@ -396,9 +396,9 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({
               <button
                 disabled={isProcessing}
                 onClick={handlePay}
-                className="w-full py-3.5 rounded-2xl bg-gradient-to-r from-amber-500 to-amber-400 hover:from-amber-400 hover:to-amber-300 text-slate-950 font-black text-sm flex items-center justify-center gap-2 shadow-xl shadow-amber-500/30 transition-transform hover:scale-[1.01]"
+                className="w-full py-3.5 rounded-2xl bg-[#FFB51B] hover:bg-[#FFD166] text-[#080D1C] font-extrabold text-sm flex items-center justify-center gap-2 shadow-xl shadow-[#FFB51B]/30 transition-transform hover:scale-[1.01] btn-primary-amber"
               >
-                <ShieldCheck className="w-5 h-5 text-slate-950" />
+                <ShieldCheck className="w-5 h-5 text-[#080D1C]" />
                 <span>{isProcessing ? 'Authorizing Payment...' : `Complete Payment of ₹${booking?.pricing.total}`}</span>
               </button>
             </div>

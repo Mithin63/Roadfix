@@ -51,7 +51,7 @@ export const RepairHistoryView: React.FC<RepairHistoryViewProps> = ({
         <div>
           <button
             onClick={onBack}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-300 hover:text-white border border-slate-800 text-xs font-bold transition-colors shadow-md"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-[#111A2E] hover:bg-[#1E2C48] text-slate-300 hover:text-white border border-[#1E2C48] text-xs font-bold transition-all shadow-md active:scale-95"
           >
             <span>← Back to Dashboard</span>
           </button>
@@ -59,14 +59,14 @@ export const RepairHistoryView: React.FC<RepairHistoryViewProps> = ({
       )}
 
       <div>
-        <h2 className="text-xl sm:text-2xl font-black text-white">Roadside Repair History</h2>
-        <p className="text-xs text-slate-400">Complete record of roadside assistance incidents, invoices, and technician ratings</p>
+        <h2 className="text-xl sm:text-2xl font-black text-slate-100 font-heading tracking-tight">Roadside Repair History</h2>
+        <p className="text-xs text-slate-400">Complete record of roadside assistance incidents, digital invoices, and technician ratings</p>
       </div>
 
       {loading ? (
-        <div className="py-16 text-center text-xs text-slate-400">Loading repair records...</div>
+        <div className="py-16 text-center text-xs text-slate-400 font-medium">Loading repair records telemetry...</div>
       ) : bookings.length === 0 ? (
-        <div className="p-12 text-center text-xs text-slate-500 bg-slate-900 rounded-3xl border border-slate-800">
+        <div className="p-12 text-center text-xs text-slate-400 bg-[#111A2E] rounded-3xl border border-[#1E2C48]">
           No previous roadside service records found.
         </div>
       ) : (
@@ -79,25 +79,25 @@ export const RepairHistoryView: React.FC<RepairHistoryViewProps> = ({
                 <div
                   key={b.id}
                   onClick={() => setSelectedRecord(b)}
-                  className={`p-4 rounded-2xl cursor-pointer border transition-all text-left space-y-2 ${
+                  className={`p-4 rounded-2xl cursor-pointer border transition-all text-left space-y-2.5 ${
                     isSelected
-                      ? 'bg-amber-500/15 border-amber-500 shadow-md'
-                      : 'bg-slate-900 border-slate-800 hover:border-slate-700'
+                      ? 'bg-[#FFB51B]/15 border-[#FFB51B] shadow-[0_0_20px_rgba(255,181,27,0.15)]'
+                      : 'bg-[#111A2E] border-[#1E2C48] hover:border-slate-600'
                   }`}
                 >
                   <div className="flex items-center justify-between">
-                    <span className="font-mono text-[11px] font-bold text-amber-400">
+                    <span className="font-mono text-[11px] font-bold text-[#FFB51B]">
                       {b.id}
                     </span>
-                    <span className={`text-[10px] uppercase font-bold px-2 py-0.5 rounded ${
-                      b.status === 'payment_completed' ? 'bg-emerald-500/20 text-emerald-400' : 'bg-slate-800 text-slate-300'
+                    <span className={`text-[10px] uppercase font-bold px-2 py-0.5 rounded border ${
+                      b.status === 'payment_completed' ? 'bg-[#10B981]/20 text-[#10B981] border-[#10B981]/30' : 'bg-slate-800 text-slate-300 border-slate-700'
                     }`}>
                       {b.status.replace(/_/g, ' ')}
                     </span>
                   </div>
 
                   <div>
-                    <h4 className="text-xs font-bold text-white capitalize">
+                    <h4 className="text-xs font-bold text-slate-100 capitalize font-heading">
                       {b.problemType.replace(/_/g, ' ')}
                     </h4>
                     <p className="text-[11px] text-slate-400">
@@ -105,11 +105,11 @@ export const RepairHistoryView: React.FC<RepairHistoryViewProps> = ({
                     </p>
                   </div>
 
-                  <div className="flex items-center justify-between text-xs pt-1 border-t border-slate-800/80">
-                    <span className="text-slate-400">
+                  <div className="flex items-center justify-between text-xs pt-2 border-t border-[#1E2C48]">
+                    <span className="text-slate-400 font-mono text-[11px]">
                       {new Date(b.createdAt).toLocaleDateString()}
                     </span>
-                    <span className="font-black text-white font-mono">
+                    <span className="font-black text-[#FFB51B] font-mono">
                       ₹{b.pricing.total}
                     </span>
                   </div>
@@ -121,13 +121,13 @@ export const RepairHistoryView: React.FC<RepairHistoryViewProps> = ({
           {/* Record Details View */}
           <div className="lg:col-span-2">
             {selectedRecord ? (
-              <div className="p-6 rounded-3xl bg-slate-900 border border-slate-800 space-y-5 shadow-xl">
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-800 pb-4">
+              <div className="p-6 rounded-3xl bg-[#111A2E] border border-[#1E2C48] space-y-5 shadow-2xl">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[#1E2C48] pb-4">
                   <div>
-                    <span className="text-xs font-mono font-bold text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded">
+                    <span className="text-xs font-mono font-bold text-[#FFB51B] bg-[#FFB51B]/10 border border-[#FFB51B]/20 px-2 py-0.5 rounded">
                       {selectedRecord.id}
                     </span>
-                    <h3 className="text-lg font-extrabold text-white mt-1 capitalize">
+                    <h3 className="text-lg font-black text-slate-100 mt-1.5 capitalize font-heading">
                       {selectedRecord.problemType.replace(/_/g, ' ')}
                     </h3>
                     <p className="text-xs text-slate-400">
@@ -138,17 +138,17 @@ export const RepairHistoryView: React.FC<RepairHistoryViewProps> = ({
                   <div className="flex items-center gap-2">
                     <button
                       onClick={() => onViewInvoice(selectedRecord.id)}
-                      className="px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-bold text-slate-200 flex items-center gap-1.5 transition-colors"
+                      className="px-3.5 py-2 rounded-xl bg-[#080D1C] hover:bg-[#17233D] text-xs font-bold text-slate-200 border border-[#1E2C48] flex items-center gap-1.5 transition-all active:scale-95"
                     >
-                      <FileText className="w-3.5 h-3.5 text-amber-400" />
+                      <FileText className="w-3.5 h-3.5 text-[#38BDF8]" />
                       View Invoice
                     </button>
                     {selectedRecord.status === 'payment_completed' && (
                       <button
                         onClick={() => onRateBooking(selectedRecord.id)}
-                        className="px-3.5 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-xs font-bold text-slate-950 flex items-center gap-1.5 transition-colors"
+                        className="px-3.5 py-2 rounded-xl bg-[#FFB51B] hover:bg-[#FFD166] text-xs font-bold text-[#080D1C] flex items-center gap-1.5 transition-all shadow-[0_0_15px_rgba(255,181,27,0.3)] active:scale-95"
                       >
-                        <Star className="w-3.5 h-3.5" />
+                        <Star className="w-3.5 h-3.5 fill-[#080D1C]" />
                         Rate
                       </button>
                     )}
@@ -157,18 +157,18 @@ export const RepairHistoryView: React.FC<RepairHistoryViewProps> = ({
 
                 {/* Details Grid */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
-                  <div className="p-4 rounded-xl bg-slate-950/70 border border-slate-800 space-y-2">
+                  <div className="p-4 rounded-2xl bg-[#080D1C] border border-[#1E2C48] space-y-2">
                     <span className="text-[10px] text-slate-500 uppercase font-bold tracking-wider block">
-                      Vehicle & Location
+                      Vehicle & Telematics
                     </span>
-                    <p className="font-bold text-white text-sm">
+                    <p className="font-bold text-slate-100 text-sm font-heading">
                       {selectedRecord.vehicleInfo.make} {selectedRecord.vehicleInfo.model}
                     </p>
-                    <p className="font-mono text-slate-300">{selectedRecord.vehicleInfo.regNo}</p>
+                    <p className="font-mono text-[#38BDF8]">{selectedRecord.vehicleInfo.regNo}</p>
                     <p className="text-slate-400">{selectedRecord.customerAddress}</p>
                   </div>
 
-                  <div className="p-4 rounded-xl bg-slate-950/70 border border-slate-800 space-y-2">
+                  <div className="p-4 rounded-2xl bg-[#080D1C] border border-[#1E2C48] space-y-2">
                     <span className="text-[10px] text-slate-500 uppercase font-bold tracking-wider block">
                       Assigned Mechanic
                     </span>
@@ -176,18 +176,18 @@ export const RepairHistoryView: React.FC<RepairHistoryViewProps> = ({
                       <img
                         src={selectedRecord.mechanicAvatar || 'https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&w=200&q=80'}
                         alt="Mechanic"
-                        className="w-8 h-8 rounded-lg object-cover ring-1 ring-slate-700"
+                        className="w-9 h-9 rounded-xl object-cover ring-1 ring-[#1E2C48]"
                       />
                       <div>
-                        <p className="font-bold text-white">{selectedRecord.mechanicName || 'Certified Mechanic'}</p>
-                        <p className="text-slate-400">{selectedRecord.mechanicPhone || '+91 98205 77112'}</p>
+                        <p className="font-bold text-slate-100 font-heading">{selectedRecord.mechanicName || 'Certified Mechanic'}</p>
+                        <p className="text-slate-400 font-mono text-[11px]">{selectedRecord.mechanicPhone || '+91 98205 77112'}</p>
                       </div>
                     </div>
                   </div>
                 </div>
 
                 {/* Work & Diagnosis */}
-                <div className="p-4 rounded-xl bg-slate-950/70 border border-slate-800 space-y-2 text-xs">
+                <div className="p-4 rounded-2xl bg-[#080D1C] border border-[#1E2C48] space-y-2 text-xs">
                   <span className="text-[10px] text-slate-500 uppercase font-bold tracking-wider block">
                     Technical Work Performed
                   </span>
@@ -207,11 +207,11 @@ export const RepairHistoryView: React.FC<RepairHistoryViewProps> = ({
                     <span className="text-[10px] text-slate-500 uppercase font-bold tracking-wider block">
                       Spare Parts Replaced
                     </span>
-                    <div className="border border-slate-800 rounded-xl overflow-hidden divide-y divide-slate-800">
+                    <div className="border border-[#1E2C48] rounded-2xl overflow-hidden divide-y divide-[#1E2C48]">
                       {selectedRecord.spareParts.map((p, idx) => (
-                        <div key={idx} className="p-2.5 flex justify-between bg-slate-950/50">
+                        <div key={idx} className="p-3 flex justify-between bg-[#080D1C]/80">
                           <span className="text-slate-300">{p.name} (x{p.quantity})</span>
-                          <span className="font-mono text-amber-400 font-bold">₹{p.price * p.quantity}</span>
+                          <span className="font-mono text-[#FFB51B] font-bold">₹{p.price * p.quantity}</span>
                         </div>
                       ))}
                     </div>
@@ -219,31 +219,31 @@ export const RepairHistoryView: React.FC<RepairHistoryViewProps> = ({
                 )}
 
                 {/* Cost Breakdown */}
-                <div className="p-4 rounded-xl bg-slate-950 border border-slate-800 space-y-1.5 text-xs">
+                <div className="p-4 rounded-2xl bg-[#080D1C] border border-[#1E2C48] space-y-2 text-xs">
                   <span className="text-[10px] text-slate-500 uppercase font-bold tracking-wider block mb-2">
                     Settled Cost Breakdown
                   </span>
                   <div className="flex justify-between text-slate-400">
                     <span>Base Service Callout:</span>
-                    <span className="font-mono">₹{selectedRecord.pricing.baseService}</span>
+                    <span className="font-mono text-slate-300">₹{selectedRecord.pricing.baseService}</span>
                   </div>
                   <div className="flex justify-between text-slate-400">
                     <span>Travel & Dispatch:</span>
-                    <span className="font-mono">₹{selectedRecord.pricing.travelCharge}</span>
+                    <span className="font-mono text-slate-300">₹{selectedRecord.pricing.travelCharge}</span>
                   </div>
                   <div className="flex justify-between text-slate-400">
                     <span>Technical Labour:</span>
-                    <span className="font-mono">₹{selectedRecord.pricing.labour}</span>
+                    <span className="font-mono text-slate-300">₹{selectedRecord.pricing.labour}</span>
                   </div>
                   {selectedRecord.pricing.parts > 0 && (
                     <div className="flex justify-between text-slate-400">
                       <span>Spare Parts:</span>
-                      <span className="font-mono">₹{selectedRecord.pricing.parts}</span>
+                      <span className="font-mono text-slate-300">₹{selectedRecord.pricing.parts}</span>
                     </div>
                   )}
-                  <div className="pt-2 border-t border-slate-800 flex justify-between font-black text-sm text-white">
-                    <span>Total Bill:</span>
-                    <span className="text-amber-400 font-mono">₹{selectedRecord.pricing.total}</span>
+                  <div className="pt-2.5 border-t border-[#1E2C48] flex justify-between font-black text-sm text-slate-100">
+                    <span>Total Settled Bill:</span>
+                    <span className="text-[#FFB51B] font-mono text-base font-extrabold">₹{selectedRecord.pricing.total}</span>
                   </div>
                 </div>
               </div>

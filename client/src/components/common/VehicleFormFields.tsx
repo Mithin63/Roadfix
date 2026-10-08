@@ -138,7 +138,7 @@ export const VehicleFormFields: React.FC<VehicleFormFieldsProps> = ({
             value={data.type}
             onChange={(e) => handleTypeChange(e.target.value as any)}
             required={required}
-            className="w-full px-3 py-2.5 rounded-xl bg-slate-950 border border-slate-700 text-white text-xs focus:outline-none focus:border-amber-400 cursor-pointer"
+            className="w-full px-3 py-2.5 rounded-xl bg-slate-950 border border-slate-700 text-white text-xs field-input cursor-pointer"
           >
             <option value="" disabled>
               [ Select vehicle type ]
@@ -164,7 +164,7 @@ export const VehicleFormFields: React.FC<VehicleFormFieldsProps> = ({
               onChange={(e) => handleMakeInputChange(e.target.value)}
               onFocus={() => setShowMakeDropdown(true)}
               required={required}
-              className="w-full px-3 py-2.5 pr-8 rounded-xl bg-slate-950 border border-slate-700 text-white text-xs focus:outline-none focus:border-amber-400"
+              className="w-full px-3 py-2.5 pr-8 rounded-xl bg-slate-950 border border-slate-700 text-white text-xs field-input"
             />
             <button
               type="button"
@@ -223,7 +223,7 @@ export const VehicleFormFields: React.FC<VehicleFormFieldsProps> = ({
                 if (data.make) setShowModelDropdown(true);
               }}
               required={required}
-              className="w-full px-3 py-2.5 pr-8 rounded-xl bg-slate-950 border border-slate-700 text-white text-xs focus:outline-none focus:border-amber-400 disabled:opacity-50"
+              className="w-full px-3 py-2.5 pr-8 rounded-xl bg-slate-950 border border-slate-700 text-white text-xs field-input disabled:opacity-50"
             />
             <button
               type="button"
@@ -278,7 +278,7 @@ export const VehicleFormFields: React.FC<VehicleFormFieldsProps> = ({
             value={data.year || ''}
             onChange={(e) => onChange({ ...data, year: e.target.value ? Number(e.target.value) : '' })}
             required={required}
-            className="w-full px-3 py-2.5 rounded-xl bg-slate-950 border border-slate-700 text-white text-xs focus:outline-none focus:border-amber-400 cursor-pointer"
+            className="w-full px-3 py-2.5 rounded-xl bg-slate-950 border border-slate-700 text-white text-xs field-input cursor-pointer"
           >
             <option value="" disabled>
               [ Select year ]
@@ -302,7 +302,7 @@ export const VehicleFormFields: React.FC<VehicleFormFieldsProps> = ({
             value={data.regNo || ''}
             onChange={(e) => handleRegNoChange(e.target.value)}
             required={required}
-            className="w-full px-3 py-2.5 rounded-xl bg-slate-950 border border-slate-700 text-white text-xs uppercase font-mono tracking-wider focus:outline-none focus:border-amber-400"
+            className="w-full px-3 py-2.5 rounded-xl bg-slate-950 border border-slate-700 text-white text-xs uppercase font-mono tracking-wider field-input"
           />
         </div>
 
@@ -315,7 +315,7 @@ export const VehicleFormFields: React.FC<VehicleFormFieldsProps> = ({
             value={data.fuelType || ''}
             onChange={(e) => onChange({ ...data, fuelType: e.target.value as any })}
             required={required}
-            className="w-full px-3 py-2.5 rounded-xl bg-slate-950 border border-slate-700 text-white text-xs focus:outline-none focus:border-amber-400 cursor-pointer"
+            className="w-full px-3 py-2.5 rounded-xl bg-slate-950 border border-slate-700 text-white text-xs field-input cursor-pointer"
           >
             <option value="" disabled>
               [ Select fuel type ]

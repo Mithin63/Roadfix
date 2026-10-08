@@ -5,15 +5,30 @@
 @layer base {
   :root {
     color-scheme: dark;
+    --bg-main: #080D1C;
+    --bg-card: #111A2E;
+    --primary-amber: #FFB51B;
+    --highlight-yellow: #FFD166;
+    --cyan-nav: #38BDF8;
+    --success-green: #10B981;
+    --text-main: #F1F5F9;
+    --text-muted: #94A3B8;
   }
   
   html, body, #root {
     min-height: 100%;
     margin: 0;
     padding: 0;
-    background-color: #030712;
-    color: #f8fafc;
-    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background-color: #080D1C;
+    color: #F1F5F9;
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Manrope', 'Inter', system-ui, sans-serif;
+    letter-spacing: -0.02em;
   }
 
   /* Custom subtle scrollbar */
@@ -22,78 +37,95 @@
     height: 6px;
   }
   ::-webkit-scrollbar-track {
-    background: #090d16;
+    background: #080D1C;
   }
   ::-webkit-scrollbar-thumb {
-    background: #1e293b;
+    background: #1E2C48;
     border-radius: 9999px;
   }
   ::-webkit-scrollbar-thumb:hover {
-    background: #334155;
+    background: #253860;
   }
 }
 
-/* Glassmorphism helpers */
-.glass-panel {
-  background: rgba(15, 23, 42, 0.75);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(51, 65, 85, 0.4);
+/* Automotive Dashboard Card Styling */
+.auto-card {
+  background-color: #111A2E;
+  border: 1px solid #1E2C48;
+  border-radius: 1rem;
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.45);
+  transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.glass-panel-glow {
-  background: rgba(15, 23, 42, 0.85);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(245, 158, 11, 0.3);
-  box-shadow: 0 0 25px -5px rgba(245, 158, 11, 0.15);
+.auto-card:hover {
+  border-color: #2D4168;
 }
 
-/* Leaflet dark mode styling tweaks */
+/* Primary Amber CTA Button */
+.btn-primary-amber {
+  background-color: #FFB51B;
+  color: #080D1C;
+  font-weight: 700;
+  font-family: 'Manrope', 'Inter', sans-serif;
+  border-radius: 0.75rem;
+  transition: transform 0.18s cubic-bezier(0.34, 1.56, 0.64, 1), background-color 0.18s ease, box-shadow 0.18s ease;
+  box-shadow: 0 4px 14px rgba(255, 181, 27, 0.25);
+}
+
+.btn-primary-amber:hover {
+  background-color: #FFC03D;
+  box-shadow: 0 6px 20px rgba(255, 181, 27, 0.35);
+  transform: translateY(-1px);
+}
+
+.btn-primary-amber:active {
+  background-color: #E59F0B;
+  transform: translateY(1px) scale(0.98);
+  box-shadow: 0 2px 8px rgba(255, 181, 27, 0.2);
+}
+
+/* Form inputs with Telematics Focus Ring */
+.field-input {
+  background-color: #0B1325;
+  border: 1px solid #1E2C48;
+  color: #F1F5F9;
+  border-radius: 0.75rem;
+  transition: border-color 0.18s ease, box-shadow 0.18s ease, background-color 0.18s ease;
+}
+
+.field-input:focus {
+  outline: none;
+  border-color: #FFB51B !important;
+  box-shadow: 0 0 0 3px rgba(255, 181, 27, 0.2) !important;
+  background-color: #0F1A33;
+}
+
+.field-input::placeholder {
+  color: #64748B;
+}
+
+/* Leaflet dark mode styling */
 .leaflet-container {
   font-family: inherit;
-  background-color: #0f172a;
+  background-color: #080D1C;
 }
 .leaflet-popup-content-wrapper {
-  background: #0f172a !important;
-  color: #f1f5f9 !important;
-  border: 1px solid #334155 !important;
+  background: #111A2E !important;
+  color: #F1F5F9 !important;
+  border: 1px solid #1E2C48 !important;
   border-radius: 12px !important;
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5) !important;
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.6) !important;
 }
 .leaflet-popup-tip {
-  background: #0f172a !important;
+  background: #111A2E !important;
 }
 
-/* Radar pulse animation for SOS & Live Tracking */
-@keyframes ping-slow {
-  0% {
-    transform: scale(0.95);
-    opacity: 0.8;
+/* Reduced Motion Respect */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
-  70% {
-    transform: scale(1.6);
-    opacity: 0;
-  }
-  100% {
-    transform: scale(1.6);
-    opacity: 0;
-  }
-}
-
-.animate-ping-slow {
-  animation: ping-slow 2.5s cubic-bezier(0, 0, 0.2, 1) infinite;
-}
-
-/* Glowing emergency badge */
-.glow-amber {
-  box-shadow: 0 0 20px rgba(245, 158, 11, 0.35);
-}
-
-.glow-red {
-  box-shadow: 0 0 25px rgba(239, 68, 68, 0.45);
-}
-
-.glow-emerald {
-  box-shadow: 0 0 20px rgba(16, 185, 129, 0.35);
 }

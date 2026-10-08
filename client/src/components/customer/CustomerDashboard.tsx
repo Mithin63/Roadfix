@@ -109,26 +109,35 @@ export const CustomerDashboard: React.FC<CustomerDashboardProps> = ({
 
   return (
     <div className="space-y-6 pb-12">
-      {/* Welcome & Status Bar */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-2">
+      {/* Welcome & Live GPS Status Glassmorphic Header Card */}
+      <div className="p-4 sm:p-5 rounded-3xl bg-slate-900/95 border border-slate-700/80 shadow-2xl backdrop-blur-xl flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
-            Hello, {user?.name.split(' ')[0] || 'Driver'} 👋
+          <div className="flex items-center gap-2 mb-1">
+            <span className="px-2.5 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/40 text-[10px] font-black uppercase tracking-wider">
+              24/7 Roadside Network Active
+            </span>
+          </div>
+          <h1 className="text-2xl sm:text-3xl font-black text-white tracking-tight flex items-center gap-2">
+            <span>Hello,</span>
+            <span className="bg-gradient-to-r from-amber-400 via-amber-200 to-white bg-clip-text text-transparent">
+              {user?.name.split(' ')[0] || 'Driver'}
+            </span>
+            <span>👋</span>
           </h1>
-          <p className="text-xs sm:text-sm text-slate-400 mt-1">
-            24/7 Roadside Assistance & Verified Mobile Mechanic Dispatch
+          <p className="text-xs sm:text-sm text-slate-200 mt-1 font-medium">
+            24/7 Emergency Breakdown Assistance, Certified Mechanics & Smart Telematics
           </p>
         </div>
 
         {/* Live Location display badge & Detect Button */}
-        <div className="flex items-center gap-2 flex-wrap">
+        <div className="flex items-center gap-2 flex-wrap shrink-0">
           <button
             type="button"
             onClick={detectLocation}
-            className={`flex items-center gap-2 px-3.5 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 border transition-colors shadow-md text-xs ${
+            className={`flex items-center gap-2 px-4 py-2.5 rounded-2xl bg-slate-950 hover:bg-slate-800 border transition-all shadow-lg text-xs font-semibold ${
               activeLocation.status === 'denied' || activeLocation.status === 'unavailable'
-                ? 'border-red-500/50 text-red-300'
-                : 'border-slate-700 hover:border-amber-500/50 text-slate-200'
+                ? 'border-red-500/60 text-red-300'
+                : 'border-amber-500/40 hover:border-amber-400 text-white'
             }`}
             title="Click to detect your exact GPS coordinates"
           >
@@ -139,13 +148,13 @@ export const CustomerDashboard: React.FC<CustomerDashboardProps> = ({
                 ? 'bg-red-400'
                 : 'bg-emerald-400 animate-ping'
             }`} />
-            <span>
+            <span className="font-bold text-slate-100">
               {activeLocation.status === 'detecting'
                 ? '📍 Detecting your location...'
                 : `📍 ${activeLocation.address}`}
             </span>
-            <span className="text-[10px] text-amber-400 font-semibold underline ml-1">
-              {activeLocation.status === 'denied' || activeLocation.status === 'unavailable' ? 'Retry GPS' : 'Refresh'}
+            <span className="text-[10px] text-amber-400 font-bold bg-amber-500/15 px-2 py-0.5 rounded-md border border-amber-500/30 ml-1">
+              {activeLocation.status === 'denied' || activeLocation.status === 'unavailable' ? 'Retry GPS' : 'Live GPS'}
             </span>
           </button>
         </div>
@@ -244,33 +253,48 @@ export const CustomerDashboard: React.FC<CustomerDashboardProps> = ({
         </div>
       )}
 
-      {/* SECTION 3: LARGE EMERGENCY HERO BUTTON */}
-      <div className="relative overflow-hidden rounded-3xl p-6 sm:p-8 bg-gradient-to-br from-slate-900 via-slate-900 to-amber-950/30 border border-slate-800 shadow-2xl">
-        <div className="absolute top-0 right-0 -mr-16 -mt-16 w-64 h-64 rounded-full bg-amber-500/10 blur-3xl pointer-events-none" />
+      {/* SECTION 3: LARGE EMERGENCY HERO BUTTON WITH LIVE HIGHWAY VIDEO BACKDROP */}
+      <div className="relative overflow-hidden rounded-3xl p-6 sm:p-8 border border-amber-500/40 shadow-2xl group">
+        {/* Live Highway Night Driving Video Layer */}
+        <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+          <video
+            src="/bg-highway.mp4"
+            autoPlay
+            loop
+            muted
+            playsInline
+            className="w-full h-full object-cover scale-110 opacity-70 group-hover:scale-105 transition-transform duration-1000"
+          />
+          {/* Multi-layered glassmorphic dark gradients */}
+          <div className="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-950/80 to-slate-950/40" />
+          <div className="absolute inset-0 bg-slate-950/40 backdrop-blur-[1px]" />
+          <div className="absolute top-0 right-0 w-80 h-80 bg-amber-500/15 blur-3xl" />
+        </div>
+
         <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-6">
-          <div className="space-y-2 text-center md:text-left">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-500/15 border border-red-500/30 text-red-400 text-xs font-bold tracking-wider uppercase">
-              <span className="w-2 h-2 rounded-full bg-red-500 animate-ping" />
-              Immediate Response • Avg 12 Mins Arrival
+          <div className="space-y-2.5 text-center md:text-left">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-500/20 border border-red-500/40 text-red-300 text-xs font-bold tracking-wider uppercase backdrop-blur-md">
+              <span className="w-2 h-2 rounded-full bg-red-400 animate-ping" />
+              <span>24/7 Live Highway Rescue • Avg 12 Mins Arrival</span>
             </div>
-            <h2 className="text-2xl sm:text-4xl font-extrabold text-white tracking-tight">
+            <h2 className="text-2xl sm:text-4xl font-black text-white tracking-tight drop-shadow-md">
               🆘 NEED ROADSIDE HELP?
             </h2>
-            <p className="text-sm text-slate-400 max-w-xl">
-              Stranded with a breakdown? Get instant AI diagnosis, transparent price estimation, and automatic dispatch of verified mechanics with the right tools.
+            <p className="text-xs sm:text-sm text-slate-200 max-w-xl leading-relaxed drop-shadow">
+              Stranded on the road or highway? Get instant AI diagnosis, transparent pricing, and direct live telematics dispatch of certified mechanics to your GPS coordinates.
             </p>
           </div>
 
           <div className="shrink-0 flex flex-col items-center gap-2">
             <button
               onClick={() => onStartBreakdown()}
-              className="px-8 py-4 sm:px-10 sm:py-5 rounded-2xl bg-gradient-to-r from-amber-500 via-amber-400 to-amber-500 hover:from-amber-400 hover:to-amber-300 text-slate-950 font-black text-lg tracking-wide shadow-2xl shadow-amber-500/40 transform hover:scale-105 active:scale-95 transition-all flex items-center gap-3 border border-amber-300"
+              className="px-8 py-4 sm:px-10 sm:py-5 rounded-2xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-lg tracking-wide shadow-2xl shadow-amber-500/50 flex items-center gap-3 border border-amber-300 cta-btn cursor-pointer"
             >
               <AlertTriangle className="w-6 h-6 text-slate-950 fill-current" />
               <span>Get Help Now</span>
             </button>
-            <span className="text-[11px] text-slate-400 font-medium">
-              100% Verified Mechanics • Transparent Pricing
+            <span className="text-[11px] text-amber-300/90 font-semibold drop-shadow">
+              ⚡ 100% Verified Mechanics • Transparent Pricing
             </span>
           </div>
         </div>
@@ -278,12 +302,14 @@ export const CustomerDashboard: React.FC<CustomerDashboardProps> = ({
 
       {/* QUICK SERVICES SECTION */}
       <div className="space-y-3">
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between p-3 rounded-2xl bg-slate-900/90 border border-slate-700/80 backdrop-blur-xl shadow-lg">
           <div className="flex items-center gap-2">
-            <Wrench className="w-4 h-4 text-amber-400" />
-            <h3 className="text-base sm:text-lg font-bold text-white">Quick Services</h3>
+            <div className="p-1.5 rounded-lg bg-amber-500/20 text-amber-400 border border-amber-500/30">
+              <Wrench className="w-4 h-4" />
+            </div>
+            <h3 className="text-base sm:text-lg font-black text-white">Emergency Quick Services</h3>
           </div>
-          <span className="text-xs text-slate-400">Tap to report directly</span>
+          <span className="text-xs text-amber-300 font-semibold">Tap to request instant rescue</span>
         </div>
 
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
@@ -293,19 +319,19 @@ export const CustomerDashboard: React.FC<CustomerDashboardProps> = ({
               <button
                 key={service.id}
                 onClick={() => onStartBreakdown(service.id)}
-                className={`group relative p-4 rounded-2xl bg-gradient-to-br ${service.color} bg-slate-900/60 border hover:border-amber-500/50 hover:bg-slate-800/80 transition-all text-left flex flex-col justify-between h-32 shadow-md hover:shadow-lg hover:-translate-y-0.5`}
+                className={`group relative p-4 rounded-2xl bg-gradient-to-br ${service.color} bg-slate-900/90 border border-slate-700/80 hover:border-amber-400 hover:bg-slate-850 transition-all text-left flex flex-col justify-between h-32 shadow-xl hover:shadow-2xl hover:-translate-y-1 backdrop-blur-xl`}
               >
                 <div className="flex items-center justify-between w-full">
-                  <div className="p-2.5 rounded-xl bg-slate-950/60 border border-slate-800/80 group-hover:scale-110 transition-transform">
+                  <div className="p-2.5 rounded-xl bg-slate-950/80 border border-slate-700 group-hover:scale-110 transition-transform">
                     <Icon className="w-5 h-5" />
                   </div>
-                  <ChevronRight className="w-4 h-4 text-slate-600 group-hover:text-amber-400 transition-colors" />
+                  <ChevronRight className="w-4 h-4 text-slate-400 group-hover:text-amber-400 transition-colors" />
                 </div>
                 <div>
-                  <h4 className="font-bold text-sm text-slate-100 group-hover:text-white transition-colors">
+                  <h4 className="font-black text-sm text-white group-hover:text-amber-300 transition-colors">
                     {service.label}
                   </h4>
-                  <p className="text-[11px] text-slate-400 mt-0.5 line-clamp-1">
+                  <p className="text-[11px] text-slate-300 mt-0.5 line-clamp-1 font-medium">
                     {service.desc}
                   </p>
                 </div>
@@ -319,41 +345,47 @@ export const CustomerDashboard: React.FC<CustomerDashboardProps> = ({
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Map Preview */}
         <div className="lg:col-span-2 space-y-3">
-          <div className="flex items-center justify-between">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 p-3 rounded-2xl bg-slate-900/90 border border-slate-700/80 backdrop-blur-xl shadow-lg">
             <div className="flex items-center gap-2">
-              <Navigation className="w-4 h-4 text-cyan-400" />
-              <h3 className="text-base font-bold text-white">Nearby Mechanics Radar</h3>
+              <div className="p-1.5 rounded-lg bg-cyan-500/20 text-cyan-400 border border-cyan-500/30">
+                <Navigation className="w-4 h-4" />
+              </div>
+              <h3 className="text-base font-black text-white">Nearby Mechanics Radar</h3>
             </div>
-            <span className="text-xs text-slate-400">
-              {nearbyMechanics.length} active mobile units near {activeLocation.address.split(',')[0] || 'your area'}
+            <span className="text-xs text-cyan-300 font-bold px-2.5 py-0.5 rounded-full bg-cyan-950/60 border border-cyan-500/40">
+              ⚡ {nearbyMechanics.length} active mobile units near {activeLocation.address.split(',')[0] || 'your area'}
             </span>
           </div>
 
-          <MapLeaflet
-            center={[activeLocation.lat, activeLocation.lng]}
-            zoom={13}
-            customerPoint={{
-              lat: activeLocation.lat,
-              lng: activeLocation.lng,
-              title: user?.name || 'Customer Location',
-              subtitle: activeLocation.address,
-              type: 'customer'
-            }}
-            nearbyPoints={mapNearbyPoints}
-            height="320px"
-          />
+          <div className="rounded-3xl overflow-hidden border border-slate-700/80 shadow-2xl">
+            <MapLeaflet
+              center={[activeLocation.lat, activeLocation.lng]}
+              zoom={13}
+              customerPoint={{
+                lat: activeLocation.lat,
+                lng: activeLocation.lng,
+                title: user?.name || 'Customer Location',
+                subtitle: activeLocation.address,
+                type: 'customer'
+              }}
+              nearbyPoints={mapNearbyPoints}
+              height="320px"
+            />
+          </div>
         </div>
 
         {/* Vehicle Health & Maintenance Widget */}
         <div className="space-y-4">
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between p-3 rounded-2xl bg-slate-900/90 border border-slate-700/80 backdrop-blur-xl shadow-lg">
             <div className="flex items-center gap-2">
-              <Car className="w-4 h-4 text-emerald-400" />
-              <h3 className="text-base font-bold text-white">Vehicle Health</h3>
+              <div className="p-1.5 rounded-lg bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
+                <Car className="w-4 h-4" />
+              </div>
+              <h3 className="text-base font-black text-white">Vehicle Health</h3>
             </div>
             <button
               onClick={onOpenVehicles}
-              className="text-xs text-amber-400 hover:text-amber-300 font-medium"
+              className="text-xs font-bold text-amber-400 hover:text-amber-300 bg-amber-500/10 px-2.5 py-1 rounded-lg border border-amber-500/30 hover:bg-amber-500/20 transition-all"
             >
               Manage &rarr;
             </button>
@@ -361,34 +393,34 @@ export const CustomerDashboard: React.FC<CustomerDashboardProps> = ({
 
           {/* Maintenance alert card */}
           {maintenanceDue ? (
-            <div className="p-4 rounded-2xl bg-amber-500/10 border border-amber-500/30 space-y-2">
-              <div className="flex items-center gap-2 text-amber-400 text-xs font-bold uppercase tracking-wider">
-                <Clock className="w-3.5 h-3.5" />
-                Service Due Soon
+            <div className="p-5 rounded-3xl bg-slate-900/95 border border-amber-500/50 shadow-2xl backdrop-blur-xl space-y-3">
+              <div className="flex items-center gap-2 text-amber-400 text-xs font-black uppercase tracking-wider bg-amber-500/15 border border-amber-500/30 px-3 py-1 rounded-xl w-fit">
+                <Clock className="w-3.5 h-3.5 animate-spin" style={{ animationDuration: '6s' }} />
+                <span>Service Due Soon</span>
               </div>
-              <h4 className="text-sm font-bold text-white">{maintenanceDue.vehicleName}</h4>
-              <p className="text-xs text-slate-300">
-                Odometer is at {maintenanceDue.odometerKm} km. Recommended inspection due at {maintenanceDue.nextDueKm} km.
+              <h4 className="text-base font-black text-white">{maintenanceDue.vehicleName}</h4>
+              <p className="text-xs text-slate-200 leading-relaxed font-medium">
+                Odometer is at <strong className="text-white">{maintenanceDue.odometerKm} km</strong>. Recommended inspection due at <strong className="text-amber-300">{maintenanceDue.nextDueKm} km</strong>.
               </p>
               <button
                 onClick={onOpenMaintenance}
-                className="w-full mt-2 py-2 px-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-semibold text-amber-300 border border-slate-700 transition-colors"
+                className="w-full mt-2 py-2.5 px-3 rounded-xl bg-amber-500 hover:bg-amber-400 text-xs font-black text-slate-950 border border-amber-300 transition-all shadow-lg shadow-amber-500/20 cta-btn"
               >
                 View Maintenance Schedule
               </button>
             </div>
           ) : (
-            <div className="p-4 rounded-2xl bg-slate-900 border border-slate-800 space-y-2">
-              <div className="flex items-center gap-2 text-emerald-400 text-xs font-bold">
-                <CheckCircle className="w-3.5 h-3.5" />
-                All Systems Normal
+            <div className="p-5 rounded-3xl bg-slate-900/95 border border-slate-700 shadow-2xl backdrop-blur-xl space-y-3">
+              <div className="flex items-center gap-2 text-emerald-400 text-xs font-black bg-emerald-950/80 border border-emerald-500/40 px-3 py-1 rounded-xl w-fit">
+                <CheckCircle className="w-4 h-4 text-emerald-400" />
+                <span>All Systems Operational</span>
               </div>
-              <p className="text-xs text-slate-400">
-                No immediate service warnings recorded for your active vehicles.
+              <p className="text-xs text-slate-200 leading-relaxed font-medium">
+                No immediate service alerts recorded for your registered vehicles. All telematics diagnostics pass safety standards.
               </p>
               <button
                 onClick={onOpenMaintenance}
-                className="w-full mt-2 py-2 px-3 rounded-xl bg-slate-800/80 hover:bg-slate-700 text-xs font-medium text-slate-300 border border-slate-700 transition-colors"
+                className="w-full mt-2 py-2.5 px-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-bold text-white border border-slate-600 transition-all shadow-md hover:border-amber-400"
               >
                 Check Maintenance Log
               </button>
@@ -396,19 +428,20 @@ export const CustomerDashboard: React.FC<CustomerDashboardProps> = ({
           )}
 
           {/* AI Vehicle Troubleshooter Assistant Banner */}
-          <div className="p-4 rounded-2xl bg-gradient-to-br from-indigo-950/60 to-slate-900 border border-indigo-500/30 space-y-2.5">
-            <div className="flex items-center gap-2 text-indigo-400 text-xs font-bold">
-              <Sparkles className="w-4 h-4" />
-              Roadfix AI Diagnostic Assistant
+          <div className="p-5 rounded-3xl bg-gradient-to-br from-indigo-950/95 via-slate-900/95 to-purple-950/80 border border-indigo-500/60 shadow-2xl backdrop-blur-xl space-y-3">
+            <div className="flex items-center gap-2 text-indigo-300 text-xs font-black bg-indigo-950/80 border border-indigo-500/50 px-3 py-1 rounded-xl w-fit">
+              <Sparkles className="w-4 h-4 text-indigo-400 animate-pulse" />
+              <span>Roadfix AI Diagnostic Assistant</span>
             </div>
-            <p className="text-xs text-slate-300">
-              Hear strange clicking sounds or engine shuddering? Ask our AI assistant for safe roadside checks.
+            <p className="text-xs text-slate-200 leading-relaxed font-medium">
+              Hear strange clicking sounds, brake squeals, or engine shuddering? Ask our AI assistant for safe roadside troubleshooting checks.
             </p>
             <button
               onClick={onOpenAiAssistant}
-              className="w-full py-2 px-3 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold transition-all shadow-md shadow-indigo-600/20"
+              className="w-full py-2.5 px-3 rounded-xl bg-gradient-to-r from-indigo-500 to-purple-500 hover:from-indigo-400 hover:to-purple-400 text-white text-xs font-black transition-all shadow-lg shadow-indigo-500/30 flex items-center justify-center gap-2"
             >
-              Ask AI Assistant
+              <Sparkles className="w-4 h-4" />
+              <span>Ask AI Assistant →</span>
             </button>
           </div>
         </div>

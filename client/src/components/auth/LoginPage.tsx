@@ -24,6 +24,7 @@ import {
 } from 'lucide-react';
 import { VehicleCategory } from '../../types';
 import { VehicleFormFields, VehicleFormData } from '../common/VehicleFormFields';
+import { triggerHaptic } from '../../utils/haptics';
 
 interface LoginPageProps {
   onSuccess?: () => void;
@@ -145,50 +146,60 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onSuccess, onClose }) => {
   };
 
   return (
-    <div className="min-h-screen w-full bg-slate-950 text-slate-100 flex flex-col justify-between selection:bg-amber-500 selection:text-slate-950 relative overflow-hidden">
-      {/* Background Ambient Glows */}
-      <div className="absolute top-0 left-1/4 w-96 h-96 bg-amber-500/10 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-10 right-1/4 w-96 h-96 bg-blue-600/10 rounded-full blur-3xl pointer-events-none" />
+    <div className="min-h-screen w-full bg-[#080D1C] text-[#F1F5F9] flex flex-col justify-between selection:bg-[#FFB51B] selection:text-[#080D1C] relative overflow-hidden font-sans">
+      {/* Background Highway Ambient Layer */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden z-0">
+        <video
+          src="/bg-highway.mp4"
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="absolute inset-0 w-full h-full object-cover scale-105 opacity-25 mix-blend-screen"
+        />
+        <div className="absolute inset-0 bg-[#080D1C]/80 backdrop-blur-[2px]" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#080D1C] via-transparent to-[#080D1C]/90" />
+      </div>
 
       {/* Top Welcome / Brand Header Bar */}
-      <header className="w-full border-b border-slate-800/80 bg-slate-950/70 backdrop-blur-md sticky top-0 z-20">
+      <header className="w-full border-b border-[#1E2C48] bg-[#080D1C]/85 backdrop-blur-md sticky top-0 z-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
           <div className="flex items-center gap-2.5">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-amber-500 to-amber-600 p-0.5 shadow-lg shadow-amber-500/20">
-              <div className="w-full h-full bg-slate-950 rounded-[10px] flex items-center justify-center">
-                <Wrench className="w-5 h-5 text-amber-400" />
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-[#FFB51B] to-[#FFD166] p-0.5 shadow-md shadow-[#FFB51B]/20">
+              <div className="w-full h-full bg-[#080D1C] rounded-[10px] flex items-center justify-center">
+                <Wrench className="w-5 h-5 text-[#FFB51B]" />
               </div>
             </div>
             <div>
               <div className="flex items-center gap-1.5">
-                <span className="font-extrabold text-lg tracking-tight bg-gradient-to-r from-amber-400 via-amber-200 to-white bg-clip-text text-transparent">
+                <span className="font-heading font-extrabold text-lg tracking-tight text-[#F1F5F9]">
                   Roadfix
                 </span>
-                <span className="px-1.5 py-0.5 text-[10px] font-black uppercase tracking-wider rounded bg-amber-500/20 text-amber-300 border border-amber-500/30">
+                <span className="px-1.5 py-0.5 text-[10px] font-extrabold uppercase tracking-wider rounded bg-[#FFB51B]/15 text-[#FFB51B] border border-[#FFB51B]/30">
                   24/7
                 </span>
               </div>
-              <p className="text-[10px] text-slate-400 hidden sm:block">
+              <p className="text-[10px] text-[#94A3B8] hidden sm:block font-medium">
                 24/7 Emergency Vehicle Assistance & Smart Dispatch
               </p>
             </div>
           </div>
 
           <div className="flex items-center gap-3">
-            <div className="hidden md:flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-950/40 border border-emerald-500/30 text-[11px] text-emerald-400">
-              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-              <span>48 Mechanics Online in Metro Network</span>
+            <div className="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-xl bg-[#111A2E] border border-[#1E2C48] text-xs text-[#38BDF8]">
+              <span className="w-2 h-2 rounded-full bg-[#10B981] animate-pulse" />
+              <span className="text-slate-200">Verified Dispatch Fleet Live</span>
             </div>
 
-            <div className="flex items-center gap-1 text-[11px] font-semibold text-slate-400 bg-slate-900 px-3 py-1.5 rounded-xl border border-slate-800">
+            <div className="flex items-center gap-1.5 text-xs font-semibold text-[#94A3B8] bg-[#111A2E] px-3 py-1.5 rounded-xl border border-[#1E2C48]">
               <Phone className="w-3.5 h-3.5 text-red-400" />
-              <span>Emergency SOS: <span className="text-white font-mono">112 / 1033</span></span>
+              <span>SOS: <strong className="text-white font-mono">112 / 1033</strong></span>
             </div>
 
             {onClose && (
               <button
                 onClick={onClose}
-                className="p-1.5 rounded-lg bg-slate-900 border border-slate-800 text-slate-400 hover:text-white"
+                className="p-1.5 rounded-xl bg-[#111A2E] border border-[#1E2C48] text-slate-400 hover:text-white"
               >
                 <X className="w-4 h-4" />
               </button>
@@ -201,103 +212,123 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onSuccess, onClose }) => {
       <div className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 flex flex-col lg:flex-row items-center justify-center gap-10 lg:gap-14 relative z-10">
         {/* Left Side: Product Value Propositions */}
         <div className="flex-1 max-w-xl text-left space-y-6">
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-400 text-xs font-semibold">
-            <Sparkles className="w-3.5 h-3.5" />
-            <span>Connected to Roadfix Fleet Database</span>
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#FFB51B]/10 border border-[#FFB51B]/30 text-[#FFB51B] text-xs font-bold uppercase tracking-wider">
+            <Sparkles className="w-3.5 h-3.5 text-[#FFB51B]" />
+            <span>24/7 Roadside Assistance Network</span>
           </div>
 
-          <h1 className="text-3xl sm:text-5xl font-black text-white tracking-tight leading-tight">
+          <h1 className="font-heading text-3xl sm:text-5xl font-extrabold text-[#F1F5F9] tracking-tight leading-tight">
             Vehicle breakdown? <br />
-            <span className="bg-gradient-to-r from-amber-400 via-amber-300 to-amber-500 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-[#FFB51B] via-[#FFD166] to-[#FFB51B] bg-clip-text text-transparent">
               Roadfix is on the way.
             </span>
           </h1>
 
-          <p className="text-sm sm:text-base text-slate-300 leading-relaxed">
+          <p className="text-sm sm:text-base text-[#94A3B8] leading-relaxed">
             Sign in to access 24/7 on-demand roadside assistance, smart AI fault diagnostics, real-time certified mechanic tracking, and transparent digital invoices.
           </p>
 
-          {/* Core Feature Badges */}
+          {/* Core Feature Badges: Radar Depth Tap */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
-            <div className="p-3.5 rounded-2xl bg-slate-900/80 border border-slate-800/80 flex items-start gap-3">
-              <div className="p-2 rounded-xl bg-amber-500/10 text-amber-400 shrink-0">
+            <div
+              onClick={() => triggerHaptic('light')}
+              className="p-3.5 rounded-2xl bg-[#111A2E]/90 border border-[#1E2C48] flex items-start gap-3 feature-card"
+            >
+              <div className="p-2 rounded-xl bg-[#FFB51B]/10 text-[#FFB51B] shrink-0">
                 <Clock className="w-4 h-4" />
               </div>
               <div>
-                <h2 className="text-xs font-bold text-white">15-Minute Fast Arrival</h2>
-                <p className="text-[11px] text-slate-400 mt-0.5">Automated dispatch to closest qualified mechanic via live GPS</p>
+                <h2 className="text-xs font-bold text-[#F1F5F9] font-heading">15-Minute Fast Arrival</h2>
+                <p className="text-[11px] text-[#94A3B8] mt-0.5">Automated dispatch to closest qualified mechanic via live GPS</p>
               </div>
             </div>
 
-            <div className="p-3.5 rounded-2xl bg-slate-900/80 border border-slate-800/80 flex items-start gap-3">
-              <div className="p-2 rounded-xl bg-indigo-500/10 text-indigo-400 shrink-0">
+            <div
+              onClick={() => triggerHaptic('light')}
+              className="p-3.5 rounded-2xl bg-[#111A2E]/90 border border-[#1E2C48] flex items-start gap-3 feature-card"
+            >
+              <div className="p-2 rounded-xl bg-[#38BDF8]/10 text-[#38BDF8] shrink-0">
                 <Sparkles className="w-4 h-4" />
               </div>
               <div>
-                <h2 className="text-xs font-bold text-white">AI Diagnostics Engine</h2>
-                <p className="text-[11px] text-slate-400 mt-0.5">Instant audio/photo breakdown analysis and tool forecasting</p>
+                <h2 className="text-xs font-bold text-[#F1F5F9] font-heading">AI Diagnostics Engine</h2>
+                <p className="text-[11px] text-[#94A3B8] mt-0.5">Instant audio/photo breakdown analysis and tool forecasting</p>
               </div>
             </div>
 
-            <div className="p-3.5 rounded-2xl bg-slate-900/80 border border-slate-800/80 flex items-start gap-3">
-              <div className="p-2 rounded-xl bg-emerald-500/10 text-emerald-400 shrink-0">
+            <div
+              onClick={() => triggerHaptic('light')}
+              className="p-3.5 rounded-2xl bg-[#111A2E]/90 border border-[#1E2C48] flex items-start gap-3 feature-card"
+            >
+              <div className="p-2 rounded-xl bg-[#10B981]/10 text-[#10B981] shrink-0">
                 <Award className="w-4 h-4" />
               </div>
               <div>
-                <h2 className="text-xs font-bold text-white">100% Certified Mechanics</h2>
-                <p className="text-[11px] text-slate-400 mt-0.5">Aadhaar & commercial driving licence verified professionals</p>
+                <h2 className="text-xs font-bold text-[#F1F5F9] font-heading">100% Certified Mechanics</h2>
+                <p className="text-[11px] text-[#94A3B8] mt-0.5">Aadhaar & commercial driving licence verified professionals</p>
               </div>
             </div>
 
-            <div className="p-3.5 rounded-2xl bg-slate-900/80 border border-slate-800/80 flex items-start gap-3">
-              <div className="p-2 rounded-xl bg-blue-500/10 text-blue-400 shrink-0">
+            <div
+              onClick={() => triggerHaptic('light')}
+              className="p-3.5 rounded-2xl bg-[#111A2E]/90 border border-[#1E2C48] flex items-start gap-3 feature-card"
+            >
+              <div className="p-2 rounded-xl bg-[#FFD166]/10 text-[#FFD166] shrink-0">
                 <Shield className="w-4 h-4" />
               </div>
               <div>
-                <h2 className="text-xs font-bold text-white">Zero Hidden Charges</h2>
-                <p className="text-[11px] text-slate-400 mt-0.5">Transparent customer approval for spare parts & digital receipts</p>
+                <h2 className="text-xs font-bold text-[#F1F5F9] font-heading">Zero Hidden Charges</h2>
+                <p className="text-[11px] text-[#94A3B8] mt-0.5">Transparent customer approval for spare parts & digital receipts</p>
               </div>
             </div>
           </div>
 
           {/* Database Connection Status Card */}
-          <div className="p-3.5 rounded-2xl bg-slate-900/60 border border-slate-800/80 flex items-center gap-3 text-xs text-slate-300">
-            <div className="p-1.5 rounded-lg bg-emerald-500/20 text-emerald-400">
+          <div className="p-3.5 rounded-2xl bg-[#111A2E]/70 border border-[#1E2C48] flex items-center gap-3 text-xs text-[#94A3B8]">
+            <div className="p-1.5 rounded-lg bg-[#10B981]/20 text-[#10B981]">
               <Database className="w-4 h-4" />
             </div>
             <div>
-              <span className="text-white font-semibold">Roadfix Database Active:</span> Only registered vehicle owners & mechanics in the backend database can sign in.
+              <span className="text-[#F1F5F9] font-semibold">Roadfix Database Active:</span> Only registered vehicle owners & mechanics in the backend database can sign in.
             </div>
           </div>
         </div>
 
         {/* Right Side: Interactive Auth Card (Sign In / Register) */}
         <div className="w-full max-w-md shrink-0">
-          <div className="bg-slate-900/95 border border-slate-700/80 rounded-3xl shadow-2xl shadow-black/80 overflow-hidden backdrop-blur-xl">
+          <div className="bg-[#111A2E] border border-[#1E2C48] rounded-3xl shadow-2xl shadow-black/80 overflow-hidden backdrop-blur-xl">
             {/* Card Header & Tab Switcher */}
-            <div className="p-5 sm:p-6 bg-gradient-to-br from-slate-950 via-slate-900 to-amber-950/30 border-b border-slate-800 text-center">
-              <h2 className="text-xl font-black text-white tracking-tight">
+            <div className="p-5 sm:p-6 bg-gradient-to-br from-[#080D1C] via-[#111A2E] to-[#FFB51B]/10 border-b border-[#1E2C48] text-center">
+              <h2 className="text-xl font-extrabold text-[#F1F5F9] font-heading tracking-tight">
                 {mode === 'login' ? 'Sign In to Roadfix' : 'Create Your Roadfix Account'}
               </h2>
-              <p className="text-xs text-slate-400 mt-1">
+              <p className="text-xs text-[#94A3B8] mt-1">
                 {mode === 'login'
                   ? 'Access your registered vehicles, roadside bookings & service history'
                   : 'Register as a vehicle owner or service mechanic in the Roadfix database'}
               </p>
 
-              {/* Mode Switcher Tabs */}
-              <div className="mt-4 grid grid-cols-2 p-1 rounded-2xl bg-slate-950/80 border border-slate-800">
+              {/* Mode Switcher Tabs: Sliding Magnetic Pill */}
+              <div className="mt-4 relative p-1 rounded-2xl bg-[#080D1C] border border-[#1E2C48] magnetic-pill-container flex">
+                {/* Smooth spring sliding background pill */}
+                <div
+                  className="magnetic-pill-indicator"
+                  style={{
+                    left: mode === 'login' ? '4px' : 'calc(50% + 2px)',
+                    width: 'calc(50% - 6px)'
+                  }}
+                />
+
                 <button
                   type="button"
                   onClick={() => {
+                    triggerHaptic('light');
                     setMode('login');
                     setErrorMsg(null);
                     setSuccessMsg(null);
                   }}
-                  className={`py-2 rounded-xl text-xs font-bold transition-all ${
-                    mode === 'login'
-                      ? 'bg-amber-500 text-slate-950 shadow-md'
-                      : 'text-slate-400 hover:text-white'
+                  className={`relative z-10 flex-1 py-2 rounded-xl text-xs font-bold transition-colors ${
+                    mode === 'login' ? 'text-[#080D1C] font-black' : 'text-[#94A3B8] hover:text-[#F1F5F9]'
                   }`}
                 >
                   Sign In
@@ -305,14 +336,13 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onSuccess, onClose }) => {
                 <button
                   type="button"
                   onClick={() => {
+                    triggerHaptic('light');
                     setMode('register');
                     setErrorMsg(null);
                     setSuccessMsg(null);
                   }}
-                  className={`py-2 rounded-xl text-xs font-bold transition-all ${
-                    mode === 'register'
-                      ? 'bg-amber-500 text-slate-950 shadow-md'
-                      : 'text-slate-400 hover:text-white'
+                  className={`relative z-10 flex-1 py-2 rounded-xl text-xs font-bold transition-colors ${
+                    mode === 'register' ? 'text-[#080D1C] font-black' : 'text-[#94A3B8] hover:text-[#F1F5F9]'
                   }`}
                 >
                   Register New Account
@@ -334,68 +364,77 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onSuccess, onClose }) => {
               )}
 
               {successMsg && (
-                <div className="p-3.5 rounded-2xl bg-emerald-950/60 border border-emerald-500/50 text-emerald-300 text-xs flex items-center gap-2.5">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+                <div className="p-3.5 rounded-2xl bg-[#10B981]/15 border border-[#10B981]/40 text-[#10B981] text-xs flex items-center gap-2.5">
+                  <CheckCircle2 className="w-4 h-4 text-[#10B981] shrink-0" />
                   <span>{successMsg}</span>
                 </div>
               )}
 
               {/* 1. SIGN IN FORM */}
               {mode === 'login' && (
-                <form onSubmit={handleLoginSubmit} className="space-y-4">
+                <form
+                  onSubmit={handleLoginSubmit}
+                  className={`space-y-4 ${errorMsg ? 'animate-micro-shake' : ''}`}
+                >
                   <div>
-                    <label className="text-xs font-bold text-slate-300 block mb-1">
+                    <label className="text-xs font-bold text-[#F1F5F9] block mb-1">
                       Registered Email Address
                     </label>
                     <div className="relative">
-                      <Mail className="w-4 h-4 text-slate-500 absolute left-3.5 top-3" />
+                      <Mail className="w-4 h-4 text-[#94A3B8] absolute left-3.5 top-3 pointer-events-none" />
                       <input
                         type="email"
                         required
                         placeholder="e.g. yourname@example.com"
                         value={loginEmail}
                         onChange={(e) => setLoginEmail(e.target.value)}
-                        className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-slate-950 border border-slate-700 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-amber-400"
+                        className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-[#080D1C] border border-[#1E2C48] text-xs text-[#F1F5F9] placeholder-[#64748B] field-input"
                       />
                     </div>
                   </div>
 
                   <div>
                     <div className="flex items-center justify-between mb-1">
-                      <label className="text-xs font-bold text-slate-300">Password</label>
+                      <label className="text-xs font-bold text-[#F1F5F9]">Password</label>
                     </div>
                     <div className="relative">
-                      <Lock className="w-4 h-4 text-slate-500 absolute left-3.5 top-3" />
+                      <Lock className="w-4 h-4 text-[#94A3B8] absolute left-3.5 top-3 pointer-events-none" />
                       <input
                         type={showPassword ? 'text' : 'password'}
                         required
                         placeholder="Enter your registered password"
                         value={loginPassword}
                         onChange={(e) => setLoginPassword(e.target.value)}
-                        className="w-full pl-10 pr-10 py-2.5 rounded-xl bg-slate-950 border border-slate-700 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-amber-400"
+                        className="w-full pl-10 pr-10 py-2.5 rounded-xl bg-[#080D1C] border border-[#1E2C48] text-xs text-[#F1F5F9] placeholder-[#64748B] field-input"
                       />
                       <button
                         type="button"
-                        onClick={() => setShowPassword(!showPassword)}
-                        className="absolute right-3.5 top-3 text-slate-500 hover:text-slate-300"
+                        onClick={() => {
+                          triggerHaptic('light');
+                          setShowPassword(!showPassword);
+                        }}
+                        className="absolute right-3.5 top-3 text-[#94A3B8] hover:text-[#F1F5F9]"
                       >
                         {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                       </button>
                     </div>
                   </div>
 
-                  <div className="p-3 rounded-xl bg-slate-950/70 border border-slate-800 text-[11px] text-slate-400">
-                    <p className="flex items-center gap-1.5 text-amber-400/90 font-medium mb-1">
+                  <div className="p-3 rounded-xl bg-[#080D1C]/70 border border-[#1E2C48] text-[11px] text-[#94A3B8]">
+                    <p className="flex items-center gap-1.5 text-[#FFB51B] font-medium mb-1">
                       <Shield className="w-3.5 h-3.5" />
                       <span>Direct Database Sign-In</span>
                     </p>
                     <span>Only users registered in the database can sign in. If you have not registered yet, switch to the <strong>Register New Account</strong> tab to connect your account.</span>
                   </div>
 
+                  {/* Primary CTA: Amber Hydraulic Press */}
                   <button
                     type="submit"
                     disabled={loading}
-                    className="w-full py-3 rounded-2xl bg-gradient-to-r from-amber-500 to-amber-400 hover:from-amber-400 hover:to-amber-300 disabled:opacity-50 text-slate-950 font-black text-sm flex items-center justify-center gap-2 shadow-xl shadow-amber-500/25 transition-transform hover:scale-[1.01]"
+                    onMouseDown={() => triggerHaptic('medium')}
+                    onTouchStart={() => triggerHaptic('medium')}
+                    className="w-full py-3 rounded-2xl bg-[#FFB51B] hover:bg-[#FFD166] text-[#080D1C] font-extrabold text-sm flex items-center justify-center gap-2 shadow-xl shadow-[#FFB51B]/25 btn-primary-amber cursor-pointer"
                   >
                     <span>{loading ? 'Verifying with Database...' : 'Sign In & Open Roadfix'}</span>
                     <ArrowRight className="w-4 h-4" />
@@ -405,41 +444,50 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onSuccess, onClose }) => {
 
               {/* 2. REGISTRATION FORM (CONNECTS DIRECTLY TO DATABASE) */}
               {mode === 'register' && (
-                <form onSubmit={handleRegisterSubmit} className="space-y-3.5">
+                <form
+                  onSubmit={handleRegisterSubmit}
+                  className={`space-y-3.5 ${errorMsg ? 'animate-micro-shake' : ''}`}
+                >
                   <div>
-                    <label className="text-[11px] font-bold text-slate-300 block mb-1">
+                    <label className="text-[11px] font-bold text-[#F1F5F9] block mb-1">
                       Register As:
                     </label>
                     <div className="grid grid-cols-2 gap-2">
                       <button
                         type="button"
-                        onClick={() => setRegRole('customer')}
-                        className={`p-2.5 rounded-xl border text-left flex items-center gap-2 transition-all ${
+                        onClick={() => {
+                          triggerHaptic('light');
+                          setRegRole('customer');
+                        }}
+                        className={`p-2.5 rounded-xl border text-left flex items-center gap-2 transition-all feature-card ${
                           regRole === 'customer'
-                            ? 'bg-blue-500/20 border-blue-500 text-blue-300 shadow-md ring-1 ring-blue-500/40'
-                            : 'bg-slate-950 border-slate-800 text-slate-400 hover:text-slate-200'
+                            ? 'bg-[#38BDF8]/20 border-[#38BDF8] text-[#38BDF8] shadow-md ring-1 ring-[#38BDF8]/40'
+                            : 'bg-[#080D1C] border-[#1E2C48] text-[#94A3B8] hover:text-[#F1F5F9]'
                         }`}
                       >
-                        <Car className="w-4 h-4 text-blue-400 shrink-0" />
+                        <Car className="w-4 h-4 text-[#38BDF8] shrink-0" />
                         <div>
-                          <div className="text-xs font-bold text-white">Vehicle Owner</div>
-                          <div className="text-[10px] text-slate-400">Book emergency repairs</div>
+                          <div className="text-xs font-bold text-[#F1F5F9] font-heading">Vehicle Owner</div>
+                          <div className="text-[10px] text-[#94A3B8]">Book emergency repairs</div>
                         </div>
                       </button>
 
                       <button
                         type="button"
-                        onClick={() => setRegRole('mechanic')}
-                        className={`p-2.5 rounded-xl border text-left flex items-center gap-2 transition-all ${
+                        onClick={() => {
+                          triggerHaptic('light');
+                          setRegRole('mechanic');
+                        }}
+                        className={`p-2.5 rounded-xl border text-left flex items-center gap-2 transition-all feature-card ${
                           regRole === 'mechanic'
-                            ? 'bg-amber-500/20 border-amber-500 text-amber-300 shadow-md ring-1 ring-amber-500/40'
-                            : 'bg-slate-950 border-slate-800 text-slate-400 hover:text-slate-200'
+                            ? 'bg-[#FFB51B]/20 border-[#FFB51B] text-[#FFB51B] shadow-md ring-1 ring-[#FFB51B]/40'
+                            : 'bg-[#080D1C] border-[#1E2C48] text-[#94A3B8] hover:text-[#F1F5F9]'
                         }`}
                       >
-                        <Wrench className="w-4 h-4 text-amber-400 shrink-0" />
+                        <Wrench className="w-4 h-4 text-[#FFB51B] shrink-0" />
                         <div>
-                          <div className="text-xs font-bold text-white">Service Mechanic</div>
-                          <div className="text-[10px] text-slate-400">Accept dispatch jobs</div>
+                          <div className="text-xs font-bold text-[#F1F5F9] font-heading">Service Mechanic</div>
+                          <div className="text-[10px] text-[#94A3B8]">Accept dispatch jobs</div>
                         </div>
                       </button>
                     </div>
@@ -447,63 +495,66 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onSuccess, onClose }) => {
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                     <div>
-                      <label className="text-[11px] font-bold text-slate-300 block mb-1">Full Name</label>
+                      <label className="text-[11px] font-bold text-[#F1F5F9] block mb-1">Full Name</label>
                       <input
                         type="text"
                         required
                         placeholder="e.g. Anand Kulkarni"
                         value={regName}
                         onChange={(e) => setRegName(e.target.value)}
-                        className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-700 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-amber-400"
+                        className="w-full px-3 py-2 rounded-xl bg-[#080D1C] border border-[#1E2C48] text-xs text-[#F1F5F9] placeholder-[#64748B] field-input"
                       />
                     </div>
 
                     <div>
-                      <label className="text-[11px] font-bold text-slate-300 block mb-1">Phone Number</label>
+                      <label className="text-[11px] font-bold text-[#F1F5F9] block mb-1">Phone Number</label>
                       <input
                         type="tel"
                         required
                         placeholder="+91 98200 XXXXX"
                         value={regPhone}
                         onChange={(e) => setRegPhone(e.target.value)}
-                        className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-700 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-amber-400"
+                        className="w-full px-3 py-2 rounded-xl bg-[#080D1C] border border-[#1E2C48] text-xs text-[#F1F5F9] placeholder-[#64748B] field-input"
                       />
                     </div>
                   </div>
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                     <div>
-                      <label className="text-[11px] font-bold text-slate-300 block mb-1">Email Address</label>
+                      <label className="text-[11px] font-bold text-[#F1F5F9] block mb-1">Email Address</label>
                       <input
                         type="email"
                         required
                         placeholder="yourname@example.com"
                         value={regEmail}
                         onChange={(e) => setRegEmail(e.target.value)}
-                        className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-700 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-amber-400"
+                        className="w-full px-3 py-2 rounded-xl bg-[#080D1C] border border-[#1E2C48] text-xs text-[#F1F5F9] placeholder-[#64748B] field-input"
                       />
                     </div>
 
                     <div>
-                      <label className="text-[11px] font-bold text-slate-300 block mb-1">Password</label>
+                      <label className="text-[11px] font-bold text-[#F1F5F9] block mb-1">Password</label>
                       <input
                         type="password"
                         required
                         placeholder="Min. 4 characters"
                         value={regPassword}
                         onChange={(e) => setRegPassword(e.target.value)}
-                        className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-700 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-amber-400"
+                        className="w-full px-3 py-2 rounded-xl bg-[#080D1C] border border-[#1E2C48] text-xs text-[#F1F5F9] placeholder-[#64748B] field-input"
                       />
                     </div>
                   </div>
 
                   <div>
                     <div className="flex items-center justify-between mb-1">
-                      <label className="text-[11px] font-bold text-slate-300">Current Location / Address</label>
+                      <label className="text-[11px] font-bold text-[#F1F5F9]">Current Location / Address</label>
                       <button
                         type="button"
-                        onClick={detectLocation}
-                        className="text-[10px] text-amber-400 hover:underline font-semibold flex items-center gap-1"
+                        onClick={() => {
+                          triggerHaptic('light');
+                          detectLocation();
+                        }}
+                        className="text-[10px] text-[#FFB51B] hover:underline font-semibold flex items-center gap-1"
                       >
                         <span>📍 Auto-Detect GPS</span>
                       </button>
@@ -514,18 +565,18 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onSuccess, onClose }) => {
                       placeholder="Enter city or roadside location (or tap Auto-Detect GPS)"
                       value={regAddress}
                       onChange={(e) => setRegAddress(e.target.value)}
-                      className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-700 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-amber-400"
+                      className="w-full px-3 py-2 rounded-xl bg-[#080D1C] border border-[#1E2C48] text-xs text-[#F1F5F9] placeholder-[#64748B] field-input"
                     />
                   </div>
 
                   {/* Customer Vehicle Information (Searchable Suggestions & Starts Blank) */}
                   {regRole === 'customer' && (
-                    <div className="p-4 rounded-2xl bg-slate-950/80 border border-slate-800 space-y-3">
+                    <div className="p-4 rounded-2xl bg-[#080D1C]/80 border border-[#1E2C48] space-y-3">
                       <div className="flex items-center justify-between">
-                        <span className="text-[10px] uppercase font-bold text-amber-400 block tracking-wider">
+                        <span className="text-[10px] uppercase font-bold text-[#FFB51B] block tracking-wider font-heading">
                           Primary Vehicle Details
                         </span>
-                        <span className="text-[10px] text-slate-400">Searchable dropdowns</span>
+                        <span className="text-[10px] text-[#94A3B8]">Searchable dropdowns</span>
                       </div>
                       <VehicleFormFields
                         data={vehicleData}
@@ -538,8 +589,8 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onSuccess, onClose }) => {
 
                   {/* Mechanic Workshop Information */}
                   {regRole === 'mechanic' && (
-                    <div className="p-3 rounded-2xl bg-slate-950/80 border border-slate-800 space-y-2">
-                      <span className="text-[10px] uppercase font-bold text-amber-400 block tracking-wider">
+                    <div className="p-3 rounded-2xl bg-[#080D1C]/80 border border-[#1E2C48] space-y-2">
+                      <span className="text-[10px] uppercase font-bold text-[#FFB51B] block tracking-wider font-heading">
                         Workshop Details (Verified Pro)
                       </span>
                       <input
@@ -547,20 +598,23 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onSuccess, onClose }) => {
                         placeholder="Workshop / Mobile Van Name"
                         value={workshopName}
                         onChange={(e) => setWorkshopName(e.target.value)}
-                        className="w-full px-3 py-1.5 rounded-lg bg-slate-900 border border-slate-700 text-white text-xs focus:outline-none focus:border-amber-400"
+                        className="w-full px-3 py-1.5 rounded-lg bg-[#080D1C] border border-[#1E2C48] text-[#F1F5F9] text-xs field-input"
                       />
                     </div>
                   )}
 
-                  <div className="p-2.5 rounded-xl bg-slate-950/70 border border-slate-800 text-[10px] text-slate-400 flex items-center gap-2">
-                    <Database className="w-3.5 h-3.5 text-amber-400 shrink-0" />
+                  <div className="p-2.5 rounded-xl bg-[#080D1C]/70 border border-[#1E2C48] text-[10px] text-[#94A3B8] flex items-center gap-2">
+                    <Database className="w-3.5 h-3.5 text-[#FFB51B] shrink-0" />
                     <span>Your account details will be securely saved into the Roadfix backend database.</span>
                   </div>
 
+                  {/* Primary Registration CTA: Amber Hydraulic Press */}
                   <button
                     type="submit"
                     disabled={loading}
-                    className="w-full py-3 rounded-2xl bg-gradient-to-r from-amber-500 to-amber-400 hover:from-amber-400 hover:to-amber-300 disabled:opacity-50 text-slate-950 font-black text-xs flex items-center justify-center gap-2 shadow-xl shadow-amber-500/25 transition-transform hover:scale-[1.01]"
+                    onMouseDown={() => triggerHaptic('medium')}
+                    onTouchStart={() => triggerHaptic('medium')}
+                    className="w-full py-3 rounded-2xl bg-[#FFB51B] hover:bg-[#FFD166] text-[#080D1C] font-extrabold text-xs flex items-center justify-center gap-2 shadow-xl shadow-[#FFB51B]/25 btn-primary-amber cursor-pointer"
                   >
                     <span>{loading ? 'Connecting to Database...' : 'Register to Database & Enter App'}</span>
                     <CheckCircle2 className="w-4 h-4" />
@@ -573,12 +627,12 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onSuccess, onClose }) => {
       </div>
 
       {/* Footer */}
-      <footer className="w-full border-t border-slate-900 bg-slate-950/80 py-4 px-4 text-center text-xs text-slate-500 relative z-10">
+      <footer className="w-full border-t border-[#1E2C48] bg-[#080D1C]/90 py-4 px-4 text-center text-xs text-[#94A3B8] relative z-10">
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2">
           <span>&copy; 2026 Roadfix — Emergency Breakdown & Verified Mechanic Network</span>
           <div className="flex items-center gap-4 text-[11px]">
-            <span className="text-slate-400">Emergency Dispatch: 24/7/365</span>
-            <span className="text-amber-400">ISO 9001 Roadside Safety</span>
+            <span className="text-[#94A3B8]">Emergency Dispatch: 24/7/365</span>
+            <span className="text-[#FFB51B]">ISO 9001 Roadside Safety</span>
           </div>
         </div>
       </footer>
