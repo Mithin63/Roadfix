@@ -128,6 +128,22 @@
     background-size: 28px 28px;
   }
 
+  /* Rain Streak Texture for Dark Editorial Theme (matching uploaded screenshot) */
+  .dark-rain-texture {
+    background-color: #0C0E14;
+    background-image: repeating-linear-gradient(
+      105deg,
+      rgba(255, 255, 255, 0.045) 0px,
+      rgba(255, 255, 255, 0.045) 1px,
+      transparent 1px,
+      transparent 28px,
+      rgba(255, 255, 255, 0.02) 28px,
+      rgba(255, 255, 255, 0.02) 29px,
+      transparent 29px,
+      transparent 56px
+    );
+  }
+
   .barcode-lines {
     background: repeating-linear-gradient(
       90deg,
@@ -141,6 +157,24 @@
       transparent 9px,
       #111215 9px,
       #111215 13px,
+      transparent 13px,
+      transparent 16px
+    );
+  }
+
+  .barcode-lines-dark {
+    background: repeating-linear-gradient(
+      90deg,
+      #94A3B8 0px,
+      #94A3B8 2px,
+      transparent 2px,
+      transparent 4px,
+      #94A3B8 4px,
+      #94A3B8 7px,
+      transparent 7px,
+      transparent 9px,
+      #94A3B8 9px,
+      #94A3B8 13px,
       transparent 13px,
       transparent 16px
     );
