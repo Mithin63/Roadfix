@@ -109,9 +109,14 @@ export const AdminDashboard: React.FC = () => {
             </span>
             <span className="text-xs text-slate-400">Roadfix Platform Operations & Telematics</span>
           </div>
-          <h2 className="text-xl sm:text-2xl font-black text-slate-100 font-heading tracking-tight mt-1">
-            System Operations & Telematics Analytics
-          </h2>
+          <div className="flex items-center gap-2 flex-wrap mt-1">
+            <h2 className="text-xl sm:text-2xl font-black text-slate-100 dark:text-slate-100 light:text-[#172033] font-heading tracking-tight">
+              System Operations & Telematics Analytics
+            </h2>
+            <span className="font-signature text-base text-[#FFB51B] dark:text-[#FFB51B] light:text-[#D99000] font-semibold -rotate-1 select-none">
+              "Ready when you need us."
+            </span>
+          </div>
         </div>
 
         {/* Tab switchers */}

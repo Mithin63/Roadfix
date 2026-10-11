@@ -47,7 +47,7 @@ export const BottomNav: React.FC<BottomNavProps> = ({ currentTab, setCurrentTab 
   const tabs = role === 'admin' ? adminTabs : role === 'mechanic' ? mechanicTabs : customerTabs;
 
   return (
-    <nav className="sm:hidden fixed bottom-0 left-0 right-0 z-40 bg-[#080D1C]/95 backdrop-blur-xl border-t border-[#1E2C48] px-2 py-1.5 flex justify-around items-center shadow-2xl">
+    <nav className="sm:hidden fixed bottom-0 left-0 right-0 z-40 bg-[#080D1C]/95 dark:bg-[#080D1C]/95 light:bg-[#F6F3EE]/95 backdrop-blur-xl border-t border-[#1E2C48] dark:border-[#1E2C48] light:border-[#111215]/25 px-2 py-1.5 flex justify-around items-center shadow-2xl transition-colors duration-200">
       {tabs.map((tab) => {
         const Icon = tab.icon;
         const isActive = currentTab === tab.id;
@@ -57,11 +57,15 @@ export const BottomNav: React.FC<BottomNavProps> = ({ currentTab, setCurrentTab 
             onClick={() => setCurrentTab(tab.id)}
             className={`flex flex-col items-center justify-center py-1 px-3 rounded-xl transition-all active:scale-95 ${
               isActive
-                ? 'text-[#FFB51B] font-extrabold'
-                : 'text-slate-400 hover:text-slate-200'
+                ? 'text-[#FFB51B] dark:text-[#FFB51B] light:text-[#111215] font-extrabold'
+                : 'text-slate-400 dark:text-[#94A3B8] light:text-[#4B5563] hover:text-slate-200 light:hover:text-[#111215]'
             }`}
           >
-            <div className={`p-1.5 rounded-xl transition-all ${isActive ? 'bg-[#FFB51B]/15 shadow-[0_0_12px_rgba(255,181,27,0.25)] text-[#FFB51B]' : ''}`}>
+            <div className={`p-1.5 rounded-xl transition-all ${
+              isActive
+                ? 'bg-[#FFB51B]/15 dark:bg-[#FFB51B]/15 light:bg-[#FACC15] light:border light:border-[#111215] shadow-sm text-[#FFB51B] dark:text-[#FFB51B] light:text-[#111215]'
+                : ''
+            }`}>
               <Icon className="w-4 h-4" />
             </div>
             <span className="text-[10px] mt-0.5 tracking-tight font-heading">{tab.label}</span>

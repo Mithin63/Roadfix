@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../context/AuthContext';
+import { useTheme } from '../../context/ThemeContext';
 import { api } from '../../services/api';
 import { Booking, BreakdownProblem } from '../../types';
 import { MapLeaflet } from '../common/MapLeaflet';
@@ -41,6 +42,7 @@ export const CustomerDashboard: React.FC<CustomerDashboardProps> = ({
   onOpenAiAssistant
 }) => {
   const { user, activeLocation, detectLocation } = useAuth();
+  const { theme } = useTheme();
   const [activeBooking, setActiveBooking] = useState<Booking | null>(null);
   const [nearbyMechanics, setNearbyMechanics] = useState<any[]>([]);
   const [maintenanceDue, setMaintenanceDue] = useState<any | null>(null);
@@ -117,14 +119,17 @@ export const CustomerDashboard: React.FC<CustomerDashboardProps> = ({
               24/7 Roadside Network Active
             </span>
           </div>
-          <h1 className="text-2xl sm:text-3xl font-black text-white tracking-tight flex items-center gap-2">
+          <h1 className="text-2xl sm:text-3xl font-black text-white dark:text-white light:text-[#172033] tracking-tight flex items-center gap-2 flex-wrap">
             <span>Hello,</span>
-            <span className="bg-gradient-to-r from-amber-400 via-amber-200 to-white bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-amber-400 via-amber-200 to-white dark:from-amber-400 dark:via-amber-200 dark:to-white light:from-[#D99000] light:to-[#172033] bg-clip-text text-transparent">
               {user?.name.split(' ')[0] || 'Driver'}
             </span>
             <span>👋</span>
+            <span className="font-signature text-xl text-amber-400 dark:text-[#FFD166] light:text-[#D99000] font-semibold select-none ml-1 -rotate-1 whitespace-nowrap hidden md:inline-block">
+              "Back on the road."
+            </span>
           </h1>
-          <p className="text-xs sm:text-sm text-slate-200 mt-1 font-medium">
+          <p className="text-xs sm:text-sm text-slate-200 dark:text-slate-200 light:text-[#5B6475] mt-1 font-medium">
             24/7 Emergency Breakdown Assistance, Certified Mechanics & Smart Telematics
           </p>
         </div>
@@ -192,7 +197,7 @@ export const CustomerDashboard: React.FC<CustomerDashboardProps> = ({
 
       {/* ACTIVE BOOKING CARD (If any active breakdown) */}
       {activeBooking && (
-        <div className="relative overflow-hidden rounded-2xl p-5 border border-amber-500/50 bg-gradient-to-r from-amber-950/40 via-slate-900 to-slate-900 shadow-xl glow-amber">
+        <div className="relative overflow-hidden rounded-2xl p-5 border border-amber-500/50 bg-gradient-to-r from-amber-950/40 via-slate-900 to-slate-900 dark:from-amber-950/40 dark:via-slate-900 dark:to-slate-900 light:from-amber-500/10 light:via-white light:to-white shadow-xl glow-amber">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div className="flex items-start gap-4">
               <div className="w-12 h-12 rounded-xl bg-amber-500/20 border border-amber-500/40 flex items-center justify-center shrink-0">
@@ -254,20 +259,21 @@ export const CustomerDashboard: React.FC<CustomerDashboardProps> = ({
       )}
 
       {/* SECTION 3: LARGE EMERGENCY HERO BUTTON WITH LIVE HIGHWAY VIDEO BACKDROP */}
-      <div className="relative overflow-hidden rounded-3xl p-6 sm:p-8 border border-amber-500/40 shadow-2xl group">
+      <div className="relative overflow-hidden rounded-3xl p-6 sm:p-8 border-2 border-amber-500/40 light:border-[#111215] shadow-2xl light:shadow-[4px_4px_0px_#111215] group">
         {/* Live Highway Night Driving Video Layer */}
         <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
           <video
-            src="/bg-highway.mp4"
+            key={theme}
+            src={theme === 'dark' ? '/bg-highway.mp4' : '/bg-highway-2.mp4'}
             autoPlay
             loop
             muted
             playsInline
-            className="w-full h-full object-cover scale-110 opacity-70 group-hover:scale-105 transition-transform duration-1000"
+            className="w-full h-full object-cover scale-110 opacity-75 light:opacity-85 group-hover:scale-105 transition-transform duration-1000"
           />
           {/* Multi-layered glassmorphic dark gradients */}
-          <div className="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-950/80 to-slate-950/40" />
-          <div className="absolute inset-0 bg-slate-950/40 backdrop-blur-[1px]" />
+          <div className="absolute inset-0 bg-gradient-to-r from-slate-950/95 via-slate-950/80 to-slate-950/40" />
+          <div className="absolute inset-0 bg-slate-950/30 backdrop-blur-[1px]" />
           <div className="absolute top-0 right-0 w-80 h-80 bg-amber-500/15 blur-3xl" />
         </div>
 
@@ -277,10 +283,10 @@ export const CustomerDashboard: React.FC<CustomerDashboardProps> = ({
               <span className="w-2 h-2 rounded-full bg-red-400 animate-ping" />
               <span>24/7 Live Highway Rescue • Avg 12 Mins Arrival</span>
             </div>
-            <h2 className="text-2xl sm:text-4xl font-black text-white tracking-tight drop-shadow-md">
+            <h2 className="text-2xl sm:text-4xl font-black !text-white tracking-tight drop-shadow-md" style={{ color: '#ffffff' }}>
               🆘 NEED ROADSIDE HELP?
             </h2>
-            <p className="text-xs sm:text-sm text-slate-200 max-w-xl leading-relaxed drop-shadow">
+            <p className="text-xs sm:text-sm !text-slate-100 max-w-xl leading-relaxed drop-shadow" style={{ color: '#F1F5F9' }}>
               Stranded on the road or highway? Get instant AI diagnosis, transparent pricing, and direct live telematics dispatch of certified mechanics to your GPS coordinates.
             </p>
           </div>

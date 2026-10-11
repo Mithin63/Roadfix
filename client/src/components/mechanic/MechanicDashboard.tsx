@@ -115,6 +115,9 @@ export const MechanicDashboard: React.FC<MechanicDashboardProps> = ({
           <div>
             <div className="flex items-center gap-2 flex-wrap">
               <h2 className="text-xl font-extrabold text-[#F1F5F9] font-heading">{user?.name}</h2>
+              <span className="font-signature text-base text-[#FFB51B] dark:text-[#FFB51B] light:text-[#D99000] font-semibold -rotate-1 select-none whitespace-nowrap hidden sm:inline-block">
+                "Ready when you need us."
+              </span>
               {profile?.isVerified && (
                 <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-[#10B981]/20 text-[#10B981] border border-[#10B981]/30 text-[10px] font-bold">
                   <ShieldCheck className="w-3.5 h-3.5" />

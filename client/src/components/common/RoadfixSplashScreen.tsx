@@ -118,6 +118,10 @@ export const RoadfixSplashScreen: React.FC<RoadfixSplashScreenProps> = ({
             Roadfix <span className="text-[#FFB51B]">24/7</span>
           </h1>
 
+          <div className="font-signature text-2xl text-[#FFD166] font-semibold select-none -rotate-1">
+            "Ready when you need us."
+          </div>
+
           <p className="text-xs sm:text-sm text-[#94A3B8] max-w-md mx-auto leading-relaxed">
             Emergency Vehicle Breakdown Rescue, Certified Mechanics & Smart Telematics Dispatch
           </p>

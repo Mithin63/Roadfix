@@ -15,13 +15,10 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     try {
       const saved = localStorage.getItem('roadfix-theme');
       if (saved === 'light' || saved === 'dark') return saved;
-      if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
-        return 'light';
-      }
     } catch (e) {
       console.warn('Theme localStorage access error', e);
     }
-    return 'dark';
+    return 'light';
   });
 
   useEffect(() => {

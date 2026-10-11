@@ -1,3 +1,5 @@
+import plugin from 'tailwindcss/plugin';
+
 /** @type {import('tailwindcss').Config} */
 export default {
   content: [
@@ -9,20 +11,43 @@ export default {
     extend: {
       colors: {
         background: {
-          main: '#080D1C',
-          card: '#111A2E',
-          'card-hover': '#17233D',
-          elevated: '#1A2846',
+          main: 'var(--bg-main)',
+          secondary: 'var(--bg-secondary)',
+          card: 'var(--bg-card)',
+          'card-hover': 'var(--bg-elevated)',
+          elevated: 'var(--bg-elevated)',
         },
         brand: {
-          amber: '#FFB51B',
-          yellow: '#FFD166',
-          cyan: '#38BDF8',
-          green: '#10B981',
-          500: '#FFB51B',
-          400: '#FFD166',
-          600: '#E59F0B',
+          amber: 'var(--primary-amber)',
+          yellow: 'var(--warm-highlight)',
+          cyan: 'var(--nav-cyan)',
+          green: 'var(--success)',
+          500: 'var(--primary-amber)',
+          400: 'var(--warm-highlight)',
+          600: 'var(--primary-amber)',
         },
+        theme: {
+          main: 'var(--bg-main)',
+          secondary: 'var(--bg-secondary)',
+          card: 'var(--bg-card)',
+          elevated: 'var(--bg-elevated)',
+          amber: 'var(--primary-amber)',
+          highlight: 'var(--warm-highlight)',
+          cyan: 'var(--nav-cyan)',
+          text: 'var(--text-primary)',
+          muted: 'var(--text-secondary)',
+          border: 'var(--border-color)',
+          success: 'var(--success)',
+          error: 'var(--error)',
+        },
+        parchment: '#F6F3EE',
+        'parchment-deep': '#EFECE5',
+        'ink-black': '#111215',
+        'safety-amber': '#F59E0B',
+        'safety-orange': '#FF6B00',
+        'safety-yellow': '#FACC15',
+        'road-slate': '#23272F',
+        'tint-cream': '#FAF8F5',
         slate: {
           950: '#080D1C',
           900: '#111A2E',
@@ -36,22 +61,26 @@ export default {
           100: '#F1F5F9',
         },
         text: {
-          main: '#F1F5F9',
-          muted: '#94A3B8',
+          main: 'var(--text-primary)',
+          muted: 'var(--text-secondary)',
           subtle: '#64748B',
         }
       },
       fontFamily: {
-        sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
-        heading: ['Manrope', 'system-ui', 'sans-serif'],
-        mono: ['JetBrains Mono', 'monospace'],
+        sans: ['var(--font-body)', 'Inter', 'system-ui', '-apple-system', 'sans-serif'],
+        heading: ['var(--font-heading)', 'Manrope', 'system-ui', 'sans-serif'],
+        headline: ['"Bebas Neue"', 'Impact', 'sans-serif'],
+        editorial: ['"Bebas Neue"', 'Impact', 'sans-serif'],
+        signature: ['var(--font-signature)', 'Caveat', 'cursive'],
+        hand: ['"Caveat"', 'cursive'],
+        mono: ['"Space Mono"', '"JetBrains Mono"', 'monospace'],
       },
       borderRadius: {
         '2xl': '1rem',
         '3xl': '1.25rem',
       },
       boxShadow: {
-        'card': '0 8px 24px -4px rgba(0, 0, 0, 0.4), 0 2px 6px -1px rgba(0, 0, 0, 0.2)',
+        'card': 'var(--card-shadow)',
         'amber-glow': '0 0 20px rgba(255, 181, 27, 0.35)',
         'cyan-glow': '0 0 20px rgba(56, 189, 248, 0.35)',
       },
@@ -61,5 +90,10 @@ export default {
       }
     },
   },
-  plugins: [],
+  plugins: [
+    plugin(function({ addVariant }) {
+      addVariant('light', '.light &');
+    })
+  ],
 }
+
