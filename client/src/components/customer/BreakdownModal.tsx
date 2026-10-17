@@ -58,6 +58,18 @@ export const BreakdownModal: React.FC<BreakdownModalProps> = ({
 }) => {
   const { user, activeLocation, setActiveLocation, detectLocation } = useAuth();
 
+  // Lock body scroll when modal is open
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isOpen]);
+
   // Wizard Step: 1 (Location) | 2 (Vehicle) | 3 (Problem) | 4 (AI Diagnosis) | 5 (Mechanic Match) | 6 (Confirm)
   const [currentStep, setCurrentStep] = useState(1);
 
@@ -398,10 +410,12 @@ export const BreakdownModal: React.FC<BreakdownModalProps> = ({
     }
   };
 
+  if (!isOpen) return null;
+
   const chosenVehicle = vehicles.find(v => v.id === selectedVehicleId);
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-[#080D1C]/85 backdrop-blur-md overflow-y-auto">
+    <div className="fixed inset-0 z-[99999] flex items-center justify-center p-3 sm:p-6 bg-[#080D1C]/85 backdrop-blur-md overflow-y-auto">
       <div className="relative w-full max-w-4xl bg-[#111A2E] border border-[#1E2C48] rounded-3xl shadow-2xl overflow-hidden my-auto flex flex-col max-h-[92vh]">
         {/* Header with Step indicator */}
         <div className="p-4 sm:p-5 border-b border-[#1E2C48] bg-[#080D1C]/90 flex items-center justify-between">

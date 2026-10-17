@@ -244,7 +244,7 @@ export const MapLeaflet: React.FC<MapLeafletProps> = ({
     : `https://www.google.com/maps?q=${targetLat},${targetLng}`;
 
   return (
-    <div className={`relative rounded-2xl overflow-hidden border border-slate-800 shadow-xl ${className}`}>
+    <div className={`relative isolate z-0 rounded-2xl overflow-hidden border border-slate-800 shadow-xl ${className}`}>
       <div ref={mapContainerRef} style={{ height, width: '100%' }} />
 
       {/* Floating GPS notice or instruction badge */}

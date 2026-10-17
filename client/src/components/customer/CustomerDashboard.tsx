@@ -3,7 +3,6 @@ import { useAuth } from '../../context/AuthContext';
 import { useTheme } from '../../context/ThemeContext';
 import { api } from '../../services/api';
 import { Booking, BreakdownProblem } from '../../types';
-import { MapLeaflet } from '../common/MapLeaflet';
 import {
   AlertTriangle,
   BatteryCharging,
@@ -21,7 +20,10 @@ import {
   Clock,
   Sparkles,
   PhoneCall,
-  Flame
+  Flame,
+  ShieldCheck,
+  Star,
+  MapPin
 } from 'lucide-react';
 
 interface CustomerDashboardProps {
@@ -92,22 +94,7 @@ export const CustomerDashboard: React.FC<CustomerDashboardProps> = ({
     return () => clearInterval(interval);
   }, [user]);
 
-  // Project mechanics in radius around customer's active location (in AP / current GPS)
-  const mapNearbyPoints = nearbyMechanics.map((m, idx) => {
-    // Generate realistic radius offsets around user's active coordinates (1.2km to 4.5km)
-    const angle = (idx / (nearbyMechanics.length || 8)) * 2 * Math.PI;
-    const distanceKm = 1.2 + (idx % 4) * 0.8;
-    const latOffset = (distanceKm / 111) * Math.cos(angle);
-    const lngOffset = (distanceKm / (111 * Math.cos((activeLocation.lat * Math.PI) / 180))) * Math.sin(angle);
 
-    return {
-      lat: activeLocation.lat + latOffset,
-      lng: activeLocation.lng + lngOffset,
-      title: `${m.name} (${m.profile.workshopName})`,
-      subtitle: `Rating: ${m.profile.rating}★ • ${distanceKm.toFixed(1)} km away • ${m.phone}`,
-      type: 'nearby' as const
-    };
-  });
 
   return (
     <div className="space-y-6 pb-12">
@@ -259,7 +246,7 @@ export const CustomerDashboard: React.FC<CustomerDashboardProps> = ({
       )}
 
       {/* SECTION 3: LARGE EMERGENCY HERO BUTTON WITH LIVE HIGHWAY VIDEO BACKDROP */}
-      <div className="relative overflow-hidden rounded-3xl p-6 sm:p-8 border-2 border-amber-500/40 light:border-[#111215] shadow-2xl light:shadow-[4px_4px_0px_#111215] group">
+      <div className="relative overflow-hidden rounded-3xl p-6 sm:p-8 bg-[#0C0E14] border-2 border-amber-500/40 light:border-[#111215] shadow-2xl light:shadow-[4px_4px_0px_#111215] group">
         {/* Live Highway Night Driving Video Layer */}
         <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
           <video
@@ -271,9 +258,9 @@ export const CustomerDashboard: React.FC<CustomerDashboardProps> = ({
             playsInline
             className="w-full h-full object-cover scale-110 opacity-75 light:opacity-85 group-hover:scale-105 transition-transform duration-1000"
           />
-          {/* Multi-layered glassmorphic dark gradients */}
-          <div className="absolute inset-0 bg-gradient-to-r from-slate-950/95 via-slate-950/80 to-slate-950/40" />
-          <div className="absolute inset-0 bg-slate-950/30 backdrop-blur-[1px]" />
+          {/* Multi-layered dark gradients for guaranteed high contrast */}
+          <div className="absolute inset-0 bg-gradient-to-r from-slate-950/95 via-slate-950/85 to-slate-950/50" />
+          <div className="absolute inset-0 bg-slate-950/40 backdrop-blur-[1px]" />
           <div className="absolute top-0 right-0 w-80 h-80 bg-amber-500/15 blur-3xl" />
         </div>
 
@@ -283,10 +270,10 @@ export const CustomerDashboard: React.FC<CustomerDashboardProps> = ({
               <span className="w-2 h-2 rounded-full bg-red-400 animate-ping" />
               <span>24/7 Live Highway Rescue • Avg 12 Mins Arrival</span>
             </div>
-            <h2 className="text-2xl sm:text-4xl font-black !text-white tracking-tight drop-shadow-md" style={{ color: '#ffffff' }}>
+            <h2 className="text-2xl sm:text-4xl font-black text-white tracking-tight drop-shadow-md">
               🆘 NEED ROADSIDE HELP?
             </h2>
-            <p className="text-xs sm:text-sm !text-slate-100 max-w-xl leading-relaxed drop-shadow" style={{ color: '#F1F5F9' }}>
+            <p className="text-xs sm:text-sm text-slate-100 max-w-xl leading-relaxed drop-shadow font-medium">
               Stranded on the road or highway? Get instant AI diagnosis, transparent pricing, and direct live telematics dispatch of certified mechanics to your GPS coordinates.
             </p>
           </div>
@@ -294,7 +281,7 @@ export const CustomerDashboard: React.FC<CustomerDashboardProps> = ({
           <div className="shrink-0 flex flex-col items-center gap-2">
             <button
               onClick={() => onStartBreakdown()}
-              className="px-8 py-4 sm:px-10 sm:py-5 rounded-2xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-lg tracking-wide shadow-2xl shadow-amber-500/50 flex items-center gap-3 border border-amber-300 cta-btn cursor-pointer"
+              className="px-8 py-4 sm:px-10 sm:py-5 rounded-2xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-lg tracking-wide shadow-2xl shadow-amber-500/50 flex items-center gap-3 border border-amber-300 cta-btn cursor-pointer btn-primary-amber"
             >
               <AlertTriangle className="w-6 h-6 text-slate-950 fill-current" />
               <span>Get Help Now</span>
@@ -308,14 +295,14 @@ export const CustomerDashboard: React.FC<CustomerDashboardProps> = ({
 
       {/* QUICK SERVICES SECTION */}
       <div className="space-y-3">
-        <div className="flex items-center justify-between p-3 rounded-2xl bg-slate-900/90 border border-slate-700/80 backdrop-blur-xl shadow-lg">
+        <div className="flex items-center justify-between p-3 rounded-2xl bg-slate-900/90 dark:bg-slate-900/90 light:bg-white border border-slate-700/80 dark:border-slate-700/80 light:border-[#111215] backdrop-blur-xl shadow-lg light:shadow-[4px_4px_0px_#111215]">
           <div className="flex items-center gap-2">
-            <div className="p-1.5 rounded-lg bg-amber-500/20 text-amber-400 border border-amber-500/30">
+            <div className="p-1.5 rounded-lg bg-amber-500/20 light:bg-amber-100 text-amber-400 light:text-[#92400E] border border-amber-500/30 light:border-[#92400E]/30">
               <Wrench className="w-4 h-4" />
             </div>
-            <h3 className="text-base sm:text-lg font-black text-white">Emergency Quick Services</h3>
+            <h3 className="text-base sm:text-lg font-black text-white dark:text-white light:text-[#111215]">Emergency Quick Services</h3>
           </div>
-          <span className="text-xs text-amber-300 font-semibold">Tap to request instant rescue</span>
+          <span className="text-xs text-amber-300 dark:text-amber-300 light:text-[#92400E] font-bold">Tap to request instant rescue</span>
         </div>
 
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
@@ -325,19 +312,19 @@ export const CustomerDashboard: React.FC<CustomerDashboardProps> = ({
               <button
                 key={service.id}
                 onClick={() => onStartBreakdown(service.id)}
-                className={`group relative p-4 rounded-2xl bg-gradient-to-br ${service.color} bg-slate-900/90 border border-slate-700/80 hover:border-amber-400 hover:bg-slate-850 transition-all text-left flex flex-col justify-between h-32 shadow-xl hover:shadow-2xl hover:-translate-y-1 backdrop-blur-xl`}
+                className={`group relative p-4 rounded-2xl bg-gradient-to-br ${service.color} bg-slate-900/90 dark:bg-slate-900/90 light:bg-white border border-slate-700/80 dark:border-slate-700/80 light:border-[#111215] hover:border-amber-400 hover:bg-slate-850 light:hover:bg-[#FAF8F5] transition-all text-left flex flex-col justify-between h-32 shadow-xl light:shadow-[3px_3px_0px_#111215] hover:shadow-2xl hover:-translate-y-1 backdrop-blur-xl cursor-pointer`}
               >
                 <div className="flex items-center justify-between w-full">
-                  <div className="p-2.5 rounded-xl bg-slate-950/80 border border-slate-700 group-hover:scale-110 transition-transform">
+                  <div className="p-2.5 rounded-xl bg-slate-950/80 dark:bg-slate-950/80 light:bg-[#EFECE5] border border-slate-700 dark:border-slate-700 light:border-[#111215] group-hover:scale-110 transition-transform">
                     <Icon className="w-5 h-5" />
                   </div>
-                  <ChevronRight className="w-4 h-4 text-slate-400 group-hover:text-amber-400 transition-colors" />
+                  <ChevronRight className="w-4 h-4 text-slate-400 dark:text-slate-400 light:text-[#111215] group-hover:text-amber-400 transition-colors" />
                 </div>
                 <div>
-                  <h4 className="font-black text-sm text-white group-hover:text-amber-300 transition-colors">
+                  <h4 className="font-black text-sm text-white dark:text-white light:text-[#111215] group-hover:text-amber-300 light:group-hover:text-[#92400E] transition-colors">
                     {service.label}
                   </h4>
-                  <p className="text-[11px] text-slate-300 mt-0.5 line-clamp-1 font-medium">
+                  <p className="text-[11px] text-slate-300 dark:text-slate-300 light:text-[#374151] mt-0.5 line-clamp-1 font-medium">
                     {service.desc}
                   </p>
                 </div>
@@ -349,49 +336,89 @@ export const CustomerDashboard: React.FC<CustomerDashboardProps> = ({
 
       {/* MAP & NEARBY MECHANICS SECTION */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Map Preview */}
+        {/* Active Nearby Rescue Units Fleet */}
         <div className="lg:col-span-2 space-y-3">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 p-3 rounded-2xl bg-slate-900/90 border border-slate-700/80 backdrop-blur-xl shadow-lg">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 p-3 rounded-2xl bg-slate-900/90 dark:bg-slate-900/90 light:bg-white border border-slate-700/80 dark:border-slate-700/80 light:border-[#111215] backdrop-blur-xl shadow-lg light:shadow-[4px_4px_0px_#111215]">
             <div className="flex items-center gap-2">
-              <div className="p-1.5 rounded-lg bg-cyan-500/20 text-cyan-400 border border-cyan-500/30">
+              <div className="p-1.5 rounded-lg bg-cyan-500/20 light:bg-sky-50 text-cyan-400 light:text-[#0369A1] border border-cyan-500/30 light:border-[#0284C7]">
                 <Navigation className="w-4 h-4" />
               </div>
-              <h3 className="text-base font-black text-white">Nearby Mechanics Radar</h3>
+              <h3 className="text-base font-black text-white dark:text-white light:text-[#111215]">Active Certified Rescue Units</h3>
             </div>
-            <span className="text-xs text-cyan-300 font-bold px-2.5 py-0.5 rounded-full bg-cyan-950/60 border border-cyan-500/40">
-              ⚡ {nearbyMechanics.length} active mobile units near {activeLocation.address.split(',')[0] || 'your area'}
+            <span className="text-xs text-cyan-300 dark:text-cyan-300 light:text-[#0369A1] font-bold px-2.5 py-0.5 rounded-full bg-cyan-950/60 dark:bg-cyan-950/60 light:bg-sky-50 border border-cyan-500/40 dark:border-cyan-500/40 light:border-[#0284C7]">
+              ⚡ {nearbyMechanics.length} active mobile units on patrol near {activeLocation.address.split(',')[0] || 'your area'}
             </span>
           </div>
 
-          <div className="rounded-3xl overflow-hidden border border-slate-700/80 shadow-2xl">
-            <MapLeaflet
-              center={[activeLocation.lat, activeLocation.lng]}
-              zoom={13}
-              customerPoint={{
-                lat: activeLocation.lat,
-                lng: activeLocation.lng,
-                title: user?.name || 'Customer Location',
-                subtitle: activeLocation.address,
-                type: 'customer'
-              }}
-              nearbyPoints={mapNearbyPoints}
-              height="320px"
-            />
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+            {nearbyMechanics.slice(0, 4).map((mech, idx) => {
+              const distanceKm = (1.2 + (idx % 4) * 0.8).toFixed(1);
+              const etaMins = 8 + (idx % 4) * 4;
+              return (
+                <div
+                  key={mech.id}
+                  className="p-4 rounded-2xl bg-slate-900/90 dark:bg-slate-900/90 light:bg-white border border-slate-700/80 dark:border-slate-700/80 light:border-[#111215] shadow-lg light:shadow-[3px_3px_0px_#111215] hover:border-amber-400 transition-all flex flex-col justify-between space-y-3"
+                >
+                  <div className="flex items-start justify-between gap-3">
+                    <div className="flex items-center gap-3">
+                      <img
+                        src={mech.avatar || 'https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&w=200&q=80'}
+                        alt={mech.name}
+                        className="w-11 h-11 rounded-xl object-cover ring-1 ring-slate-700 light:ring-[#111215]"
+                      />
+                      <div>
+                        <div className="flex items-center gap-1.5">
+                          <h4 className="font-extrabold text-sm text-white dark:text-white light:text-[#111215] font-heading">{mech.name}</h4>
+                          {mech.profile.isVerified && (
+                            <span title="Verified Certified Technician">
+                              <ShieldCheck className="w-3.5 h-3.5 text-emerald-400 light:text-[#047857]" />
+                            </span>
+                          )}
+                        </div>
+                        <p className="text-[11px] text-slate-400 dark:text-slate-400 light:text-[#374151] font-medium">{mech.profile.workshopName}</p>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-1 px-2 py-0.5 rounded-lg bg-amber-500/15 light:bg-amber-100 border border-amber-500/30 light:border-[#92400E]/30 text-amber-400 dark:text-amber-400 light:text-[#92400E] text-xs font-bold font-mono">
+                      <Star className="w-3 h-3 fill-current" />
+                      <span>{mech.profile.rating || '4.9'}</span>
+                    </div>
+                  </div>
+
+                  <div className="pt-2 border-t border-slate-800 dark:border-slate-800 light:border-[#111215] flex items-center justify-between text-xs">
+                    <div className="flex items-center gap-2.5 text-slate-400 dark:text-slate-400 light:text-[#374151]">
+                      <span className="flex items-center gap-1 text-cyan-300 dark:text-cyan-300 light:text-[#0369A1] font-bold">
+                        <MapPin className="w-3 h-3" />
+                        {distanceKm} km
+                      </span>
+                      <span>•</span>
+                      <span className="text-emerald-400 dark:text-emerald-400 light:text-[#047857] font-bold">~{etaMins} mins ETA</span>
+                    </div>
+
+                    <button
+                      onClick={() => onStartBreakdown()}
+                      className="px-3 py-1.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-xs transition-all shadow-md btn-primary-amber cursor-pointer"
+                    >
+                      Request Rescue
+                    </button>
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </div>
 
         {/* Vehicle Health & Maintenance Widget */}
         <div className="space-y-4">
-          <div className="flex items-center justify-between p-3 rounded-2xl bg-slate-900/90 border border-slate-700/80 backdrop-blur-xl shadow-lg">
+          <div className="flex items-center justify-between p-3 rounded-2xl bg-slate-900/90 dark:bg-slate-900/90 light:bg-white border border-slate-700/80 dark:border-slate-700/80 light:border-[#111215] backdrop-blur-xl shadow-lg light:shadow-[4px_4px_0px_#111215]">
             <div className="flex items-center gap-2">
-              <div className="p-1.5 rounded-lg bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
+              <div className="p-1.5 rounded-lg bg-emerald-500/20 light:bg-emerald-50 text-emerald-400 light:text-[#047857] border border-emerald-500/30 light:border-[#047857]">
                 <Car className="w-4 h-4" />
               </div>
-              <h3 className="text-base font-black text-white">Vehicle Health</h3>
+              <h3 className="text-base font-black text-white dark:text-white light:text-[#111215]">Vehicle Health</h3>
             </div>
             <button
               onClick={onOpenVehicles}
-              className="text-xs font-bold text-amber-400 hover:text-amber-300 bg-amber-500/10 px-2.5 py-1 rounded-lg border border-amber-500/30 hover:bg-amber-500/20 transition-all"
+              className="text-xs font-bold text-amber-400 dark:text-amber-400 light:text-[#92400E] bg-amber-500/10 dark:bg-amber-500/10 light:bg-amber-100 px-2.5 py-1 rounded-lg border border-amber-500/30 dark:border-amber-500/30 light:border-[#92400E]/30 hover:bg-amber-500/20 transition-all cursor-pointer"
             >
               Manage &rarr;
             </button>
@@ -399,34 +426,34 @@ export const CustomerDashboard: React.FC<CustomerDashboardProps> = ({
 
           {/* Maintenance alert card */}
           {maintenanceDue ? (
-            <div className="p-5 rounded-3xl bg-slate-900/95 border border-amber-500/50 shadow-2xl backdrop-blur-xl space-y-3">
-              <div className="flex items-center gap-2 text-amber-400 text-xs font-black uppercase tracking-wider bg-amber-500/15 border border-amber-500/30 px-3 py-1 rounded-xl w-fit">
+            <div className="p-5 rounded-3xl bg-slate-900/95 dark:bg-slate-900/95 light:bg-white border border-amber-500/50 dark:border-amber-500/50 light:border-[#111215] shadow-2xl light:shadow-[4px_4px_0px_#111215] backdrop-blur-xl space-y-3">
+              <div className="flex items-center gap-2 text-amber-400 dark:text-amber-400 light:text-[#92400E] text-xs font-black uppercase tracking-wider bg-amber-500/15 light:bg-amber-100 border border-amber-500/30 light:border-[#92400E]/30 px-3 py-1 rounded-xl w-fit">
                 <Clock className="w-3.5 h-3.5 animate-spin" style={{ animationDuration: '6s' }} />
                 <span>Service Due Soon</span>
               </div>
-              <h4 className="text-base font-black text-white">{maintenanceDue.vehicleName}</h4>
-              <p className="text-xs text-slate-200 leading-relaxed font-medium">
-                Odometer is at <strong className="text-white">{maintenanceDue.odometerKm} km</strong>. Recommended inspection due at <strong className="text-amber-300">{maintenanceDue.nextDueKm} km</strong>.
+              <h4 className="text-base font-black text-white dark:text-white light:text-[#111215]">{maintenanceDue.vehicleName}</h4>
+              <p className="text-xs text-slate-200 dark:text-slate-200 light:text-[#374151] leading-relaxed font-medium">
+                Odometer is at <strong className="text-white dark:text-white light:text-[#111215]">{maintenanceDue.odometerKm} km</strong>. Recommended inspection due at <strong className="text-amber-300 dark:text-amber-300 light:text-[#92400E]">{maintenanceDue.nextDueKm} km</strong>.
               </p>
               <button
                 onClick={onOpenMaintenance}
-                className="w-full mt-2 py-2.5 px-3 rounded-xl bg-amber-500 hover:bg-amber-400 text-xs font-black text-slate-950 border border-amber-300 transition-all shadow-lg shadow-amber-500/20 cta-btn"
+                className="w-full mt-2 py-2.5 px-3 rounded-xl bg-amber-500 hover:bg-amber-400 text-xs font-black text-slate-950 border border-amber-300 light:border-[#111215] transition-all shadow-lg shadow-amber-500/20 cta-btn btn-primary-amber cursor-pointer"
               >
                 View Maintenance Schedule
               </button>
             </div>
           ) : (
-            <div className="p-5 rounded-3xl bg-slate-900/95 border border-slate-700 shadow-2xl backdrop-blur-xl space-y-3">
-              <div className="flex items-center gap-2 text-emerald-400 text-xs font-black bg-emerald-950/80 border border-emerald-500/40 px-3 py-1 rounded-xl w-fit">
-                <CheckCircle className="w-4 h-4 text-emerald-400" />
+            <div className="p-5 rounded-3xl bg-slate-900/95 dark:bg-slate-900/95 light:bg-white border border-slate-700 dark:border-slate-700 light:border-[#111215] shadow-2xl light:shadow-[4px_4px_0px_#111215] backdrop-blur-xl space-y-3">
+              <div className="flex items-center gap-2 text-emerald-400 light:text-[#047857] text-xs font-black bg-emerald-950/80 light:bg-emerald-50 border border-emerald-500/40 light:border-[#047857] px-3 py-1 rounded-xl w-fit">
+                <CheckCircle className="w-4 h-4 text-emerald-400 light:text-[#047857]" />
                 <span>All Systems Operational</span>
               </div>
-              <p className="text-xs text-slate-200 leading-relaxed font-medium">
+              <p className="text-xs text-slate-200 dark:text-slate-200 light:text-[#374151] leading-relaxed font-medium">
                 No immediate service alerts recorded for your registered vehicles. All telematics diagnostics pass safety standards.
               </p>
               <button
                 onClick={onOpenMaintenance}
-                className="w-full mt-2 py-2.5 px-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-bold text-white border border-slate-600 transition-all shadow-md hover:border-amber-400"
+                className="w-full mt-2 py-2.5 px-3 rounded-xl bg-slate-800 dark:bg-slate-800 light:bg-[#FAF8F5] hover:bg-slate-700 light:hover:bg-[#EFECE5] text-xs font-bold text-white dark:text-white light:text-[#111215] border border-slate-600 dark:border-slate-600 light:border-[#111215] transition-all shadow-md light:shadow-[2px_2px_0px_#111215] cursor-pointer"
               >
                 Check Maintenance Log
               </button>
@@ -434,17 +461,17 @@ export const CustomerDashboard: React.FC<CustomerDashboardProps> = ({
           )}
 
           {/* AI Vehicle Troubleshooter Assistant Banner */}
-          <div className="p-5 rounded-3xl bg-gradient-to-br from-indigo-950/95 via-slate-900/95 to-purple-950/80 border border-indigo-500/60 shadow-2xl backdrop-blur-xl space-y-3">
-            <div className="flex items-center gap-2 text-indigo-300 text-xs font-black bg-indigo-950/80 border border-indigo-500/50 px-3 py-1 rounded-xl w-fit">
-              <Sparkles className="w-4 h-4 text-indigo-400 animate-pulse" />
+          <div className="p-5 rounded-3xl bg-gradient-to-br from-indigo-950/95 via-slate-900/95 to-purple-950/80 dark:from-indigo-950/95 dark:via-slate-900/95 dark:to-purple-950/80 light:from-indigo-50 light:via-purple-50 light:to-white border border-indigo-500/60 dark:border-indigo-500/60 light:border-[#111215] shadow-2xl light:shadow-[4px_4px_0px_#111215] backdrop-blur-xl space-y-3">
+            <div className="flex items-center gap-2 text-indigo-300 dark:text-indigo-300 light:text-[#5B21B6] text-xs font-black bg-indigo-950/80 dark:bg-indigo-950/80 light:bg-indigo-100 border border-indigo-500/50 dark:border-indigo-500/50 light:border-[#5B21B6]/30 px-3 py-1 rounded-xl w-fit">
+              <Sparkles className="w-4 h-4 text-indigo-400 dark:text-indigo-400 light:text-[#5B21B6] animate-pulse" />
               <span>Roadfix AI Diagnostic Assistant</span>
             </div>
-            <p className="text-xs text-slate-200 leading-relaxed font-medium">
+            <p className="text-xs text-slate-200 dark:text-slate-200 light:text-[#374151] leading-relaxed font-medium">
               Hear strange clicking sounds, brake squeals, or engine shuddering? Ask our AI assistant for safe roadside troubleshooting checks.
             </p>
             <button
               onClick={onOpenAiAssistant}
-              className="w-full py-2.5 px-3 rounded-xl bg-gradient-to-r from-indigo-500 to-purple-500 hover:from-indigo-400 hover:to-purple-400 text-white text-xs font-black transition-all shadow-lg shadow-indigo-500/30 flex items-center justify-center gap-2"
+              className="w-full py-2.5 px-3 rounded-xl bg-gradient-to-r from-indigo-500 to-purple-500 hover:from-indigo-400 hover:to-purple-400 text-white text-xs font-black transition-all shadow-lg shadow-indigo-500/30 flex items-center justify-center gap-2 cursor-pointer"
             >
               <Sparkles className="w-4 h-4" />
               <span>Ask AI Assistant →</span>

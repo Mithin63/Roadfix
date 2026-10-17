@@ -354,29 +354,16 @@
    LIGHT THEME (ROADFIX EDITORIAL POSTER) SYSTEMATIC ENGINE
    Parchment canvas (#F6F3EE), deep parchment (#EFECE5), crisp ink-black (#111215), 
    solid hard drop shadows (4px 4px 0px #111215), and tactile safety amber (#F59E0B).
+   Guarantees 100% crystal-clear readability and contrast on every page.
    ========================================================================= */
 
-/* Parchment Paper Surfaces */
+/* Parchment Paper Canvas Surfaces */
 .light body {
   background-color: #F6F3EE !important;
   color: #111215 !important;
 }
 
-.light .bg-\[\#080D1C\],
-.light .bg-\[\#080D1C\]\/95,
-.light .bg-\[\#080D1C\]\/90,
-.light .bg-\[\#080D1C\]\/85,
-.light .bg-\[\#080D1C\]\/80,
-.light .bg-\[\#080D1C\]\/70,
-.light .bg-slate-950,
-.light .bg-slate-950\/95,
-.light .bg-slate-950\/90,
-.light .bg-slate-950\/85,
-.light .bg-slate-950\/80 {
-  background-color: #F6F3EE !important;
-  color: #111215;
-}
-
+/* Core Card Surfaces in Light Theme */
 .light .bg-\[\#111A2E\],
 .light .bg-\[\#111A2E\]\/95,
 .light .bg-\[\#111A2E\]\/90,
@@ -390,37 +377,71 @@
   border-color: #111215 !important;
 }
 
+/* Elevated / Secondary Parchment Surfaces */
+.light .bg-\[\#080D1C\],
+.light .bg-\[\#080D1C\]\/95,
+.light .bg-\[\#080D1C\]\/90,
+.light .bg-\[\#080D1C\]\/85,
+.light .bg-\[\#080D1C\]\/80,
+.light .bg-\[\#080D1C\]\/70,
+.light .bg-\[\#080D1C\]\/40,
+.light .bg-slate-950,
+.light .bg-slate-950\/95,
+.light .bg-slate-950\/90,
+.light .bg-slate-950\/85,
+.light .bg-slate-950\/80,
+.light .bg-slate-950\/70,
+.light .bg-slate-950\/60,
+.light .bg-slate-950\/50,
+.light .bg-slate-950\/30 {
+  background-color: #F6F3EE !important;
+  color: #111215 !important;
+  border-color: #111215 !important;
+}
+
 .light .bg-\[\#0B1224\],
 .light .bg-\[\#172239\],
 .light .bg-\[\#17233D\],
 .light .bg-\[\#1A2846\],
+.light .bg-\[\#121824\],
+.light .bg-\[\#161C28\],
 .light .bg-slate-850,
 .light .bg-slate-800,
 .light .bg-slate-800\/90,
-.light .bg-slate-800\/80 {
-  background-color: #EFECE5 !important;
-  color: #111215 !important;
-}
-
+.light .bg-slate-800\/80,
 .light .bg-slate-800\/50,
 .light .bg-slate-800\/40,
 .light .bg-slate-900\/50 {
-  background-color: rgba(239, 236, 229, 0.95) !important;
+  background-color: #EFECE5 !important;
+  color: #111215 !important;
+  border-color: #111215 !important;
 }
 
 .light .hover\:bg-\[\#17233D\]:hover,
-.light .hover\:bg-slate-800:hover {
+.light .hover\:bg-\[\#1E2C48\]:hover,
+.light .hover\:bg-\[\#2A3E66\]:hover,
+.light .hover\:bg-slate-800:hover,
+.light .hover\:bg-slate-700:hover {
   background-color: #E5E1D8 !important;
+  color: #111215 !important;
 }
 
 /* Crisp Neobrutalist Outlines & Dividers */
 .light .border-\[\#1E2C48\],
+.light .border-\[\#1E2C48\]\/60,
+.light .border-\[\#1E2638\],
+.light .border-\[\#1E293B\],
 .light .border-\[\#26334B\],
+.light .border-\[\#2A354C\],
 .light .border-slate-800,
+.light .border-slate-800\/80,
+.light .border-slate-800\/60,
 .light .border-slate-700,
 .light .border-slate-700\/80,
 .light .border-slate-700\/50,
+.light .border-slate-600,
 .light .divide-\[\#1E2C48\] > :not([hidden]) ~ :not([hidden]),
+.light .divide-\[\#1E2638\] > :not([hidden]) ~ :not([hidden]),
 .light .divide-slate-800 > :not([hidden]) ~ :not([hidden]),
 .light .divide-slate-700 > :not([hidden]) ~ :not([hidden]) {
   border-color: #111215 !important;
@@ -430,91 +451,318 @@
 .light .shadow-2xl,
 .light .shadow-xl,
 .light .shadow-lg,
+.light .shadow-md,
 .light .auto-card {
   box-shadow: 4px 4px 0px #111215 !important;
+  border-color: #111215 !important;
 }
 
-/* Editorial Typography & Text Hierarchy */
-.light .text-\[\#F1F5F9\],
-.light .text-slate-100,
-.light .text-slate-200,
-.light .text-white {
+/* =========================================================================
+   UNIVERSAL HIGH-CONTRAST TYPOGRAPHY IN LIGHT THEME
+   Guarantees all text is bold, crisp, dark, and perfectly readable.
+   ========================================================================= */
+
+/* Headings default to solid ink-black */
+.light h1,
+.light h2,
+.light h3,
+.light h4,
+.light h5,
+.light h6 {
   color: #111215 !important;
 }
 
-.light .text-\[\#94A3B8\],
-.light .text-slate-400,
-.light .text-slate-500 {
-  color: #4B5563 !important;
+/* Primary text overrides */
+.light .text-\[\#F1F5F9\],
+.light .text-slate-100,
+.light .\!text-slate-100,
+.light .text-slate-200,
+.light .text-white,
+.light .\!text-white,
+.light .text-slate-50 {
+  color: #111215 !important;
 }
 
+/* Intermediate text (slate-300) -> dark charcoal */
 .light .text-slate-300 {
   color: #1F2937 !important;
 }
 
-/* Amber Accents & Badges */
-.light .text-\[\#FFB51B\],
-.light .text-amber-400,
-.light .text-amber-500 {
-  color: #F59E0B !important;
+/* Subtitles, hints, and muted text (slate-400 / 500) -> rich slate grey (contrast > 7:1) */
+.light .text-\[\#94A3B8\],
+.light .text-\[\#64748B\],
+.light .text-slate-400,
+.light .text-slate-500 {
+  color: #374151 !important;
 }
 
-.light .bg-\[\#FFB51B\] {
-  background-color: #F59E0B !important;
+.light .text-slate-600 {
+  color: #1F2937 !important;
+}
+
+/* Amber / Gold Text: Replace washed-out light yellow with dark rich amber (contrast > 4.8:1) */
+.light .text-\[\#FFD166\],
+.light .text-amber-300,
+.light .text-amber-300\/90,
+.light .text-yellow-400,
+.light .text-yellow-500 {
+  color: #B45309 !important;
+  font-weight: 700;
+}
+
+.light .text-\[\#FFB51B\],
+.light .text-amber-400,
+.light .text-amber-500,
+.light .text-\[\#F59E0B\],
+.light .text-\[\#D97706\] {
+  color: #92400E !important;
+  font-weight: 700;
+}
+
+/* Cyan / Blue Text: Replace light cyan with deep ocean cyan (contrast > 5.2:1) */
+.light .text-\[\#38BDF8\],
+.light .text-cyan-300,
+.light .text-cyan-400,
+.light .text-blue-400 {
+  color: #0369A1 !important;
+  font-weight: 700;
+}
+
+/* Emerald / Green Text: Replace light mint with deep forest emerald (contrast > 5.5:1) */
+.light .text-\[\#10B981\],
+.light .text-emerald-200,
+.light .text-emerald-300,
+.light .text-emerald-400,
+.light .text-emerald-500 {
+  color: #047857 !important;
+  font-weight: 700;
+}
+
+/* Red / Danger Text: Replace pale pink with deep dark crimson (contrast > 5.5:1) */
+.light .text-red-200,
+.light .text-red-300,
+.light .text-red-400,
+.light .text-red-500,
+.light .text-rose-400 {
+  color: #B91C1C !important;
+  font-weight: 700;
+}
+
+/* Indigo / Purple Text */
+.light .text-indigo-300,
+.light .text-indigo-400,
+.light .text-purple-400 {
+  color: #5B21B6 !important;
+  font-weight: 700;
+}
+
+/* Orange Text */
+.light .text-orange-400,
+.light .text-\[\#FF6B00\] {
+  color: #C2410C !important;
+  font-weight: 700;
+}
+
+/* =========================================================================
+   BUTTONS IN LIGHT THEME
+   Ensure high-contrast borders, solid tactile backgrounds, and readable labels.
+   ========================================================================= */
+
+/* Secondary / Navigation / Back Buttons (Back to Dashboard, Open in Maps, Share) */
+.light button.bg-\[\#111A2E\],
+.light button.bg-\[\#080D1C\],
+.light button.bg-\[\#1E2C48\],
+.light button.bg-slate-900,
+.light button.bg-slate-800,
+.light a.bg-\[\#111A2E\],
+.light a.bg-\[\#080D1C\],
+.light a.bg-\[\#1E2C48\],
+.light a.bg-slate-900,
+.light a.bg-slate-800 {
+  background-color: #FFFFFF !important;
+  color: #111215 !important;
+  border: 2px solid #111215 !important;
+  box-shadow: 2px 2px 0px #111215 !important;
+}
+
+.light button.bg-\[\#111A2E\]:hover,
+.light button.bg-\[\#080D1C\]:hover,
+.light button.bg-\[\#1E2C48\]:hover,
+.light button.bg-slate-900:hover,
+.light button.bg-slate-800:hover,
+.light a.bg-\[\#111A2E\]:hover,
+.light a.bg-\[\#080D1C\]:hover,
+.light a.bg-\[\#1E2C48\]:hover,
+.light a.bg-slate-900:hover,
+.light a.bg-slate-800:hover {
+  background-color: #EFECE5 !important;
+  color: #111215 !important;
+  border-color: #111215 !important;
+}
+
+.light button.bg-\[\#111A2E\] *,
+.light button.bg-\[\#080D1C\] *,
+.light button.bg-\[\#1E2C48\] *,
+.light button.bg-slate-900 *,
+.light button.bg-slate-800 *,
+.light a.bg-\[\#111A2E\] *,
+.light a.bg-\[\#080D1C\] *,
+.light a.bg-\[\#1E2C48\] *,
+.light a.bg-slate-900 *,
+.light a.bg-slate-800 * {
   color: #111215 !important;
 }
 
-.light .hover\:bg-\[\#FFD166\]:hover {
-  background-color: #FBBF24 !important;
+/* Call Mechanic Button (Emerald Action) */
+.light button.bg-\[\#10B981\]\/15,
+.light .bg-\[\#10B981\]\/15 {
+  background-color: #ECFDF5 !important;
+  border: 2px solid #047857 !important;
+  color: #047857 !important;
 }
-
-.light .border-\[\#FFB51B\],
-.light .border-\[\#FFB51B\]\/30,
-.light .border-amber-500\/40,
-.light .border-amber-500\/30 {
-  border-color: #111215 !important;
-}
-
-.light .bg-\[\#FFB51B\]\/15,
-.light .bg-\[\#FFB51B\]\/20,
-.light .bg-amber-500\/20,
-.light .bg-amber-500\/10 {
-  background-color: rgba(245, 158, 11, 0.15) !important;
-}
-
-/* Navigation Cyan Telematics */
-.light .text-\[\#38BDF8\],
-.light .text-cyan-400 {
-  color: #0284C7 !important;
-}
-
-.light .border-\[\#38BDF8\],
-.light .border-cyan-500\/30 {
-  border-color: #111215 !important;
-}
-
-.light .bg-\[\#38BDF8\]\/15,
-.light .bg-\[\#38BDF8\]\/20,
-.light .bg-cyan-500\/20,
-.light .bg-cyan-500\/10 {
-  background-color: rgba(2, 132, 199, 0.12) !important;
-}
-
-/* Success Green */
-.light .text-\[\#10B981\],
-.light .text-emerald-400 {
+.light button.bg-\[\#10B981\]\/15 *,
+.light .bg-\[\#10B981\]\/15 * {
   color: #047857 !important;
 }
 
-.light .border-\[\#10B981\],
-.light .border-emerald-500\/30 {
-  border-color: #111215 !important;
+/* Chat Button (Cyan Action) */
+.light button.bg-\[\#38BDF8\]\/15,
+.light .bg-\[\#38BDF8\]\/15 {
+  background-color: #F0F9FF !important;
+  border: 2px solid #0284C7 !important;
+  color: #0369A1 !important;
+}
+.light button.bg-\[\#38BDF8\]\/15 *,
+.light .bg-\[\#38BDF8\]\/15 * {
+  color: #0369A1 !important;
 }
 
-.light .bg-\[\#10B981\]\/15,
+/* Primary Amber Action Buttons */
+.light .bg-\[\#FFB51B\],
+.light .btn-primary-amber,
+.light .btn-amber-hydraulic {
+  background-color: #F59E0B !important;
+  color: #111215 !important;
+  border: 2px solid #111215 !important;
+  box-shadow: 0 4px 0 #B45309 !important;
+}
+
+.light .btn-primary-amber *,
+.light .btn-amber-hydraulic *,
+.light button.bg-amber-500 *,
+.light button.bg-\[\#FFB51B\] * {
+  color: #111215 !important;
+}
+
+/* =========================================================================
+   PILL BADGES & TAGS IN LIGHT THEME
+   ========================================================================= */
+
+/* Small vehicle info / type pill badges */
+.light span.bg-\[\#080D1C\],
+.light span.bg-slate-800,
+.light span.bg-slate-900,
+.light span.bg-slate-950 {
+  background-color: #EFECE5 !important;
+  color: #111215 !important;
+  border: 1px solid #111215 !important;
+  font-weight: 700 !important;
+}
+
+/* Amber highlight badges */
+.light .bg-\[\#FFB51B\]\/15,
+.light .bg-\[\#FFB51B\]\/20,
+.light .bg-\[\#FFB51B\]\/10,
+.light .bg-amber-500\/20,
+.light .bg-amber-500\/15,
+.light .bg-amber-500\/10 {
+  background-color: #FEF3C7 !important;
+  border: 1px solid #B45309 !important;
+  color: #92400E !important;
+}
+.light .bg-\[\#FFB51B\]\/15 *,
+.light .bg-\[\#FFB51B\]\/20 *,
+.light .bg-\[\#FFB51B\]\/10 *,
+.light .bg-amber-500\/20 *,
+.light .bg-amber-500\/15 *,
+.light .bg-amber-500\/10 * {
+  color: #92400E !important;
+}
+
+/* Cyan badges */
+.light .bg-\[\#38BDF8\]\/20,
+.light .bg-cyan-500\/20,
+.light .bg-cyan-500\/15,
+.light .bg-cyan-500\/10,
+.light .bg-cyan-950\/60,
+.light .bg-blue-500\/20 {
+  background-color: #E0F2FE !important;
+  border: 1px solid #0284C7 !important;
+  color: #0369A1 !important;
+}
+.light .bg-\[\#38BDF8\]\/20 *,
+.light .bg-cyan-500\/20 *,
+.light .bg-cyan-500\/15 *,
+.light .bg-cyan-500\/10 *,
+.light .bg-cyan-950\/60 *,
+.light .bg-blue-500\/20 * {
+  color: #0369A1 !important;
+}
+
+/* Emerald badges */
 .light .bg-\[\#10B981\]\/20,
-.light .bg-emerald-500\/20 {
-  background-color: rgba(4, 120, 87, 0.12) !important;
+.light .bg-emerald-500\/20,
+.light .bg-emerald-500\/15,
+.light .bg-emerald-950\/80,
+.light .bg-emerald-950\/20 {
+  background-color: #ECFDF5 !important;
+  border: 1px solid #047857 !important;
+  color: #047857 !important;
+}
+.light .bg-\[\#10B981\]\/20 *,
+.light .bg-emerald-500\/20 *,
+.light .bg-emerald-500\/15 *,
+.light .bg-emerald-950\/80 *,
+.light .bg-emerald-950\/20 * {
+  color: #047857 !important;
+}
+
+/* Red / Danger badges */
+.light .bg-red-500\/20,
+.light .bg-red-500\/15,
+.light .bg-red-500\/10,
+.light .bg-red-950\/40,
+.light .bg-red-950\/30,
+.light .bg-red-950\/50,
+.light .bg-red-950\/80 {
+  background-color: #FEE2E2 !important;
+  border: 1px solid #B91C1C !important;
+  color: #991B1B !important;
+}
+.light .bg-red-500\/20 *,
+.light .bg-red-500\/15 *,
+.light .bg-red-500\/10 *,
+.light .bg-red-950\/40 *,
+.light .bg-red-950\/30 *,
+.light .bg-red-950\/50 *,
+.light .bg-red-950\/80 * {
+  color: #991B1B !important;
+}
+
+/* Purple / Indigo badges */
+.light .bg-indigo-950\/80,
+.light .bg-indigo-500\/20,
+.light .bg-purple-500\/20,
+.light .bg-purple-950\/80 {
+  background-color: #F3E8FF !important;
+  border: 1px solid #7C3AED !important;
+  color: #5B21B6 !important;
+}
+.light .bg-indigo-950\/80 *,
+.light .bg-indigo-500\/20 *,
+.light .bg-purple-500\/20 *,
+.light .bg-purple-950\/80 * {
+  color: #5B21B6 !important;
 }
 
 /* Form Controls in Light Theme */
@@ -541,6 +789,19 @@
   outline: none !important;
 }
 
+/* Ensure Leaflet maps never escape their stacking context or punch through modals */
+.leaflet-container {
+  z-index: 0 !important;
+  isolation: isolate !important;
+}
+
+/* Modals & Dialog Backdrops: High z-index to always sit above any map layers */
+.fixed.inset-0.z-50,
+.fixed.inset-0.z-\[99999\],
+.fixed.inset-0 {
+  z-index: 99999 !important;
+}
+
 /* Modals & Dialog Backdrops in Light Theme */
 .light .fixed.inset-0.bg-\[\#080D1C\]\/85,
 .light .fixed.inset-0.bg-slate-950\/80,
@@ -556,7 +817,7 @@
 
 .light thead {
   background-color: #EFECE5 !important;
-  color: #4B5563 !important;
+  color: #111215 !important;
   border-bottom: 2px solid #111215 !important;
 }
 

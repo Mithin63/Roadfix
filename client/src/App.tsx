@@ -144,12 +144,12 @@ const MainAppContent: React.FC = () => {
           loop
           muted
           playsInline
-          className="w-full h-full object-cover opacity-50 dark:opacity-40 light:opacity-30 scale-105 transition-opacity duration-300"
+          className="w-full h-full object-cover opacity-50 dark:opacity-40 light:opacity-20 scale-105 transition-opacity duration-300"
         />
         <div 
           className="absolute inset-0 backdrop-blur-[1px] transition-colors duration-300"
           style={{
-            backgroundColor: isDark ? 'rgba(8, 13, 28, 0.65)' : 'rgba(246, 243, 238, 0.72)'
+            backgroundColor: isDark ? 'rgba(8, 13, 28, 0.65)' : 'rgba(246, 243, 238, 0.94)'
           }}
         />
         <div 
@@ -157,7 +157,7 @@ const MainAppContent: React.FC = () => {
           style={{
             background: isDark
               ? 'linear-gradient(to top, #080D1C 0%, rgba(8,13,28,0.4) 50%, #080D1C 100%)'
-              : 'linear-gradient(to top, #F6F3EE 0%, rgba(246,243,238,0.3) 50%, #F6F3EE 100%)'
+              : 'linear-gradient(to top, #F6F3EE 0%, rgba(246,243,238,0.85) 50%, #F6F3EE 100%)'
           }}
         />
       </div>
@@ -173,7 +173,7 @@ const MainAppContent: React.FC = () => {
       />
 
       {/* Main Container */}
-      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
+      <main className="relative z-10 flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
         {/* Dedicated User Profile / Details Tab (Available for all roles) */}
         {currentTab === 'profile' && (
           <UserProfilePage
