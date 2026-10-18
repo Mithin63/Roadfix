@@ -61,7 +61,7 @@ const MainAppContent: React.FC = () => {
     } else if (role === 'admin') {
       setCurrentTab('dashboard');
     }
-  }, [role]);
+  }, [role, user]);
 
   const handleStartBreakdown = (problem?: BreakdownProblem) => {
     setPreselectedProblem(problem);
@@ -175,96 +175,68 @@ const MainAppContent: React.FC = () => {
 
       {/* Main Container */}
       <main className="relative z-10 flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
-        {/* Dedicated User Profile / Details Tab (Available for all roles) */}
-        {currentTab === 'profile' && (
-          <UserProfilePage
-            onOpenVehicles={() => setCurrentTab('vehicles')}
-            onOpenSos={() => setIsSosModalOpen(true)}
-            onOpenLogin={() => setIsLoginModalOpen(true)}
-            onBackToDashboard={() => {
-              if (role === 'customer') setCurrentTab('home');
-              else setCurrentTab('dashboard');
-            }}
-          />
-        )}
 
-            {/* ROLE 1: CUSTOMER VIEWS */}
-            {role === 'customer' && currentTab !== 'profile' && (
-              <>
-                {currentTab === 'home' && (
-                  <CustomerDashboard
-                    onStartBreakdown={handleStartBreakdown}
-                    onOpenTracking={() => setCurrentTab('tracking')}
-                    onOpenVehicles={() => setCurrentTab('vehicles')}
-                    onOpenMaintenance={() => setCurrentTab('maintenance')}
-                    onOpenHistory={() => setCurrentTab('history')}
-                    onOpenAiAssistant={() => setIsAiAssistantOpen(true)}
-                  />
-                )}
 
-                {currentTab === 'tracking' && (
-                  <TrackingScreen
-                    onOpenChat={handleOpenChat}
-                    onOpenPayment={handleOpenPayment}
-                    onOpenReview={handleOpenReview}
-                    onBackToHome={() => setCurrentTab('home')}
-                  />
-                )}
-
-                {currentTab === 'vehicles' && (
-                  <VehiclesView onBack={() => setCurrentTab('home')} />
-                )}
-
-                {currentTab === 'history' && (
-                  <RepairHistoryView
-                    onViewInvoice={handleOpenPayment}
-                    onRateBooking={handleOpenReview}
-                    onBack={() => setCurrentTab('home')}
-                  />
-                )}
-
-                {currentTab === 'maintenance' && (
-                  <MaintenanceView onBack={() => setCurrentTab('home')} />
-                )}
-              </>
-            )}
-
-            {/* ROLE 2: MECHANIC VIEWS */}
-            {role === 'mechanic' && currentTab !== 'profile' && (
-              <>
-                {currentTab === 'dashboard' && (
-                  <MechanicDashboard
-                    onOpenJobScreen={handleOpenMechanicJob}
-                    onOpenChat={handleOpenChat}
-                  />
-                )}
-
-                {currentTab === 'requests' && (
-                  <MechanicDashboard
-                    onOpenJobScreen={handleOpenMechanicJob}
-                    onOpenChat={handleOpenChat}
-                  />
-                )}
-
-                {currentTab === 'active-job' && (
-                  <MechanicJobScreen
-                    bookingId={activeMechanicJobId}
-                    onBack={() => setCurrentTab('dashboard')}
-                    onOpenChat={handleOpenChat}
-                  />
-                )}
-
-                {currentTab === 'earnings' && (
-                  <MechanicDashboard
-                    onOpenJobScreen={handleOpenMechanicJob}
-                    onOpenChat={handleOpenChat}
-                  />
-                )}
-              </>
-            )}
-
-            {/* ROLE 3: ADMIN VIEWS */}
-            {role === 'admin' && currentTab !== 'profile' && <AdminDashboard />}
+        <ErrorBoundary>
+          {/* Dedicated User Profile / Details Tab (Available for all roles) */}
+          {currentTab === 'profile' ? (
+            <UserProfilePage
+              onOpenVehicles={() => setCurrentTab('vehicles')}
+              onOpenSos={() => setIsSosModalOpen(true)}
+              onOpenLogin={() => setIsLoginModalOpen(true)}
+              onBackToDashboard={() => {
+                if (role === 'customer') setCurrentTab('home');
+                else setCurrentTab('dashboard');
+              }}
+            />
+          ) : role === 'admin' ? (
+            /* ROLE 3: ADMIN VIEWS */
+            <AdminDashboard />
+          ) : role === 'mechanic' ? (
+            /* ROLE 2: MECHANIC VIEWS */
+            currentTab === 'active-job' ? (
+              <MechanicJobScreen
+                bookingId={activeMechanicJobId}
+                onBack={() => setCurrentTab('dashboard')}
+                onOpenChat={handleOpenChat}
+              />
+            ) : (
+              <MechanicDashboard
+                onOpenJobScreen={handleOpenMechanicJob}
+                onOpenChat={handleOpenChat}
+              />
+            )
+          ) : (
+            /* ROLE 1: CUSTOMER VIEWS (Default for customer & any unexpected role) */
+            currentTab === 'tracking' ? (
+              <TrackingScreen
+                onOpenChat={handleOpenChat}
+                onOpenPayment={handleOpenPayment}
+                onOpenReview={handleOpenReview}
+                onBackToHome={() => setCurrentTab('home')}
+              />
+            ) : currentTab === 'vehicles' ? (
+              <VehiclesView onBack={() => setCurrentTab('home')} />
+            ) : currentTab === 'history' ? (
+              <RepairHistoryView
+                onViewInvoice={handleOpenPayment}
+                onRateBooking={handleOpenReview}
+                onBack={() => setCurrentTab('home')}
+              />
+            ) : currentTab === 'maintenance' ? (
+              <MaintenanceView onBack={() => setCurrentTab('home')} />
+            ) : (
+              <CustomerDashboard
+                onStartBreakdown={handleStartBreakdown}
+                onOpenTracking={() => setCurrentTab('tracking')}
+                onOpenVehicles={() => setCurrentTab('vehicles')}
+                onOpenMaintenance={() => setCurrentTab('maintenance')}
+                onOpenHistory={() => setCurrentTab('history')}
+                onOpenAiAssistant={() => setIsAiAssistantOpen(true)}
+              />
+            )
+          )}
+        </ErrorBoundary>
       </main>
 
       {/* Global Interactive Modals */}

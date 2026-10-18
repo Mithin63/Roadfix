@@ -67,20 +67,21 @@ export const CustomerDashboard: React.FC<CustomerDashboardProps> = ({
     if (!user) return;
     try {
       setLoading(true);
-      // Fetch bookings for this customer
       const bookingsRes = await api.getBookings({ customerId: user.id });
-      const current = bookingsRes.bookings.find(
-        b => !['payment_completed', 'cancelled'].includes(b.status)
-      );
+      const current = Array.isArray(bookingsRes?.bookings)
+        ? bookingsRes.bookings.find(b => !['payment_completed', 'cancelled'].includes(b.status))
+        : null;
       setActiveBooking(current || null);
 
       // Fetch nearby mechanics
       const mechRes = await api.getMechanics({ isOnline: true });
-      setNearbyMechanics(mechRes.mechanics || []);
+      setNearbyMechanics(Array.isArray(mechRes?.mechanics) ? mechRes.mechanics : []);
 
       // Fetch maintenance
       const maintRes = await api.getMaintenance(user.id);
-      const due = maintRes.reminders?.find((r: any) => r.isDueSoon);
+      const due = Array.isArray(maintRes?.reminders)
+        ? maintRes.reminders.find((r: any) => r.isDueSoon)
+        : null;
       setMaintenanceDue(due || null);
     } catch (err) {
       console.error(err);
@@ -214,16 +215,16 @@ export const CustomerDashboard: React.FC<CustomerDashboardProps> = ({
                   Mechanic {activeBooking.mechanicName || 'Assigned'} is {activeBooking.status === 'travelling' ? 'en route to your vehicle' : 'handling your breakdown'}
                 </h3>
                 <p className="text-xs text-slate-400 mt-0.5">
-                  {activeBooking.vehicleInfo.make} {activeBooking.vehicleInfo.model} ({activeBooking.vehicleInfo.regNo}) • ETA ~{activeBooking.etaMinutes} mins
+                  {activeBooking.vehicleInfo?.make || 'Vehicle'} {activeBooking.vehicleInfo?.model || ''} {activeBooking.vehicleInfo?.regNo ? `(${activeBooking.vehicleInfo.regNo})` : ''} • ETA ~{activeBooking.etaMinutes || 15} mins
                 </p>
               </div>
             </div>
 
             <div className="flex items-center gap-2 shrink-0 flex-wrap">
               <a
-                href={activeBooking.mechanicLat && activeBooking.mechanicLng
+                href={activeBooking.mechanicLat && activeBooking.mechanicLng && activeBooking.customerLat && activeBooking.customerLng
                   ? `https://www.google.com/maps/dir/?api=1&origin=${activeBooking.mechanicLat},${activeBooking.mechanicLng}&destination=${activeBooking.customerLat},${activeBooking.customerLng}`
-                  : `https://www.google.com/maps?q=${activeBooking.customerLat},${activeBooking.customerLng}`}
+                  : `https://www.google.com/maps?q=${activeBooking.customerLat || 19.0760},${activeBooking.customerLng || 72.8777}`}
                 target="_blank"
                 rel="noreferrer"
                 className="px-3.5 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-amber-300 border border-amber-500/30 font-bold text-xs flex items-center justify-center gap-1.5 transition-colors"

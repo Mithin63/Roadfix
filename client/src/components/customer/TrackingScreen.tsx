@@ -327,8 +327,8 @@ export const TrackingScreen: React.FC<TrackingScreenProps> = ({
             customerPoint={{
               lat: booking.customerLat,
               lng: booking.customerLng,
-              title: `${booking.customerName} (${booking.vehicleInfo.model})`,
-              subtitle: booking.customerAddress,
+              title: `${booking.customerName || 'Customer'} (${booking.vehicleInfo?.model || 'Vehicle'})`,
+              subtitle: booking.customerAddress || 'Roadside Location',
               type: 'customer'
             }}
             mechanicPoint={

@@ -149,7 +149,7 @@ export const MechanicJobScreen: React.FC<MechanicJobScreenProps> = ({
               </span>
             </div>
             <h2 className="text-lg font-extrabold text-[#F1F5F9] font-heading mt-1">
-              {booking.customerName} • {booking.vehicleInfo.make} {booking.vehicleInfo.model}
+              {booking.customerName || 'Customer'} • {booking.vehicleInfo?.make || 'Vehicle'} {booking.vehicleInfo?.model || ''}
             </h2>
           </div>
         </div>
