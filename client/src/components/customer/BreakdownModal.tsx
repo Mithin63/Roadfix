@@ -38,7 +38,8 @@ import {
   Info,
   AlertCircle,
   Trash2,
-  Volume2
+  Volume2,
+  Truck
 } from 'lucide-react';
 
 import { VehicleFormFields, VehicleFormData } from '../common/VehicleFormFields';
@@ -91,12 +92,12 @@ export const BreakdownModal: React.FC<BreakdownModalProps> = ({
     year: '',
     regNo: '',
     fuelType: '',
-    color: 'White'
+    color: ''
   });
 
   // Step 3: Problem (Multi-optional & Real Voice Speech Recognition)
   const [problemTypes, setProblemTypes] = useState<BreakdownProblem[]>(
-    preselectedProblem ? [preselectedProblem] : ['battery_dead']
+    preselectedProblem ? [preselectedProblem] : []
   );
   const [problemDescription, setProblemDescription] = useState('');
   const [isRecordingVoice, setIsRecordingVoice] = useState(false);
@@ -142,18 +143,6 @@ export const BreakdownModal: React.FC<BreakdownModalProps> = ({
       }
     };
   }, []);
-
-  // Lock body scroll when modal is open to prevent duplicate scrolling (Issue 1)
-  useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = '';
-    }
-    return () => {
-      document.body.style.overflow = '';
-    };
-  }, [isOpen]);
 
   // Load customer's vehicles
   useEffect(() => {
@@ -670,13 +659,14 @@ export const BreakdownModal: React.FC<BreakdownModalProps> = ({
               {/* Multi-optional Problem category pills */}
               <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2.5">
                 {[
+                  { id: 'flat_tyre', label: 'Puncture / Tyre', icon: Disc },
+                  { id: 'battery_dead', label: 'Battery Assistance', icon: BatteryCharging },
+                  { id: 'engine_problem', label: 'Engine Trouble', icon: Cpu },
+                  { id: 'fuel_problem', label: 'Fuel Assistance', icon: Fuel },
+                  { id: 'towing', label: 'Towing Assistance', icon: Truck },
                   { id: 'vehicle_wont_start', label: "Won't Start", icon: Car },
-                  { id: 'flat_tyre', label: 'Flat Tyre', icon: Disc },
-                  { id: 'battery_dead', label: 'Battery Dead', icon: BatteryCharging },
-                  { id: 'engine_problem', label: 'Engine Problem', icon: Cpu },
                   { id: 'brake_problem', label: 'Brake Problem', icon: AlertTriangle },
                   { id: 'overheating', label: 'Overheating', icon: Flame },
-                  { id: 'fuel_problem', label: 'Fuel Empty', icon: Fuel },
                   { id: 'electrical_problem', label: 'Electrical/Fuse', icon: Zap },
                   { id: 'accident_damage', label: 'Accident / Body', icon: ShieldAlert },
                   { id: 'key_lock_problem', label: 'Key / Lockout', icon: Key },

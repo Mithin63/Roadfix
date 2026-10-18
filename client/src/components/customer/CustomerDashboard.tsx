@@ -23,7 +23,8 @@ import {
   Flame,
   ShieldCheck,
   Star,
-  MapPin
+  MapPin,
+  Truck
 } from 'lucide-react';
 
 interface CustomerDashboardProps {
@@ -51,15 +52,15 @@ export const CustomerDashboard: React.FC<CustomerDashboardProps> = ({
   const [loading, setLoading] = useState(true);
 
   const quickServices: { id: BreakdownProblem; label: string; icon: any; color: string; desc: string }[] = [
-    { id: 'battery_dead', label: 'Battery Problem', icon: BatteryCharging, color: 'from-amber-500/20 to-amber-600/10 border-amber-500/30 text-amber-400', desc: 'Jump start & battery testing' },
-    { id: 'flat_tyre', label: 'Flat Tyre', icon: Disc, color: 'from-cyan-500/20 to-cyan-600/10 border-cyan-500/30 text-cyan-400', desc: 'Puncture repair & spare mount' },
-    { id: 'fuel_problem', label: 'Fuel Problem', icon: Fuel, color: 'from-emerald-500/20 to-emerald-600/10 border-emerald-500/30 text-emerald-400', desc: 'Emergency 5L fuel delivery' },
-    { id: 'engine_problem', label: 'Engine Problem', icon: Cpu, color: 'from-orange-500/20 to-orange-600/10 border-orange-500/30 text-orange-400', desc: 'Stalling, noise & diagnostics' },
-    { id: 'overheating', label: 'Overheating', icon: Flame, color: 'from-red-500/20 to-red-600/10 border-red-500/30 text-red-400', desc: 'Coolant leaks & steam' },
-    { id: 'electrical_problem', label: 'Electrical / Fuse', icon: Zap, color: 'from-yellow-500/20 to-yellow-600/10 border-yellow-500/30 text-yellow-400', desc: 'Lights, harness & fuses' },
-    { id: 'accident_damage', label: 'Accident / Damage', icon: ShieldAlert, color: 'from-rose-500/20 to-rose-600/10 border-rose-500/30 text-rose-400', desc: 'Body securing & clearance' },
-    { id: 'key_lock_problem', label: 'Key / Lockout', icon: Key, color: 'from-purple-500/20 to-purple-600/10 border-purple-500/30 text-purple-400', desc: 'Lockout & key fob battery' },
-    { id: 'other', label: 'Other Issue', icon: Wrench, color: 'from-blue-500/20 to-blue-600/10 border-blue-500/30 text-blue-400', desc: 'Brakes, clutch & towing prep' },
+    { id: 'flat_tyre', label: 'Puncture Repair', icon: Disc, color: 'from-cyan-500/20 to-cyan-600/10 border-cyan-500/30 text-cyan-400', desc: 'Puncture vulcanizing & spare mount' },
+    { id: 'battery_dead', label: 'Battery Assistance', icon: BatteryCharging, color: 'from-amber-500/20 to-amber-600/10 border-amber-500/30 text-amber-400', desc: 'Jump start & battery load test' },
+    { id: 'engine_problem', label: 'Engine Trouble', icon: Cpu, color: 'from-orange-500/20 to-orange-600/10 border-orange-500/30 text-orange-400', desc: 'Stalling, misfire & OBD2 diagnostic' },
+    { id: 'fuel_problem', label: 'Fuel Assistance', icon: Fuel, color: 'from-emerald-500/20 to-emerald-600/10 border-emerald-500/30 text-emerald-400', desc: 'Emergency 5L fuel dispatch' },
+    { id: 'towing', label: 'Towing Assistance', icon: Truck, color: 'from-purple-500/20 to-purple-600/10 border-purple-500/30 text-purple-400', desc: 'Flatbed recovery & safe towing' },
+    { id: 'overheating', label: 'Overheating / Coolant', icon: Flame, color: 'from-red-500/20 to-red-600/10 border-red-500/30 text-red-400', desc: 'Coolant leaks, radiator & steam' },
+    { id: 'electrical_problem', label: 'Electrical / Fuse', icon: Zap, color: 'from-yellow-500/20 to-yellow-600/10 border-yellow-500/30 text-yellow-400', desc: 'Alternator, harness & fuses' },
+    { id: 'key_lock_problem', label: 'Key / Lockout', icon: Key, color: 'from-indigo-500/20 to-indigo-600/10 border-indigo-500/30 text-indigo-400', desc: 'Lockout rescue & key battery' },
+    { id: 'other', label: 'Other Diagnostics', icon: Wrench, color: 'from-blue-500/20 to-blue-600/10 border-blue-500/30 text-blue-400', desc: 'Brakes, clutch & custom repairs' },
   ];
 
   const loadData = async () => {
@@ -96,6 +97,15 @@ export const CustomerDashboard: React.FC<CustomerDashboardProps> = ({
 
 
 
+  const safeLocation = activeLocation || {
+    lat: 16.5062,
+    lng: 80.6480,
+    address: 'Live Location Active',
+    status: 'idle',
+    errorMsg: null,
+    isRealGps: false
+  };
+
   return (
     <div className="space-y-6 pb-12">
       {/* Welcome & Live GPS Status Glassmorphic Header Card */}
@@ -109,7 +119,7 @@ export const CustomerDashboard: React.FC<CustomerDashboardProps> = ({
           <h1 className="text-2xl sm:text-3xl font-black text-white dark:text-white light:text-[#172033] tracking-tight flex items-center gap-2 flex-wrap">
             <span>Hello,</span>
             <span className="bg-gradient-to-r from-amber-400 via-amber-200 to-white dark:from-amber-400 dark:via-amber-200 dark:to-white light:from-[#D99000] light:to-[#172033] bg-clip-text text-transparent">
-              {user?.name.split(' ')[0] || 'Driver'}
+              {user?.name ? user.name.split(' ')[0] : 'Driver'}
             </span>
             <span>👋</span>
             <span className="font-signature text-xl text-amber-400 dark:text-[#FFD166] light:text-[#D99000] font-semibold select-none ml-1 -rotate-1 whitespace-nowrap hidden md:inline-block">
@@ -127,26 +137,26 @@ export const CustomerDashboard: React.FC<CustomerDashboardProps> = ({
             type="button"
             onClick={detectLocation}
             className={`flex items-center gap-2 px-4 py-2.5 rounded-2xl bg-slate-950 hover:bg-slate-800 border transition-all shadow-lg text-xs font-semibold ${
-              activeLocation.status === 'denied' || activeLocation.status === 'unavailable'
+              safeLocation.status === 'denied' || safeLocation.status === 'unavailable'
                 ? 'border-red-500/60 text-red-300'
                 : 'border-amber-500/40 hover:border-amber-400 text-white'
             }`}
             title="Click to detect your exact GPS coordinates"
           >
             <div className={`w-2.5 h-2.5 rounded-full ${
-              activeLocation.status === 'detecting'
+              safeLocation.status === 'detecting'
                 ? 'bg-amber-400 animate-spin'
-                : activeLocation.status === 'denied' || activeLocation.status === 'unavailable'
+                : safeLocation.status === 'denied' || safeLocation.status === 'unavailable'
                 ? 'bg-red-400'
                 : 'bg-emerald-400 animate-ping'
             }`} />
             <span className="font-bold text-slate-100">
-              {activeLocation.status === 'detecting'
+              {safeLocation.status === 'detecting'
                 ? '📍 Detecting your location...'
-                : `📍 ${activeLocation.address}`}
+                : `📍 ${safeLocation.address || 'GPS Telematics Connected'}`}
             </span>
             <span className="text-[10px] text-amber-400 font-bold bg-amber-500/15 px-2 py-0.5 rounded-md border border-amber-500/30 ml-1">
-              {activeLocation.status === 'denied' || activeLocation.status === 'unavailable' ? 'Retry GPS' : 'Live GPS'}
+              {safeLocation.status === 'denied' || safeLocation.status === 'unavailable' ? 'Retry GPS' : 'Live GPS'}
             </span>
           </button>
         </div>
@@ -346,7 +356,7 @@ export const CustomerDashboard: React.FC<CustomerDashboardProps> = ({
               <h3 className="text-base font-black text-white dark:text-white light:text-[#111215]">Active Certified Rescue Units</h3>
             </div>
             <span className="text-xs text-cyan-300 dark:text-cyan-300 light:text-[#0369A1] font-bold px-2.5 py-0.5 rounded-full bg-cyan-950/60 dark:bg-cyan-950/60 light:bg-sky-50 border border-cyan-500/40 dark:border-cyan-500/40 light:border-[#0284C7]">
-              ⚡ {nearbyMechanics.length} active mobile units on patrol near {activeLocation.address.split(',')[0] || 'your area'}
+              ⚡ {nearbyMechanics.length} active mobile units on patrol near {(safeLocation.address || 'your area').split(',')[0]}
             </span>
           </div>
 
@@ -369,18 +379,18 @@ export const CustomerDashboard: React.FC<CustomerDashboardProps> = ({
                       <div>
                         <div className="flex items-center gap-1.5">
                           <h4 className="font-extrabold text-sm text-white dark:text-white light:text-[#111215] font-heading">{mech.name}</h4>
-                          {mech.profile.isVerified && (
+                          {mech.profile?.isVerified && (
                             <span title="Verified Certified Technician">
                               <ShieldCheck className="w-3.5 h-3.5 text-emerald-400 light:text-[#047857]" />
                             </span>
                           )}
                         </div>
-                        <p className="text-[11px] text-slate-400 dark:text-slate-400 light:text-[#374151] font-medium">{mech.profile.workshopName}</p>
+                        <p className="text-[11px] text-slate-400 dark:text-slate-400 light:text-[#374151] font-medium">{mech.profile?.workshopName || 'Certified Workshop'}</p>
                       </div>
                     </div>
                     <div className="flex items-center gap-1 px-2 py-0.5 rounded-lg bg-amber-500/15 light:bg-amber-100 border border-amber-500/30 light:border-[#92400E]/30 text-amber-400 dark:text-amber-400 light:text-[#92400E] text-xs font-bold font-mono">
                       <Star className="w-3 h-3 fill-current" />
-                      <span>{mech.profile.rating || '4.9'}</span>
+                      <span>{mech.profile?.rating || '4.9'}</span>
                     </div>
                   </div>
 

@@ -206,6 +206,20 @@ class DatabaseStore {
     return Array.from(this.users.values());
   }
 
+  getRegisteredUsersDetails(): any[] {
+    const list: any[] = [];
+    this.users.forEach((u) => {
+      const vehicles = this.getVehiclesByCustomer(u.id);
+      const mechanicProfile = u.role === 'mechanic' ? this.getMechanicProfile(u.id) : undefined;
+      list.push({
+        ...u,
+        vehicles,
+        mechanicProfile
+      });
+    });
+    return list;
+  }
+
   createUser(user: User): User {
     if (!user.password) user.password = 'password123';
     this.users.set(user.id, user);

@@ -194,6 +194,17 @@ export const MechanicJobScreen: React.FC<MechanicJobScreenProps> = ({
         </h3>
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
           <button
+            onClick={() => handleUpdateStatus('travelling', 'Mechanic is en route with equipment and telemetry')}
+            className={`p-3 rounded-xl border text-xs font-bold transition-all ${
+              ['travelling', 'arrived', 'diagnosis_started', 'repair_in_progress', 'repair_completed', 'payment_completed'].includes(booking.status)
+                ? 'bg-[#10B981]/20 border-[#10B981]/40 text-[#10B981]'
+                : 'bg-[#080D1C] border-[#1E2C48] hover:border-[#FFB51B] text-[#94A3B8] hover:text-[#F1F5F9]'
+            }`}
+          >
+            1. En Route
+          </button>
+
+          <button
             onClick={() => handleUpdateStatus('arrived', 'Mechanic has arrived at breakdown site')}
             className={`p-3 rounded-xl border text-xs font-bold transition-all ${
               ['arrived', 'diagnosis_started', 'repair_in_progress', 'repair_completed', 'payment_completed'].includes(booking.status)
@@ -201,18 +212,7 @@ export const MechanicJobScreen: React.FC<MechanicJobScreenProps> = ({
                 : 'bg-[#080D1C] border-[#1E2C48] hover:border-[#FFB51B] text-[#94A3B8] hover:text-[#F1F5F9]'
             }`}
           >
-            1. Arrived on Site
-          </button>
-
-          <button
-            onClick={() => handleUpdateStatus('diagnosis_started', 'On-site physical and OBD2 diagnostics underway')}
-            className={`p-3 rounded-xl border text-xs font-bold transition-all ${
-              ['diagnosis_started', 'repair_in_progress', 'repair_completed', 'payment_completed'].includes(booking.status)
-                ? 'bg-[#10B981]/20 border-[#10B981]/40 text-[#10B981]'
-                : 'bg-[#080D1C] border-[#1E2C48] hover:border-[#FFB51B] text-[#94A3B8] hover:text-[#F1F5F9]'
-            }`}
-          >
-            2. Diagnosis Started
+            2. Arrived on Site
           </button>
 
           <button
@@ -223,7 +223,7 @@ export const MechanicJobScreen: React.FC<MechanicJobScreenProps> = ({
                 : 'bg-[#080D1C] border-[#1E2C48] hover:border-[#FFB51B] text-[#94A3B8] hover:text-[#F1F5F9]'
             }`}
           >
-            3. Repair Started
+            3. In Progress
           </button>
 
           <button
@@ -234,7 +234,7 @@ export const MechanicJobScreen: React.FC<MechanicJobScreenProps> = ({
                 : 'bg-[#FFB51B] hover:bg-[#FFD166] text-[#080D1C] font-extrabold btn-primary-amber'
             }`}
           >
-            4. Repair Completed
+            4. Completed
           </button>
         </div>
       </div>

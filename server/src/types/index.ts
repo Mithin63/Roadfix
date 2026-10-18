@@ -71,6 +71,7 @@ export type BreakdownProblem =
   | 'electrical_problem'
   | 'accident_damage'
   | 'key_lock_problem'
+  | 'towing'
   | 'other';
 
 export interface AIDiagnosis {

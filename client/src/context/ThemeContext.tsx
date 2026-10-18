@@ -18,7 +18,7 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     } catch (e) {
       console.warn('Theme localStorage access error', e);
     }
-    return 'light';
+    return 'dark';
   });
 
   useEffect(() => {

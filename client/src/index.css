@@ -472,14 +472,26 @@
   color: #111215 !important;
 }
 
-/* Primary text overrides */
+/* Primary text overrides on surfaces */
 .light .text-\[\#F1F5F9\],
 .light .text-slate-100,
 .light .\!text-slate-100,
 .light .text-slate-200,
-.light .text-white,
-.light .\!text-white,
 .light .text-slate-50 {
+  color: #111215 !important;
+}
+
+/* In light theme, text-white on regular parchment/white surfaces becomes ink-black,
+   EXCEPT inside buttons, badges, or elements with dark/colored backgrounds */
+.light p.text-white,
+.light h1.text-white,
+.light h2.text-white,
+.light h3.text-white,
+.light h4.text-white,
+.light h5.text-white,
+.light h6.text-white,
+.light div.text-white:not(button *):not(.btn-hydraulic *):not(.bg-\[\#111215\] *):not([class*="bg-red-"] *):not([class*="bg-emerald-6"] *):not([class*="from-indigo-"] *),
+.light span.text-white:not(button *):not(a *):not(.btn-hydraulic *):not(.bg-\[\#111215\] *):not([class*="bg-red-"] *):not([class*="bg-emerald-6"] *):not([class*="from-indigo-"] *) {
   color: #111215 !important;
 }
 
@@ -653,6 +665,59 @@
 .light button.bg-\[\#FFB51B\] * {
   color: #111215 !important;
 }
+
+/* =========================================================================
+   DARK & COLORED ACTION BUTTONS IN LIGHT THEME
+   Guarantees 100% crystal-clear, high-contrast white text on dark & action buttons.
+   ========================================================================= */
+
+/* Dark Hydraulic & Solid Ink Primary Buttons (e.g., "SIGN IN & OPEN ROADFIX") */
+.light .btn-hydraulic,
+.light button.bg-\[\#111215\],
+.light .bg-\[\#111215\].text-white {
+  background-color: #111215 !important;
+  color: #FFFFFF !important;
+  border: 2px solid #111215 !important;
+}
+
+.light .btn-hydraulic *,
+.light button.bg-\[\#111215\] * {
+  color: #FFFFFF !important;
+}
+
+/* Arrow inside dark hydraulic button stays bright safety amber */
+.light .btn-hydraulic .text-\[\#F59E0B\],
+.light button.bg-\[\#111215\] .text-\[\#F59E0B\],
+.light .btn-hydraulic .text-amber-400,
+.light button.bg-\[\#111215\] .text-amber-400 {
+  color: #F59E0B !important;
+}
+
+/* Red Emergency & Danger Buttons (e.g., SOS DISPATCH, End Call, Cancel Request) */
+.light button.bg-\[\#DC2626\],
+.light button.bg-red-600,
+.light button.bg-red-500,
+.light button[class*="bg-red-"],
+.light .bg-\[\#DC2626\].text-white,
+.light .bg-red-600.text-white {
+  background-color: #DC2626 !important;
+  color: #FFFFFF !important;
+  border-color: #111215 !important;
+}
+
+.light button.bg-\[\#DC2626\] *,
+.light button.bg-red-600 *,
+.light button.bg-red-500 *,
+.light button[class*="bg-red-"] * {
+  color: #FFFFFF !important;
+}
+
+/* Gradient Indigo / AI Action Buttons */
+.light button[class*="from-indigo-"],
+.light button[class*="from-indigo-"] * {
+  color: #FFFFFF !important;
+}
+
 
 /* =========================================================================
    PILL BADGES & TAGS IN LIGHT THEME

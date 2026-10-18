@@ -41,6 +41,11 @@ export const MapLeaflet: React.FC<MapLeafletProps> = ({
     if (!mapContainerRef.current) return;
 
     if (!mapInstanceRef.current) {
+      // Clear any prior leaflet id attached to DOM node to prevent "Map container is already initialized"
+      if ((mapContainerRef.current as any)._leaflet_id) {
+        delete (mapContainerRef.current as any)._leaflet_id;
+      }
+
       const map = L.map(mapContainerRef.current, {
         zoomControl: false,
         attributionControl: false
@@ -75,7 +80,12 @@ export const MapLeaflet: React.FC<MapLeafletProps> = ({
     }
 
     return () => {
-      // Cleanup handled on unmount
+      if (mapInstanceRef.current) {
+        mapInstanceRef.current.remove();
+        mapInstanceRef.current = null;
+      }
+      markersLayerRef.current = null;
+      routeLineRef.current = null;
     };
   }, []);
 
@@ -224,15 +234,7 @@ export const MapLeaflet: React.FC<MapLeafletProps> = ({
     }
   }, [customerPoint?.lat, customerPoint?.lng, mechanicPoint?.lat, mechanicPoint?.lng, nearbyPoints, showRoute, zoom]);
 
-  // Cleanup on unmount
-  useEffect(() => {
-    return () => {
-      if (mapInstanceRef.current) {
-        mapInstanceRef.current.remove();
-        mapInstanceRef.current = null;
-      }
-    };
-  }, []);
+
 
   // Target coordinates for Google Maps
   const targetLat = customerPoint?.lat || mechanicPoint?.lat || center[0];

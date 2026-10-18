@@ -62,6 +62,23 @@ router.post('/login', (req: Request, res: Response) => {
   });
 });
 
+// Reset password for registered account
+router.post('/reset-password', (req: Request, res: Response) => {
+  const { email, newPassword } = req.body;
+  if (!email || !email.trim()) {
+    return res.status(400).json({ success: false, message: 'Email address is required.' });
+  }
+  if (!newPassword || newPassword.trim().length < 4) {
+    return res.status(400).json({ success: false, message: 'New password must be at least 4 characters long.' });
+  }
+  const user = db.getUserByEmail(email.trim());
+  if (!user) {
+    return res.status(404).json({ success: false, message: 'No registered user found with this email.' });
+  }
+  db.updateUser(user.id, { password: newPassword.trim() });
+  return res.json({ success: true, message: 'Password updated successfully! You can now log in.' });
+});
+
 // Register - Registers new user directly into the database
 router.post('/register', (req: Request, res: Response) => {
   const {
@@ -184,6 +201,17 @@ router.post('/register', (req: Request, res: Response) => {
       ...newUser,
       profile
     }
+  });
+});
+
+// Full list of all registered users in database
+router.get('/registered-users', (_req: Request, res: Response) => {
+  const registrations = db.getRegisteredUsersDetails();
+  res.json({
+    success: true,
+    totalRegistered: registrations.length,
+    serverEngine: 'Node.js Express + MongoDB/JSON Persistent Store',
+    registrations
   });
 });
 

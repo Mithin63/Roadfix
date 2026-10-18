@@ -159,10 +159,14 @@ export const VehicleFormFields: React.FC<VehicleFormFieldsProps> = ({
           <div className="relative">
             <input
               type="text"
-              placeholder="[ Select or type manufacturer ]"
+              autoComplete="off"
+              spellCheck="false"
+              placeholder="Type manufacturer (e.g. Maruti, Honda, Hero)"
               value={makeQuery}
               onChange={(e) => handleMakeInputChange(e.target.value)}
-              onFocus={() => setShowMakeDropdown(true)}
+              onFocus={() => {
+                if (makeQuery.trim().length > 0) setShowMakeDropdown(true);
+              }}
               required={required}
               className="w-full px-3 py-2.5 pr-8 rounded-xl bg-slate-950 border border-slate-700 text-white text-xs field-input"
             />
@@ -170,6 +174,7 @@ export const VehicleFormFields: React.FC<VehicleFormFieldsProps> = ({
               type="button"
               onClick={() => setShowMakeDropdown(!showMakeDropdown)}
               className="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white"
+              title="Toggle manufacturer suggestions"
             >
               <ChevronDown className="w-3.5 h-3.5" />
             </button>
@@ -216,11 +221,13 @@ export const VehicleFormFields: React.FC<VehicleFormFieldsProps> = ({
           <div className="relative">
             <input
               type="text"
-              placeholder={data.make ? `[ Select ${data.make} model ]` : '[ Select manufacturer first ]'}
+              autoComplete="off"
+              spellCheck="false"
+              placeholder={data.make ? `Type ${data.make} model name` : 'Select or type manufacturer first'}
               value={modelQuery}
               onChange={(e) => handleModelInputChange(e.target.value)}
               onFocus={() => {
-                if (data.make) setShowModelDropdown(true);
+                if (data.make && modelQuery.trim().length > 0) setShowModelDropdown(true);
               }}
               required={required}
               className="w-full px-3 py-2.5 pr-8 rounded-xl bg-slate-950 border border-slate-700 text-white text-xs field-input disabled:opacity-50"
@@ -231,6 +238,7 @@ export const VehicleFormFields: React.FC<VehicleFormFieldsProps> = ({
                 if (data.make) setShowModelDropdown(!showModelDropdown);
               }}
               className="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white"
+              title="Toggle model suggestions"
             >
               <ChevronDown className="w-3.5 h-3.5" />
             </button>
@@ -298,6 +306,8 @@ export const VehicleFormFields: React.FC<VehicleFormFieldsProps> = ({
           </label>
           <input
             type="text"
+            autoComplete="off"
+            spellCheck="false"
             placeholder="e.g. AP 16 AB 1234 / MH 02 CD 5678"
             value={data.regNo || ''}
             onChange={(e) => handleRegNoChange(e.target.value)}

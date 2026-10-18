@@ -74,6 +74,17 @@ router.get('/users', (req: Request, res: Response) => {
   res.json({ success: true, users });
 });
 
+// All registrations with vehicles and mechanic profiles
+router.get('/registrations', (_req: Request, res: Response) => {
+  const registrations = db.getRegisteredUsersDetails();
+  res.json({
+    success: true,
+    totalRegistered: registrations.length,
+    serverEngine: 'Node.js Express + MongoDB/JSON Persistent Store',
+    registrations
+  });
+});
+
 // Toggle block status
 router.patch('/users/:id/block', (req: Request, res: Response) => {
   const { id } = req.params;

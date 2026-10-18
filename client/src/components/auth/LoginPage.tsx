@@ -27,8 +27,12 @@ import {
   AlertTriangle,
   Bot,
   Cloud,
-  LogOut
+  LogOut,
+  Search,
+  RefreshCw,
+  Users
 } from 'lucide-react';
+import { api } from '../../services/api';
 import { VehicleCategory } from '../../types';
 import { VehicleFormFields, VehicleFormData } from '../common/VehicleFormFields';
 import { triggerHaptic } from '../../utils/haptics';
@@ -280,17 +284,17 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onSuccess, onClose }) => {
                   isDark ? 'bg-[#121824] border border-[#1E2638]' : 'bg-white border-2 border-[#111215]'
                 }`}>
                   <div className="w-6 h-6 rounded-full bg-blue-600 flex items-center justify-center text-xs font-bold text-white shrink-0">
-                    {user.name ? user.name[0].toUpperCase() : 'M'}
+                    {user.name ? user.name[0].toUpperCase() : 'U'}
                   </div>
                   <div className="text-left font-mono text-[11px] leading-tight">
                     <div className="flex items-center gap-1.5 font-bold">
-                      <span className={isDark ? 'text-slate-200' : 'text-[#111215]'}>{user.name || 'Mithin Boddepalli'}</span>
+                      <span className={isDark ? 'text-slate-200' : 'text-[#111215]'}>{user.name || 'User'}</span>
                       <span className="px-1 py-0.2 bg-blue-600/30 text-blue-400 border border-blue-500/40 text-[9px] rounded uppercase font-semibold">
                         {user.role || 'Customer'}
                       </span>
                     </div>
                     <span className={`text-[9px] truncate max-w-[120px] block ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
-                      {user.email || 'mithinboddepalliag...'}
+                      {user.email || ''}
                     </span>
                   </div>
                 </div>
@@ -308,39 +312,27 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onSuccess, onClose }) => {
                 </button>
               </div>
             ) : (
-              <div className="flex items-center gap-1.5">
+              <div className="flex items-center gap-2">
                 <button
                   onClick={() => openAuthWithMode('login')}
-                  className={`flex items-center gap-2 px-2.5 py-1 rounded-xl cursor-pointer ${
-                    isDark ? 'bg-[#121824] border border-[#1E2638] hover:border-slate-500' : 'bg-white border-2 border-[#111215] shadow-[2px_2px_0px_#111215]'
+                  className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl cursor-pointer font-mono text-xs font-bold transition-all ${
+                    isDark
+                      ? 'bg-[#F59E0B] text-[#111215] hover:bg-[#FBBF24] border border-[#F59E0B]'
+                      : 'bg-[#F59E0B] border-2 border-[#111215] text-[#111215] shadow-[2px_2px_0px_#111215]'
                   }`}
                 >
-                  <div className="w-6 h-6 rounded-full bg-blue-600 flex items-center justify-center text-xs font-bold text-white shrink-0">
-                    M
-                  </div>
-                  <div className="hidden sm:block text-left font-mono text-[11px] leading-tight">
-                    <div className="flex items-center gap-1.5 font-bold">
-                      <span className={isDark ? 'text-slate-200' : 'text-[#111215]'}>Mithin Boddepalli</span>
-                      <span className="px-1 py-0.2 bg-blue-600/30 text-blue-400 border border-blue-500/40 text-[9px] rounded uppercase font-semibold">
-                        Customer
-                      </span>
-                    </div>
-                    <span className={`text-[9px] truncate max-w-[120px] block ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
-                      mithinboddepalliag...
-                    </span>
-                  </div>
+                  <UserIcon className="w-3.5 h-3.5" />
+                  <span>Sign In</span>
                 </button>
                 <button
-                  onClick={() => openAuthWithMode('login')}
-                  className={`px-2.5 py-1.5 rounded-xl font-mono text-xs flex items-center gap-1.5 cursor-pointer ${
+                  onClick={() => openAuthWithMode('register')}
+                  className={`hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-xl cursor-pointer font-mono text-xs font-bold transition-all ${
                     isDark
-                      ? 'bg-[#121824] border border-[#1E2638] text-slate-300 hover:text-white'
+                      ? 'bg-[#121824] border border-[#1E2638] text-slate-300 hover:text-white hover:border-slate-500'
                       : 'bg-white border-2 border-[#111215] text-[#111215] shadow-[2px_2px_0px_#111215]'
                   }`}
-                  title="Sign In"
                 >
-                  <LogOut className="w-3.5 h-3.5 rotate-180" />
-                  <span className="hidden md:inline">Sign In</span>
+                  <span>Register</span>
                 </button>
               </div>
             )}
@@ -415,7 +407,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onSuccess, onClose }) => {
                     : 'btn-hydraulic bg-[#111215] text-white border-2 border-[#111215]'
                 }`}
               >
-                <span>SIGN IN &amp; OPEN ROADFIX</span>
+                <span className={isDark ? 'text-[#111215]' : '!text-white text-white'}>SIGN IN &amp; OPEN ROADFIX</span>
                 <span className={isDark ? 'text-[#111215]' : 'text-[#F59E0B]'}>&rarr;</span>
               </button>
               <button
@@ -779,7 +771,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onSuccess, onClose }) => {
       {/* INTERACTIVE AUTH MODAL (Connected directly to database) */}
       {isAuthModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#080D1C]/80 backdrop-blur-sm overflow-y-auto" onClick={() => setIsAuthModalOpen(false)}>
-          <div className={`rounded-2xl p-6 sm:p-8 max-w-lg w-full relative text-left my-auto ${
+          <div className={`rounded-2xl p-6 sm:p-8 max-w-lg w-full relative text-left my-auto transition-all ${
             isDark
               ? 'bg-[#10141D] border-2 border-[#1E2638] text-white shadow-[12px_12px_0px_#000000]'
               : 'bg-[#F6F3EE] border-4 border-[#111215] text-[#111215] shadow-[12px_12px_0px_#111215]'
@@ -788,7 +780,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onSuccess, onClose }) => {
             {/* Close Button */}
             <button
               onClick={() => setIsAuthModalOpen(false)}
-              className={`absolute top-4 right-4 w-9 h-9 rounded-md flex items-center justify-center font-mono font-bold transition-all cursor-pointer ${
+              className={`absolute top-4 right-4 w-9 h-9 rounded-md flex items-center justify-center font-mono font-bold transition-all cursor-pointer z-10 ${
                 isDark
                   ? 'border border-[#1E2638] bg-[#121824] text-slate-300 hover:text-white hover:border-slate-500'
                   : 'border-2 border-[#111215] bg-white text-[#111215] hover:bg-[#111215] hover:text-white shadow-[2px_2px_0px_#111215]'
@@ -799,13 +791,16 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onSuccess, onClose }) => {
 
             {/* Modal Header */}
             <div className="mb-6">
-              <span className={`inline-block px-3 py-1 font-mono text-[10px] font-bold uppercase tracking-wider rounded-full mb-2 ${
-                isDark
-                  ? 'bg-amber-500/20 text-amber-400 border border-amber-500/40'
-                  : 'bg-[#FACC15] text-[#111215] border-2 border-[#111215]'
-              }`}>
-                CONNECTED TO ROADFIX DATABASE
-              </span>
+              <div className="flex items-center gap-2 flex-wrap mb-2">
+                <span className={`inline-flex items-center gap-1.5 px-3 py-1 font-mono text-[10px] font-bold uppercase tracking-wider rounded-full ${
+                  isDark
+                    ? 'bg-amber-500/20 text-amber-400 border border-amber-500/40'
+                    : 'bg-[#FACC15] text-[#111215] border-2 border-[#111215]'
+                }`}>
+                  <Database className="w-3 h-3 text-amber-500" />
+                  <span>CONNECTED TO ROADFIX DATABASE</span>
+                </span>
+              </div>
               <h2 className={`font-headline text-4xl uppercase tracking-tight ${isDark ? 'text-white' : 'text-[#111215]'}`}>
                 {mode === 'login' ? 'Sign In to Roadfix' : 'Create Your Roadfix Account'}
               </h2>
@@ -817,7 +812,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onSuccess, onClose }) => {
             </div>
 
             {/* Tab Selector */}
-            <div className={`grid grid-cols-2 gap-2 p-1.5 rounded-lg mb-6 font-mono text-xs font-bold uppercase ${
+            <div className={`grid grid-cols-2 gap-1.5 p-1.5 rounded-lg mb-6 font-mono text-xs font-bold uppercase ${
               isDark ? 'bg-[#0A0D14] border border-[#1E2638]' : 'bg-[#111215]/10 border-2 border-[#111215]'
             }`}>
               <button
@@ -827,7 +822,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onSuccess, onClose }) => {
                   setMode('login');
                   setErrorMsg(null);
                 }}
-                className={`py-2.5 rounded-md border transition-all cursor-pointer ${
+                className={`py-2 rounded-md border transition-all cursor-pointer text-center ${
                   mode === 'login'
                     ? 'bg-[#F59E0B] text-[#111215] border-[#111215] font-black shadow-md'
                     : isDark ? 'text-slate-400 border-transparent hover:text-white' : 'text-[#111215]/70 border-transparent hover:text-[#111215]'
@@ -842,7 +837,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onSuccess, onClose }) => {
                   setMode('register');
                   setErrorMsg(null);
                 }}
-                className={`py-2.5 rounded-md border transition-all cursor-pointer ${
+                className={`py-2 rounded-md border transition-all cursor-pointer text-center ${
                   mode === 'register'
                     ? 'bg-[#F59E0B] text-[#111215] border-[#111215] font-black shadow-md'
                     : isDark ? 'text-slate-400 border-transparent hover:text-white' : 'text-[#111215]/70 border-transparent hover:text-[#111215]'

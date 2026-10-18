@@ -49,17 +49,14 @@ export const TrackingScreen: React.FC<TrackingScreenProps> = ({
   const [cancelReason, setCancelReason] = useState('Vehicle started / problem resolved on my own');
   const [isCancelling, setIsCancelling] = useState(false);
 
-  // Status step order 1 to 9
-  const statusSteps: { id: BookingStatus; label: string; desc: string }[] = [
-    { id: 'requested', label: 'Booking Requested', desc: 'Dispatched to certified mechanic network' },
-    { id: 'accepted', label: 'Mechanic Accepted', desc: 'Mechanic verified service request' },
-    { id: 'preparing_equipment', label: 'Preparing Equipment', desc: 'Packing recommended tools & testing kit' },
-    { id: 'travelling', label: 'Mechanic Travelling', desc: 'En route with live GPS telemetry' },
-    { id: 'arrived', label: 'Mechanic Arrived', desc: 'On-site at customer vehicle location' },
-    { id: 'diagnosis_started', label: 'Diagnosis Started', desc: 'Physical inspection and OBD2 scan' },
-    { id: 'repair_in_progress', label: 'Repair In Progress', desc: 'Parts installation and troubleshooting' },
-    { id: 'repair_completed', label: 'Repair Completed', desc: 'Final testing and quality check completed' },
-    { id: 'payment_completed', label: 'Payment Completed', desc: 'Digital invoice generated and settled' }
+  // Canonical 6-milestone forward progression timeline (Cancelled displayed via status alert banner)
+  const statusSteps = [
+    { id: 'requested', label: 'Requested', desc: 'Dispatched to certified mechanic network' },
+    { id: 'accepted', label: 'Accepted', desc: 'Certified mechanic confirmed service request' },
+    { id: 'en_route', label: 'En Route', desc: 'Mechanic travelling to your location with GPS telemetry' },
+    { id: 'arrived', label: 'Arrived', desc: 'Mechanic arrived on-site at breakdown location' },
+    { id: 'in_progress', label: 'In Progress', desc: 'Diagnostics, parts installation & repair underway' },
+    { id: 'completed', label: 'Completed', desc: 'Repair successfully verified and invoice settled' }
   ];
 
   const fetchBooking = async () => {
@@ -150,8 +147,22 @@ export const TrackingScreen: React.FC<TrackingScreenProps> = ({
     );
   }
 
-  // Calculate current step index
-  const currentStepIndex = statusSteps.findIndex(s => s.id === booking.status);
+  // Map booking status to 0..5 milestone index
+  const getStepIndex = (status: BookingStatus) => {
+    switch (status) {
+      case 'requested': return 0;
+      case 'accepted': return 1;
+      case 'preparing_equipment':
+      case 'travelling': return 2;
+      case 'arrived': return 3;
+      case 'diagnosis_started':
+      case 'repair_in_progress': return 4;
+      case 'repair_completed':
+      case 'payment_completed': return 5;
+      default: return 0;
+    }
+  };
+  const currentStepIndex = getStepIndex(booking.status);
 
   // Pending charges that need customer decision
   const pendingCharges = booking.additionalCharges?.filter(c => !c.approvedByCustomer);

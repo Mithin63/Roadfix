@@ -32,14 +32,28 @@ async function fetchJson<T>(url: string, options: RequestInit = {}): Promise<T> 
   if (token) headers['Authorization'] = `Bearer ${token}`;
   if (userId) headers['x-user-id'] = userId;
 
-  const res = await fetch(`${API_BASE}${url}`, {
-    ...options,
-    headers
-  });
+  let res: Response;
+  try {
+    res = await fetch(`${API_BASE}${url}`, {
+      ...options,
+      headers
+    });
+  } catch (netErr: any) {
+    throw new Error('Could not connect to Roadfix backend server. Please verify the server is running on port 5000.');
+  }
 
-  const data = await res.json();
+  const text = await res.text();
+  let data: any = {};
+  if (text && text.trim()) {
+    try {
+      data = JSON.parse(text);
+    } catch {
+      throw new Error(`Server returned non-JSON response (${res.status} ${res.statusText}).`);
+    }
+  }
+
   if (!res.ok || data.success === false) {
-    throw new Error(data.message || 'API request failed');
+    throw new Error(data.message || `Request failed with status ${res.status}`);
   }
 
   return data;
@@ -66,6 +80,11 @@ export const api = {
       serverEngine: string;
       registrations: any[];
     }>('/auth/registered-users'),
+  resetPassword: (email: string, newPassword: string) =>
+    fetchJson<{ success: boolean; message: string }>('/auth/reset-password', {
+      method: 'POST',
+      body: JSON.stringify({ email, newPassword })
+    }),
   updateProfile: (payload: any) =>
     fetchJson<{ success: boolean; message: string; user: User }>('/auth/profile', {
       method: 'PUT',

@@ -21,6 +21,7 @@ import { ChatDrawer } from './components/chat/ChatDrawer';
 import { LoginPage } from './components/auth/LoginPage';
 import { UserProfilePage } from './components/auth/UserProfilePage';
 import { RoadfixSplashScreen } from './components/common/RoadfixSplashScreen';
+import { ErrorBoundary } from './components/common/ErrorBoundary';
 import { Wrench } from 'lucide-react';
 import { BreakdownProblem } from './types';
 
@@ -340,11 +341,15 @@ const MainAppContent: React.FC = () => {
 
 export function App() {
   return (
-    <ThemeProvider>
-      <AuthProvider>
-        <MainAppContent />
-      </AuthProvider>
-    </ThemeProvider>
+    <ErrorBoundary>
+      <ThemeProvider>
+        <AuthProvider>
+          <ErrorBoundary>
+            <MainAppContent />
+          </ErrorBoundary>
+        </AuthProvider>
+      </ThemeProvider>
+    </ErrorBoundary>
   );
 }
 
