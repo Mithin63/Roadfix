@@ -271,7 +271,7 @@ export const CustomerDashboard: React.FC<CustomerDashboardProps> = ({
           />
           {/* Multi-layered dark gradients for guaranteed high contrast */}
           <div className="absolute inset-0 bg-gradient-to-r from-slate-950/95 via-slate-950/85 to-slate-950/50" />
-          <div className="absolute inset-0 bg-slate-950/40 backdrop-blur-[1px]" />
+          <div className="absolute inset-0 bg-slate-950/40" />
           <div className="absolute top-0 right-0 w-80 h-80 bg-amber-500/15 blur-3xl" />
         </div>
 

@@ -137,7 +137,11 @@ const MainAppContent: React.FC = () => {
   return (
     <div className="min-h-screen bg-[var(--bg-main)] text-[var(--text-main)] flex flex-col font-sans selection:bg-[#FFB51B] selection:text-[#080D1C] relative overflow-x-hidden transition-colors duration-200">
       {/* Ambient Highway Video Background Layer (Uses user-uploaded bgvd video 2 in light theme) */}
-      <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+      <div 
+        className="roadfix-bg-video-layer fixed inset-0 pointer-events-none overflow-hidden"
+        style={{ zIndex: 0 }}
+        aria-hidden="true"
+      >
         <video
           key={theme}
           src={isDark ? "/bg-highway.mp4" : "/bg-highway-2.mp4"}
@@ -145,19 +149,19 @@ const MainAppContent: React.FC = () => {
           loop
           muted
           playsInline
-          className="w-full h-full object-cover opacity-50 dark:opacity-40 light:opacity-20 scale-105 transition-opacity duration-300"
+          className="w-full h-full object-cover opacity-45 dark:opacity-40 light:opacity-20 scale-105 transition-opacity duration-300"
         />
         <div 
-          className="absolute inset-0 backdrop-blur-[1px] transition-colors duration-300"
+          className="absolute inset-0 transition-colors duration-300"
           style={{
-            backgroundColor: isDark ? 'rgba(8, 13, 28, 0.65)' : 'rgba(246, 243, 238, 0.94)'
+            backgroundColor: isDark ? 'rgba(8, 13, 28, 0.60)' : 'rgba(246, 243, 238, 0.94)'
           }}
         />
         <div 
           className="absolute inset-0 transition-all duration-300"
           style={{
             background: isDark
-              ? 'linear-gradient(to top, #080D1C 0%, rgba(8,13,28,0.4) 50%, #080D1C 100%)'
+              ? 'linear-gradient(to top, #080D1C 0%, rgba(8,13,28,0.30) 50%, #080D1C 100%)'
               : 'linear-gradient(to top, #F6F3EE 0%, rgba(246,243,238,0.85) 50%, #F6F3EE 100%)'
           }}
         />

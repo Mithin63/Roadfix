@@ -863,8 +863,17 @@
 /* Modals & Dialog Backdrops: High z-index to always sit above any map layers */
 .fixed.inset-0.z-50,
 .fixed.inset-0.z-\[99999\],
-.fixed.inset-0 {
+.modal-backdrop.fixed.inset-0,
+[role="dialog"].fixed.inset-0 {
   z-index: 99999 !important;
+}
+
+/* Background video container must ALWAYS stay strictly at z-index: 0 behind dashboard content */
+.roadfix-bg-video-layer {
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 0 !important;
+  pointer-events: none !important;
 }
 
 /* Modals & Dialog Backdrops in Light Theme */
