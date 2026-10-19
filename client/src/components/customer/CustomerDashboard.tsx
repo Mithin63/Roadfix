@@ -110,7 +110,10 @@ export const CustomerDashboard: React.FC<CustomerDashboardProps> = ({
   return (
     <div className="space-y-6 pb-12">
       {/* Welcome & Live GPS Status Glassmorphic Header Card */}
-      <div className="p-4 sm:p-5 rounded-3xl bg-slate-900/95 border border-slate-700/80 shadow-2xl backdrop-blur-xl flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div 
+        className="auto-fade-in-up p-4 sm:p-5 rounded-3xl bg-slate-900/95 border border-slate-700/80 shadow-2xl backdrop-blur-xl flex flex-col sm:flex-row sm:items-center justify-between gap-4"
+        style={{ animationDelay: '0ms' }}
+      >
         <div>
           <div className="flex items-center gap-2 mb-1">
             <span className="px-2.5 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/40 text-[10px] font-black uppercase tracking-wider">
@@ -137,20 +140,27 @@ export const CustomerDashboard: React.FC<CustomerDashboardProps> = ({
           <button
             type="button"
             onClick={detectLocation}
-            className={`flex items-center gap-2 px-4 py-2.5 rounded-2xl bg-slate-950 hover:bg-slate-800 border transition-all shadow-lg text-xs font-semibold ${
+            className={`btn-auto relative flex items-center gap-2 px-4 py-2.5 rounded-2xl bg-slate-950 hover:bg-slate-800 border transition-all shadow-lg text-xs font-semibold ${
               safeLocation.status === 'denied' || safeLocation.status === 'unavailable'
                 ? 'border-red-500/60 text-red-300'
                 : 'border-amber-500/40 hover:border-amber-400 text-white'
             }`}
             title="Click to detect your exact GPS coordinates"
+            aria-label="Detect GPS coordinates"
           >
-            <div className={`w-2.5 h-2.5 rounded-full ${
-              safeLocation.status === 'detecting'
-                ? 'bg-amber-400 animate-spin'
-                : safeLocation.status === 'denied' || safeLocation.status === 'unavailable'
-                ? 'bg-red-400'
-                : 'bg-emerald-400 animate-ping'
-            }`} />
+            <div className="relative flex items-center justify-center w-3 h-3">
+              {safeLocation.status === 'detecting' ? (
+                <div className="w-2.5 h-2.5 rounded-full bg-amber-400 animate-spin" />
+              ) : safeLocation.status === 'denied' || safeLocation.status === 'unavailable' ? (
+                <div className="w-2.5 h-2.5 rounded-full bg-red-400" />
+              ) : (
+                <>
+                  <div className="gps-beacon-outer" />
+                  <div className="gps-beacon-inner" />
+                  <div className="w-2.5 h-2.5 rounded-full bg-emerald-400 shadow-[0_0_8px_#34d399]" />
+                </>
+              )}
+            </div>
             <span className="font-bold text-slate-100">
               {safeLocation.status === 'detecting'
                 ? '📍 Detecting your location...'
@@ -165,7 +175,10 @@ export const CustomerDashboard: React.FC<CustomerDashboardProps> = ({
 
       {/* GPS Status Alert Banner (When Permission Denied or Unavailable) */}
       {(activeLocation.status === 'denied' || activeLocation.status === 'unavailable') && (
-        <div className="p-4 rounded-2xl bg-red-500/10 border border-red-500/40 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-lg">
+        <div 
+          className="auto-fade-in-up p-4 rounded-2xl bg-red-500/10 border border-red-500/40 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-lg"
+          style={{ animationDelay: '50ms' }}
+        >
           <div className="flex items-center gap-3">
             <div className="w-9 h-9 rounded-xl bg-red-500/20 border border-red-500/40 flex items-center justify-center shrink-0">
               <AlertTriangle className="w-5 h-5 text-red-400" />
@@ -178,7 +191,7 @@ export const CustomerDashboard: React.FC<CustomerDashboardProps> = ({
               </h4>
               <p className="text-xs text-slate-300 mt-0.5">
                 {activeLocation.status === 'denied'
-                  ? 'Please allow browser location permissions in your address bar to automatically detect mechanics around you.'
+                  ? 'Please allow browser location permissions in your address bar to automatically detect mechanics around you. You can also manually choose on the map.'
                   : 'Please ensure device GPS/location services are enabled and try again.'}
               </p>
             </div>
@@ -186,7 +199,7 @@ export const CustomerDashboard: React.FC<CustomerDashboardProps> = ({
           <button
             type="button"
             onClick={detectLocation}
-            className="shrink-0 px-4 py-2 rounded-xl bg-red-500 hover:bg-red-400 text-slate-950 font-bold text-xs transition-colors shadow-md"
+            className="btn-auto shrink-0 px-4 py-2 rounded-xl bg-red-500 hover:bg-red-400 text-slate-950 font-bold text-xs transition-colors shadow-md"
           >
             Retry Location
           </button>
@@ -195,11 +208,14 @@ export const CustomerDashboard: React.FC<CustomerDashboardProps> = ({
 
       {/* ACTIVE BOOKING CARD (If any active breakdown) */}
       {activeBooking && (
-        <div className="relative overflow-hidden rounded-2xl p-5 border border-amber-500/50 bg-gradient-to-r from-amber-950/40 via-slate-900 to-slate-900 dark:from-amber-950/40 dark:via-slate-900 dark:to-slate-900 light:from-amber-500/10 light:via-white light:to-white shadow-xl glow-amber">
+        <div 
+          className="auto-fade-in-up relative overflow-hidden rounded-2xl p-5 border border-amber-500/50 bg-gradient-to-r from-amber-950/40 via-slate-900 to-slate-900 dark:from-amber-950/40 dark:via-slate-900 dark:to-slate-900 light:from-amber-500/10 light:via-white light:to-white shadow-xl glow-amber"
+          style={{ animationDelay: '60ms' }}
+        >
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div className="flex items-start gap-4">
               <div className="w-12 h-12 rounded-xl bg-amber-500/20 border border-amber-500/40 flex items-center justify-center shrink-0">
-                <Navigation className="w-6 h-6 text-amber-400 animate-bounce-subtle" />
+                <Navigation className="w-6 h-6 text-amber-400" />
               </div>
               <div>
                 <div className="flex items-center gap-2 flex-wrap">
@@ -227,14 +243,14 @@ export const CustomerDashboard: React.FC<CustomerDashboardProps> = ({
                   : `https://www.google.com/maps?q=${activeBooking.customerLat || 19.0760},${activeBooking.customerLng || 72.8777}`}
                 target="_blank"
                 rel="noreferrer"
-                className="px-3.5 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-amber-300 border border-amber-500/30 font-bold text-xs flex items-center justify-center gap-1.5 transition-colors"
+                className="btn-auto px-3.5 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-amber-300 border border-amber-500/30 font-bold text-xs flex items-center justify-center gap-1.5 transition-colors"
               >
                 <span>Google Maps ↗</span>
               </a>
 
               <button
                 onClick={() => onOpenTracking(activeBooking.id)}
-                className="px-5 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs shadow-lg shadow-amber-500/20 flex items-center justify-center gap-2 transition-transform hover:scale-[1.02]"
+                className="btn-auto px-5 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs shadow-lg shadow-amber-500/20 flex items-center justify-center gap-2"
               >
                 <Navigation className="w-4 h-4" />
                 Track Live
@@ -247,7 +263,7 @@ export const CustomerDashboard: React.FC<CustomerDashboardProps> = ({
                     loadData();
                   }
                 }}
-                className="px-3.5 py-2.5 rounded-xl bg-red-500/15 hover:bg-red-500/25 text-red-400 border border-red-500/30 font-bold text-xs transition-colors"
+                className="btn-auto px-3.5 py-2.5 rounded-xl bg-red-500/15 hover:bg-red-500/25 text-red-400 border border-red-500/30 font-bold text-xs transition-colors"
               >
                 Cancel Request
               </button>
@@ -257,7 +273,10 @@ export const CustomerDashboard: React.FC<CustomerDashboardProps> = ({
       )}
 
       {/* SECTION 3: LARGE EMERGENCY HERO BUTTON WITH LIVE HIGHWAY VIDEO BACKDROP */}
-      <div className="relative overflow-hidden rounded-3xl p-6 sm:p-8 bg-[#0C0E14] border-2 border-amber-500/40 light:border-[#111215] shadow-2xl light:shadow-[4px_4px_0px_#111215] group">
+      <div 
+        className="auto-fade-in-up relative overflow-hidden rounded-3xl p-6 sm:p-8 bg-[#0C0E14] border-2 border-amber-500/40 light:border-[#111215] shadow-2xl light:shadow-[4px_4px_0px_#111215] group"
+        style={{ animationDelay: '100ms' }}
+      >
         {/* Live Highway Night Driving Video Layer */}
         <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
           <video
@@ -278,7 +297,7 @@ export const CustomerDashboard: React.FC<CustomerDashboardProps> = ({
         <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="space-y-2.5 text-center md:text-left">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-500/20 border border-red-500/40 text-red-300 text-xs font-bold tracking-wider uppercase backdrop-blur-md">
-              <span className="w-2 h-2 rounded-full bg-red-400 animate-ping" />
+              <span className="w-2 h-2 rounded-full bg-red-400 auto-sos-indicator" />
               <span>24/7 Live Highway Rescue • Avg 12 Mins Arrival</span>
             </div>
             <h2 className="text-2xl sm:text-4xl font-black text-white tracking-tight drop-shadow-md">
@@ -292,7 +311,8 @@ export const CustomerDashboard: React.FC<CustomerDashboardProps> = ({
           <div className="shrink-0 flex flex-col items-center gap-2">
             <button
               onClick={() => onStartBreakdown()}
-              className="px-8 py-4 sm:px-10 sm:py-5 rounded-2xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-lg tracking-wide shadow-2xl shadow-amber-500/50 flex items-center gap-3 border border-amber-300 cta-btn cursor-pointer btn-primary-amber"
+              aria-label="Get roadside help now"
+              className="btn-get-help-now px-8 py-4 sm:px-10 sm:py-5 rounded-2xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-lg tracking-wide shadow-2xl shadow-amber-500/50 flex items-center gap-3 border border-amber-300 cursor-pointer btn-primary-amber"
             >
               <AlertTriangle className="w-6 h-6 text-slate-950 fill-current" />
               <span>Get Help Now</span>
@@ -305,7 +325,10 @@ export const CustomerDashboard: React.FC<CustomerDashboardProps> = ({
       </div>
 
       {/* QUICK SERVICES SECTION */}
-      <div className="space-y-3">
+      <div 
+        className="auto-fade-in-up space-y-3"
+        style={{ animationDelay: '140ms' }}
+      >
         <div className="flex items-center justify-between p-3 rounded-2xl bg-slate-900/90 dark:bg-slate-900/90 light:bg-white border border-slate-700/80 dark:border-slate-700/80 light:border-[#111215] backdrop-blur-xl shadow-lg light:shadow-[4px_4px_0px_#111215]">
           <div className="flex items-center gap-2">
             <div className="p-1.5 rounded-lg bg-amber-500/20 light:bg-amber-100 text-amber-400 light:text-[#92400E] border border-amber-500/30 light:border-[#92400E]/30">
@@ -317,19 +340,29 @@ export const CustomerDashboard: React.FC<CustomerDashboardProps> = ({
         </div>
 
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
-          {quickServices.map((service) => {
+          {quickServices.map((service, idx) => {
             const Icon = service.icon;
             return (
-              <button
+              <div
                 key={service.id}
+                role="button"
+                tabIndex={0}
+                aria-label={`Request ${service.label} assistance`}
                 onClick={() => onStartBreakdown(service.id)}
-                className={`group relative p-4 rounded-2xl bg-gradient-to-br ${service.color} bg-slate-900/90 dark:bg-slate-900/90 light:bg-white border border-slate-700/80 dark:border-slate-700/80 light:border-[#111215] hover:border-amber-400 hover:bg-slate-850 light:hover:bg-[#FAF8F5] transition-all text-left flex flex-col justify-between h-32 shadow-xl light:shadow-[3px_3px_0px_#111215] hover:shadow-2xl hover:-translate-y-1 backdrop-blur-xl cursor-pointer`}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    onStartBreakdown(service.id);
+                  }
+                }}
+                style={{ animationDelay: `${160 + idx * 45}ms` }}
+                className={`auto-service-card auto-fade-in-up group relative p-4 rounded-2xl bg-gradient-to-br ${service.color} bg-slate-900/90 dark:bg-slate-900/90 light:bg-white border border-slate-700/80 dark:border-slate-700/80 light:border-[#111215] hover:border-amber-400 light:hover:border-[#111215] transition-all text-left flex flex-col justify-between h-32 shadow-xl light:shadow-[3px_3px_0px_#111215] backdrop-blur-xl cursor-pointer select-none`}
               >
                 <div className="flex items-center justify-between w-full">
-                  <div className="p-2.5 rounded-xl bg-slate-950/80 dark:bg-slate-950/80 light:bg-[#EFECE5] border border-slate-700 dark:border-slate-700 light:border-[#111215] group-hover:scale-110 transition-transform">
-                    <Icon className="w-5 h-5" />
+                  <div className="auto-service-icon p-2.5 rounded-xl bg-slate-950/80 dark:bg-slate-950/80 light:bg-[#EFECE5] border border-slate-700 dark:border-slate-700 light:border-[#111215]">
+                    <Icon className="w-5 h-5 text-amber-400 dark:text-amber-400 light:text-[#92400E]" />
                   </div>
-                  <ChevronRight className="w-4 h-4 text-slate-400 dark:text-slate-400 light:text-[#111215] group-hover:text-amber-400 transition-colors" />
+                  <ChevronRight className="w-4 h-4 text-slate-400 dark:text-slate-400 light:text-[#111215] group-hover:text-amber-400 group-hover:translate-x-0.5 transition-all" />
                 </div>
                 <div>
                   <h4 className="font-black text-sm text-white dark:text-white light:text-[#111215] group-hover:text-amber-300 light:group-hover:text-[#92400E] transition-colors">
@@ -339,7 +372,7 @@ export const CustomerDashboard: React.FC<CustomerDashboardProps> = ({
                     {service.desc}
                   </p>
                 </div>
-              </button>
+              </div>
             );
           })}
         </div>
@@ -348,7 +381,10 @@ export const CustomerDashboard: React.FC<CustomerDashboardProps> = ({
       {/* MAP & NEARBY MECHANICS SECTION */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Active Nearby Rescue Units Fleet */}
-        <div className="lg:col-span-2 space-y-3">
+        <div 
+          className="auto-fade-in-up lg:col-span-2 space-y-3"
+          style={{ animationDelay: '180ms' }}
+        >
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 p-3 rounded-2xl bg-slate-900/90 dark:bg-slate-900/90 light:bg-white border border-slate-700/80 dark:border-slate-700/80 light:border-[#111215] backdrop-blur-xl shadow-lg light:shadow-[4px_4px_0px_#111215]">
             <div className="flex items-center gap-2">
               <div className="p-1.5 rounded-lg bg-cyan-500/20 light:bg-sky-50 text-cyan-400 light:text-[#0369A1] border border-cyan-500/30 light:border-[#0284C7]">
@@ -368,7 +404,7 @@ export const CustomerDashboard: React.FC<CustomerDashboardProps> = ({
               return (
                 <div
                   key={mech.id}
-                  className="p-4 rounded-2xl bg-slate-900/90 dark:bg-slate-900/90 light:bg-white border border-slate-700/80 dark:border-slate-700/80 light:border-[#111215] shadow-lg light:shadow-[3px_3px_0px_#111215] hover:border-amber-400 transition-all flex flex-col justify-between space-y-3"
+                  className="auto-card-interactive p-4 rounded-2xl bg-slate-900/90 dark:bg-slate-900/90 light:bg-white border border-slate-700/80 dark:border-slate-700/80 light:border-[#111215] shadow-lg light:shadow-[3px_3px_0px_#111215] hover:border-amber-400 transition-all flex flex-col justify-between space-y-3"
                 >
                   <div className="flex items-start justify-between gap-3">
                     <div className="flex items-center gap-3">
@@ -407,7 +443,7 @@ export const CustomerDashboard: React.FC<CustomerDashboardProps> = ({
 
                     <button
                       onClick={() => onStartBreakdown()}
-                      className="px-3 py-1.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-xs transition-all shadow-md btn-primary-amber cursor-pointer"
+                      className="btn-auto px-3 py-1.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-xs transition-all shadow-md btn-primary-amber cursor-pointer"
                     >
                       Request Rescue
                     </button>
@@ -419,7 +455,10 @@ export const CustomerDashboard: React.FC<CustomerDashboardProps> = ({
         </div>
 
         {/* Vehicle Health & Maintenance Widget */}
-        <div className="space-y-4">
+        <div 
+          className="auto-fade-in-up space-y-4"
+          style={{ animationDelay: '220ms' }}
+        >
           <div className="flex items-center justify-between p-3 rounded-2xl bg-slate-900/90 dark:bg-slate-900/90 light:bg-white border border-slate-700/80 dark:border-slate-700/80 light:border-[#111215] backdrop-blur-xl shadow-lg light:shadow-[4px_4px_0px_#111215]">
             <div className="flex items-center gap-2">
               <div className="p-1.5 rounded-lg bg-emerald-500/20 light:bg-emerald-50 text-emerald-400 light:text-[#047857] border border-emerald-500/30 light:border-[#047857]">
@@ -429,7 +468,7 @@ export const CustomerDashboard: React.FC<CustomerDashboardProps> = ({
             </div>
             <button
               onClick={onOpenVehicles}
-              className="text-xs font-bold text-amber-400 dark:text-amber-400 light:text-[#92400E] bg-amber-500/10 dark:bg-amber-500/10 light:bg-amber-100 px-2.5 py-1 rounded-lg border border-amber-500/30 dark:border-amber-500/30 light:border-[#92400E]/30 hover:bg-amber-500/20 transition-all cursor-pointer"
+              className="btn-auto text-xs font-bold text-amber-400 dark:text-amber-400 light:text-[#92400E] bg-amber-500/10 dark:bg-amber-500/10 light:bg-amber-100 px-2.5 py-1 rounded-lg border border-amber-500/30 dark:border-amber-500/30 light:border-[#92400E]/30 hover:bg-amber-500/20 transition-all cursor-pointer"
             >
               Manage &rarr;
             </button>
@@ -448,7 +487,7 @@ export const CustomerDashboard: React.FC<CustomerDashboardProps> = ({
               </p>
               <button
                 onClick={onOpenMaintenance}
-                className="w-full mt-2 py-2.5 px-3 rounded-xl bg-amber-500 hover:bg-amber-400 text-xs font-black text-slate-950 border border-amber-300 light:border-[#111215] transition-all shadow-lg shadow-amber-500/20 cta-btn btn-primary-amber cursor-pointer"
+                className="btn-auto w-full mt-2 py-2.5 px-3 rounded-xl bg-amber-500 hover:bg-amber-400 text-xs font-black text-slate-950 border border-amber-300 light:border-[#111215] transition-all shadow-lg shadow-amber-500/20 cta-btn btn-primary-amber cursor-pointer"
               >
                 View Maintenance Schedule
               </button>
@@ -464,7 +503,7 @@ export const CustomerDashboard: React.FC<CustomerDashboardProps> = ({
               </p>
               <button
                 onClick={onOpenMaintenance}
-                className="w-full mt-2 py-2.5 px-3 rounded-xl bg-slate-800 dark:bg-slate-800 light:bg-[#FAF8F5] hover:bg-slate-700 light:hover:bg-[#EFECE5] text-xs font-bold text-white dark:text-white light:text-[#111215] border border-slate-600 dark:border-slate-600 light:border-[#111215] transition-all shadow-md light:shadow-[2px_2px_0px_#111215] cursor-pointer"
+                className="btn-auto w-full mt-2 py-2.5 px-3 rounded-xl bg-slate-800 dark:bg-slate-800 light:bg-[#FAF8F5] hover:bg-slate-700 light:hover:bg-[#EFECE5] text-xs font-bold text-white dark:text-white light:text-[#111215] border border-slate-600 dark:border-slate-600 light:border-[#111215] transition-all shadow-md light:shadow-[2px_2px_0px_#111215] cursor-pointer"
               >
                 Check Maintenance Log
               </button>
@@ -474,7 +513,7 @@ export const CustomerDashboard: React.FC<CustomerDashboardProps> = ({
           {/* AI Vehicle Troubleshooter Assistant Banner */}
           <div className="p-5 rounded-3xl bg-gradient-to-br from-indigo-950/95 via-slate-900/95 to-purple-950/80 dark:from-indigo-950/95 dark:via-slate-900/95 dark:to-purple-950/80 light:from-indigo-50 light:via-purple-50 light:to-white border border-indigo-500/60 dark:border-indigo-500/60 light:border-[#111215] shadow-2xl light:shadow-[4px_4px_0px_#111215] backdrop-blur-xl space-y-3">
             <div className="flex items-center gap-2 text-indigo-300 dark:text-indigo-300 light:text-[#5B21B6] text-xs font-black bg-indigo-950/80 dark:bg-indigo-950/80 light:bg-indigo-100 border border-indigo-500/50 dark:border-indigo-500/50 light:border-[#5B21B6]/30 px-3 py-1 rounded-xl w-fit">
-              <Sparkles className="w-4 h-4 text-indigo-400 dark:text-indigo-400 light:text-[#5B21B6] animate-pulse" />
+              <Sparkles className="w-4 h-4 text-indigo-400 dark:text-indigo-400 light:text-[#5B21B6]" />
               <span>Roadfix AI Diagnostic Assistant</span>
             </div>
             <p className="text-xs text-slate-200 dark:text-slate-200 light:text-[#374151] leading-relaxed font-medium">
@@ -482,7 +521,7 @@ export const CustomerDashboard: React.FC<CustomerDashboardProps> = ({
             </p>
             <button
               onClick={onOpenAiAssistant}
-              className="w-full py-2.5 px-3 rounded-xl bg-gradient-to-r from-indigo-500 to-purple-500 hover:from-indigo-400 hover:to-purple-400 text-white text-xs font-black transition-all shadow-lg shadow-indigo-500/30 flex items-center justify-center gap-2 cursor-pointer"
+              className="btn-auto w-full py-2.5 px-3 rounded-xl bg-gradient-to-r from-indigo-500 to-purple-500 hover:from-indigo-400 hover:to-purple-400 text-white text-xs font-black transition-all shadow-lg shadow-indigo-500/30 flex items-center justify-center gap-2 cursor-pointer"
             >
               <Sparkles className="w-4 h-4" />
               <span>Ask AI Assistant →</span>
@@ -493,3 +532,4 @@ export const CustomerDashboard: React.FC<CustomerDashboardProps> = ({
     </div>
   );
 };
+

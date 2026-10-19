@@ -86,7 +86,7 @@ export const RoadfixSplashScreen: React.FC<RoadfixSplashScreenProps> = ({
 
         <button
           onClick={handleSkip}
-          className="text-xs text-[#94A3B8] hover:text-white transition-colors flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-[#111A2E] border border-[#1E2C48] hover:border-[#FFB51B]/50 font-medium cursor-pointer"
+          className="text-xs text-[#94A3B8] hover:text-white transition-colors flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-[#111A2E] border border-[#1E2C48] hover:border-[#FFB51B]/50 font-medium cursor-pointer btn-auto"
         >
           <span>Skip Intro</span>
           <ArrowRight className="w-3.5 h-3.5" />

@@ -874,9 +874,9 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onSuccess, onClose }) => {
               </button>
             </div>
 
-            {/* Alerts */}
+            {/* Alerts with Smooth Animations & Shake */}
             {errorMsg && (
-              <div className="mb-4 p-3 bg-red-950/80 border border-red-500/50 rounded-lg text-red-200 font-mono text-xs flex flex-col gap-2">
+              <div className="animate-error-shake mb-4 p-3 bg-red-950/80 border border-red-500/50 rounded-lg text-red-200 font-mono text-xs flex flex-col gap-2">
                 <div className="flex items-start gap-2">
                   <AlertCircle className="w-4 h-4 text-red-400 shrink-0 mt-0.5" />
                   <span>{errorMsg}</span>
@@ -890,7 +890,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onSuccess, onClose }) => {
                         setMode('reset');
                         setErrorMsg(null);
                       }}
-                      className="px-2.5 py-1 rounded bg-amber-500 text-slate-950 font-bold text-[10px] uppercase hover:bg-amber-400 cursor-pointer"
+                      className="btn-auto px-2.5 py-1 rounded bg-amber-500 text-slate-950 font-bold text-[10px] uppercase hover:bg-amber-400 cursor-pointer"
                     >
                       Reset Password Now
                     </button>
@@ -902,7 +902,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onSuccess, onClose }) => {
                           setMode('login');
                           setErrorMsg(null);
                         }}
-                        className="px-2.5 py-1 rounded bg-slate-800 text-slate-200 font-bold text-[10px] uppercase hover:bg-slate-700 cursor-pointer"
+                        className="btn-auto px-2.5 py-1 rounded bg-slate-800 text-slate-200 font-bold text-[10px] uppercase hover:bg-slate-700 cursor-pointer"
                       >
                         Switch to Sign In
                       </button>
@@ -913,7 +913,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onSuccess, onClose }) => {
             )}
 
             {successMsg && (
-              <div className="mb-4 p-3 bg-emerald-950/80 border border-emerald-500/50 rounded-lg text-emerald-200 font-mono text-xs flex items-start gap-2">
+              <div className="animate-in fade-in slide-in-from-top-1 duration-200 mb-4 p-3 bg-emerald-950/80 border border-emerald-500/50 rounded-lg text-emerald-200 font-mono text-xs flex items-start gap-2">
                 <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
                 <span>{successMsg}</span>
               </div>
@@ -936,10 +936,10 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onSuccess, onClose }) => {
                       value={resetEmail}
                       onChange={(e) => setResetEmail(e.target.value)}
                       placeholder="e.g. mithin@example.com"
-                      className={`w-full pl-10 pr-4 py-2.5 rounded-lg font-mono text-xs focus:outline-none ${
+                      className={`w-full pl-10 pr-4 py-2.5 rounded-lg font-mono text-xs focus:outline-none transition-all duration-200 ${
                         isDark
-                          ? 'bg-[#121824] border border-[#1E2638] text-white focus:border-[#F59E0B]'
-                          : 'bg-white border-2 border-[#111215] text-[#111215] shadow-[2px_2px_0px_#111215]'
+                          ? 'bg-[#121824] border border-[#1E2638] text-white focus:border-[#F59E0B] focus:ring-2 focus:ring-[#F59E0B]/30'
+                          : 'bg-white border-2 border-[#111215] text-[#111215] shadow-[2px_2px_0px_#111215] focus:border-[#F59E0B] focus:ring-2 focus:ring-[#F59E0B]/30'
                       }`}
                     />
                   </div>
@@ -960,10 +960,10 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onSuccess, onClose }) => {
                       value={resetPassword}
                       onChange={(e) => setResetPassword(e.target.value)}
                       placeholder="Enter new password (min. 4 chars)"
-                      className={`w-full pl-10 pr-10 py-2.5 rounded-lg font-mono text-xs focus:outline-none ${
+                      className={`w-full pl-10 pr-10 py-2.5 rounded-lg font-mono text-xs focus:outline-none transition-all duration-200 ${
                         isDark
-                          ? 'bg-[#121824] border border-[#1E2638] text-white focus:border-[#F59E0B]'
-                          : 'bg-white border-2 border-[#111215] text-[#111215] shadow-[2px_2px_0px_#111215]'
+                          ? 'bg-[#121824] border border-[#1E2638] text-white focus:border-[#F59E0B] focus:ring-2 focus:ring-[#F59E0B]/30'
+                          : 'bg-white border-2 border-[#111215] text-[#111215] shadow-[2px_2px_0px_#111215] focus:border-[#F59E0B] focus:ring-2 focus:ring-[#F59E0B]/30'
                       }`}
                     />
                     <button
@@ -979,9 +979,16 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onSuccess, onClose }) => {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="w-full btn-amber-hydraulic font-headline text-2xl tracking-wider py-3.5 rounded-xl border-2 border-[#111215] font-bold flex justify-center items-center gap-2 cursor-pointer mt-2"
+                  className="w-full btn-auto btn-amber-hydraulic font-headline text-2xl tracking-wider py-3.5 rounded-xl border-2 border-[#111215] font-bold flex justify-center items-center gap-2 cursor-pointer mt-2 disabled:opacity-60"
                 >
-                  <span>{loading ? 'Updating Password...' : 'Update Password & Sign In →'}</span>
+                  {loading ? (
+                    <>
+                      <div className="w-5 h-5 border-2 border-[#111215] border-t-transparent rounded-full animate-spin" />
+                      <span>Updating Password...</span>
+                    </>
+                  ) : (
+                    <span>Update Password & Sign In →</span>
+                  )}
                 </button>
 
                 <div className="text-center pt-1">
@@ -1013,10 +1020,10 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onSuccess, onClose }) => {
                       value={loginEmail}
                       onChange={(e) => setLoginEmail(e.target.value)}
                       placeholder="e.g. mithin@example.com"
-                      className={`w-full pl-10 pr-4 py-2.5 rounded-lg font-mono text-xs focus:outline-none ${
+                      className={`w-full pl-10 pr-4 py-2.5 rounded-lg font-mono text-xs focus:outline-none transition-all duration-200 ${
                         isDark
-                          ? 'bg-[#121824] border border-[#1E2638] text-white focus:border-[#F59E0B]'
-                          : 'bg-white border-2 border-[#111215] text-[#111215] shadow-[2px_2px_0px_#111215]'
+                          ? 'bg-[#121824] border border-[#1E2638] text-white focus:border-[#F59E0B] focus:ring-2 focus:ring-[#F59E0B]/30'
+                          : 'bg-white border-2 border-[#111215] text-[#111215] shadow-[2px_2px_0px_#111215] focus:border-[#F59E0B] focus:ring-2 focus:ring-[#F59E0B]/30'
                       }`}
                     />
                   </div>
@@ -1049,10 +1056,10 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onSuccess, onClose }) => {
                       value={loginPassword}
                       onChange={(e) => setLoginPassword(e.target.value)}
                       placeholder="Enter account password"
-                      className={`w-full pl-10 pr-10 py-2.5 rounded-lg font-mono text-xs focus:outline-none ${
+                      className={`w-full pl-10 pr-10 py-2.5 rounded-lg font-mono text-xs focus:outline-none transition-all duration-200 ${
                         isDark
-                          ? 'bg-[#121824] border border-[#1E2638] text-white focus:border-[#F59E0B]'
-                          : 'bg-white border-2 border-[#111215] text-[#111215] shadow-[2px_2px_0px_#111215]'
+                          ? 'bg-[#121824] border border-[#1E2638] text-white focus:border-[#F59E0B] focus:ring-2 focus:ring-[#F59E0B]/30'
+                          : 'bg-white border-2 border-[#111215] text-[#111215] shadow-[2px_2px_0px_#111215] focus:border-[#F59E0B] focus:ring-2 focus:ring-[#F59E0B]/30'
                       }`}
                     />
                     <button
@@ -1068,9 +1075,16 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onSuccess, onClose }) => {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="w-full btn-amber-hydraulic font-headline text-2xl tracking-wider py-3.5 rounded-xl border-2 border-[#111215] font-bold flex justify-center items-center gap-2 cursor-pointer mt-2"
+                  className="w-full btn-auto btn-amber-hydraulic font-headline text-2xl tracking-wider py-3.5 rounded-xl border-2 border-[#111215] font-bold flex justify-center items-center gap-2 cursor-pointer mt-2 disabled:opacity-60"
                 >
-                  <span>{loading ? 'Authenticating...' : 'Sign In to Roadfix →'}</span>
+                  {loading ? (
+                    <>
+                      <div className="w-5 h-5 border-2 border-[#111215] border-t-transparent rounded-full animate-spin" />
+                      <span>Authenticating...</span>
+                    </>
+                  ) : (
+                    <span>Sign In to Roadfix →</span>
+                  )}
                 </button>
               </form>
             ) : (
@@ -1220,9 +1234,16 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onSuccess, onClose }) => {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="w-full btn-amber-hydraulic font-headline text-2xl tracking-wider py-3.5 rounded-xl border-2 border-[#111215] font-bold flex justify-center items-center gap-2 cursor-pointer mt-2"
+                  className="w-full btn-auto btn-amber-hydraulic font-headline text-2xl tracking-wider py-3.5 rounded-xl border-2 border-[#111215] font-bold flex justify-center items-center gap-2 cursor-pointer mt-2 disabled:opacity-60"
                 >
-                  <span>{loading ? 'Registering...' : 'Create Account & Connect →'}</span>
+                  {loading ? (
+                    <>
+                      <div className="w-5 h-5 border-2 border-[#111215] border-t-transparent rounded-full animate-spin" />
+                      <span>Creating Account...</span>
+                    </>
+                  ) : (
+                    <span>Create Account & Connect →</span>
+                  )}
                 </button>
               </form>
             )}

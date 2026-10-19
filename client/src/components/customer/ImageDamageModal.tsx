@@ -143,7 +143,7 @@ export const ImageDamageModal: React.FC<ImageDamageModalProps> = ({
                 <button
                   key={idx}
                   onClick={() => handleSelectPreset(p)}
-                  className="p-2.5 rounded-2xl bg-[#080D1C] border border-[#1E2C48] hover:border-[#FFB51B] text-left transition-all active:scale-95 group"
+                  className="p-2.5 rounded-2xl bg-[#080D1C] border border-[#1E2C48] hover:border-[#FFB51B] text-left transition-all btn-auto group"
                 >
                   <img
                     src={p.url}
@@ -211,7 +211,7 @@ export const ImageDamageModal: React.FC<ImageDamageModalProps> = ({
                     onProceedToBooking(analysisResult.suggestedProblem);
                     onClose();
                   }}
-                  className="px-5 py-2.5 rounded-xl bg-[#FFB51B] hover:bg-[#FFD166] text-[#080D1C] font-extrabold text-xs shadow-[0_0_18px_rgba(255,181,27,0.3)] transition-all active:scale-95 flex items-center gap-1.5"
+                  className="px-5 py-2.5 rounded-xl bg-[#FFB51B] hover:bg-[#FFD166] text-[#080D1C] font-extrabold text-xs shadow-[0_0_18px_rgba(255,181,27,0.3)] transition-all btn-primary-amber btn-auto flex items-center gap-1.5"
                 >
                   Request Dispatch for this Issue &rarr;
                 </button>

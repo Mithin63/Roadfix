@@ -16,6 +16,7 @@ interface MapLeafletProps {
   mechanicPoint?: MapPoint;
   nearbyPoints?: MapPoint[];
   showRoute?: boolean;
+  isSearching?: boolean;
   onLocationSelect?: (lat: number, lng: number) => void;
   height?: string;
   className?: string;
@@ -28,6 +29,7 @@ export const MapLeaflet: React.FC<MapLeafletProps> = ({
   mechanicPoint,
   nearbyPoints = [],
   showRoute = false,
+  isSearching = false,
   onLocationSelect,
   height = '360px',
   className = ''
@@ -116,20 +118,30 @@ export const MapLeaflet: React.FC<MapLeafletProps> = ({
     const bounds: L.LatLngExpression[] = [];
 
     // Helper to create HTML icon
-    const createCustomIcon = (bgColor: string, ringColor: string, innerSvg: string) => {
+    const createCustomIcon = (bgColor: string, ringColor: string, innerSvg: string, showRadar: boolean = false) => {
+      const radarHtml = showRadar ? `
+        <div style="position: absolute; width: 140px; height: 140px; border-radius: 9999px; pointer-events: none; z-index: -1;">
+          <div style="position: absolute; inset: 0; border-radius: 9999px; background: conic-gradient(from 0deg at 50% 50%, rgba(255, 181, 27, 0.6) 0deg, rgba(255, 181, 27, 0.1) 45deg, transparent 90deg, transparent 360deg); animation: auto-radar-sweep 2.2s linear infinite;"></div>
+          <div style="position: absolute; inset: 0; border-radius: 9999px; border: 1.5px solid rgba(255, 181, 27, 0.7); animation: auto-radar-sonar-wave 2.2s infinite ease-out;"></div>
+          <div style="position: absolute; inset: 0; border-radius: 9999px; border: 1.5px solid rgba(255, 181, 27, 0.4); animation: auto-radar-sonar-wave 2.2s infinite 1.1s ease-out;"></div>
+        </div>
+      ` : '';
+
       return L.divIcon({
         className: 'custom-leaflet-marker',
         html: `
-          <div style="position: relative; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center;">
-            <div style="position: absolute; width: 100%; height: 100%; border-radius: 9999px; background: ${ringColor}; opacity: 0.35; animation: ping-slow 2s infinite;"></div>
-            <div style="position: relative; width: 30px; height: 30px; border-radius: 9999px; background: ${bgColor}; border: 2px solid white; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 10px rgba(0,0,0,0.5);">
+          <div style="position: relative; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;">
+            ${radarHtml}
+            <div style="position: absolute; inset: -8px; border-radius: 9999px; background: ${ringColor}; opacity: 0.35; animation: auto-gps-beacon-1 2.2s infinite ease-out;"></div>
+            <div style="position: absolute; inset: -14px; border-radius: 9999px; background: ${ringColor}; opacity: 0.2; animation: auto-gps-beacon-2 2.2s infinite 0.5s ease-out;"></div>
+            <div style="position: relative; width: 32px; height: 32px; border-radius: 9999px; background: ${bgColor}; border: 2.5px solid white; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 14px rgba(0,0,0,0.55);">
               ${innerSvg}
             </div>
           </div>
         `,
-        iconSize: [36, 36],
-        iconAnchor: [18, 18],
-        popupAnchor: [0, -18]
+        iconSize: [40, 40],
+        iconAnchor: [20, 20],
+        popupAnchor: [0, -20]
       });
     };
 
@@ -138,8 +150,9 @@ export const MapLeaflet: React.FC<MapLeafletProps> = ({
       bounds.push([customerPoint.lat, customerPoint.lng]);
       const customerIcon = createCustomIcon(
         '#ef4444',
-        '#f87171',
-        `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/></svg>`
+        'rgba(56, 189, 248, 0.5)',
+        `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/></svg>`,
+        isSearching
       );
 
       const marker = L.marker([customerPoint.lat, customerPoint.lng], { icon: customerIcon });
@@ -158,8 +171,9 @@ export const MapLeaflet: React.FC<MapLeafletProps> = ({
       bounds.push([mechanicPoint.lat, mechanicPoint.lng]);
       const mechanicIcon = createCustomIcon(
         '#f59e0b',
-        '#fbbf24',
-        `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>`
+        'rgba(245, 158, 11, 0.45)',
+        `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>`,
+        false
       );
 
       const marker = L.marker([mechanicPoint.lat, mechanicPoint.lng], { icon: mechanicIcon });
@@ -232,7 +246,7 @@ export const MapLeaflet: React.FC<MapLeafletProps> = ({
     } else if (bounds.length === 1 && customerPoint) {
       map.setView([customerPoint.lat, customerPoint.lng], zoom);
     }
-  }, [customerPoint?.lat, customerPoint?.lng, mechanicPoint?.lat, mechanicPoint?.lng, nearbyPoints, showRoute, zoom]);
+  }, [customerPoint?.lat, customerPoint?.lng, mechanicPoint?.lat, mechanicPoint?.lng, nearbyPoints, showRoute, isSearching, zoom]);
 
 
 

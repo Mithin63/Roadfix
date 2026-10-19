@@ -92,9 +92,11 @@ export const Navbar: React.FC<NavbarProps> = ({
           <button
             onClick={detectLocation}
             title="Click to detect current GPS location"
-            className="hidden xl:flex items-center gap-2 h-10 px-3.5 rounded-xl bg-[#111A2E] dark:bg-[#111A2E] light:bg-white border border-[#1E2C48] dark:border-[#1E2C48] light:border-[#111215] text-xs text-slate-800 dark:text-[#F1F5F9] light:text-[#111215] hover:border-[#38BDF8]/60 light:shadow-[2px_2px_0px_#111215] transition-all duration-150 max-w-[220px] shrink-0 whitespace-nowrap cursor-pointer"
+            className="btn-auto hidden xl:flex items-center gap-2 h-10 px-3.5 rounded-xl bg-[#111A2E] dark:bg-[#111A2E] light:bg-white border border-[#1E2C48] dark:border-[#1E2C48] light:border-[#111215] text-xs text-slate-800 dark:text-[#F1F5F9] light:text-[#111215] hover:border-[#38BDF8]/60 light:shadow-[2px_2px_0px_#111215] max-w-[220px] shrink-0 whitespace-nowrap cursor-pointer"
           >
-            <MapPin className="w-4 h-4 text-[#38BDF8] light:text-[#0284C7] shrink-0" />
+            <div className="relative flex items-center justify-center">
+              <span className="w-2 h-2 rounded-full bg-[#38BDF8] light:bg-[#0284C7] shadow-[0_0_8px_#38bdf8]" />
+            </div>
             <span className="truncate text-xs font-mono font-medium text-slate-300 dark:text-slate-200 light:text-[#111215]">{activeLocation.address}</span>
           </button>
         </div>
@@ -104,7 +106,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           {/* AI Vehicle Assistant button */}
           <button
             onClick={onOpenAiAssistant}
-            className="h-10 px-3.5 rounded-xl bg-[#111A2E] dark:bg-[#111A2E] light:bg-white hover:bg-[#17233D] dark:hover:bg-[#17233D] light:hover:bg-[#EFECE5] text-[#38BDF8] light:text-[#111215] border border-[#1E2C48] dark:border-[#1E2C48] light:border-[#111215] light:shadow-[2px_2px_0px_#111215] text-xs font-bold shadow-sm transition-all duration-150 flex items-center gap-2 shrink-0 whitespace-nowrap cursor-pointer"
+            className="btn-auto h-10 px-3.5 rounded-xl bg-[#111A2E] dark:bg-[#111A2E] light:bg-white hover:bg-[#17233D] dark:hover:bg-[#17233D] light:hover:bg-[#EFECE5] text-[#38BDF8] light:text-[#111215] border border-[#1E2C48] dark:border-[#1E2C48] light:border-[#111215] light:shadow-[2px_2px_0px_#111215] text-xs font-bold shadow-sm flex items-center gap-2 shrink-0 whitespace-nowrap cursor-pointer"
           >
             <Bot className="w-4 h-4 text-[#38BDF8] light:text-[#0284C7] shrink-0" />
             <span className="whitespace-nowrap">AI Vehicle Assistant</span>
@@ -113,7 +115,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           {/* AI Damage Visual Scanner */}
           <button
             onClick={onOpenDamageAnalysis}
-            className="hidden lg:flex h-10 px-3.5 rounded-xl bg-[#111A2E] dark:bg-[#111A2E] light:bg-white hover:bg-[#17233D] dark:hover:bg-[#17233D] light:hover:bg-[#EFECE5] text-slate-200 dark:text-[#F1F5F9] light:text-[#111215] border border-[#1E2C48] dark:border-[#1E2C48] light:border-[#111215] light:shadow-[2px_2px_0px_#111215] text-xs font-bold transition-all duration-150 shadow-sm items-center gap-2 shrink-0 whitespace-nowrap cursor-pointer"
+            className="btn-auto hidden lg:flex h-10 px-3.5 rounded-xl bg-[#111A2E] dark:bg-[#111A2E] light:bg-white hover:bg-[#17233D] dark:hover:bg-[#17233D] light:hover:bg-[#EFECE5] text-slate-200 dark:text-[#F1F5F9] light:text-[#111215] border border-[#1E2C48] dark:border-[#1E2C48] light:border-[#111215] light:shadow-[2px_2px_0px_#111215] text-xs font-bold shadow-sm items-center gap-2 shrink-0 whitespace-nowrap cursor-pointer"
           >
             <Sparkles className="w-4 h-4 text-[#FFB51B] light:text-[#F59E0B] shrink-0" />
             <span className="whitespace-nowrap">AI Damage Scan</span>
@@ -122,9 +124,9 @@ export const Navbar: React.FC<NavbarProps> = ({
           {/* Emergency SOS Button */}
           <button
             onClick={onOpenSos}
-            className="h-10 px-4 rounded-xl bg-[#DC2626] light:bg-[#DC2626] text-white text-xs font-black tracking-wider shadow-md border-2 border-red-500 light:border-[#111215] light:shadow-[2px_2px_0px_#111215] hover:bg-red-700 transition-all duration-150 cursor-pointer active:scale-95 flex items-center gap-2 shrink-0 whitespace-nowrap"
+            className="btn-auto h-10 px-4 rounded-xl bg-[#DC2626] light:bg-[#DC2626] text-white text-xs font-black tracking-wider shadow-md border-2 border-red-500 light:border-[#111215] light:shadow-[2px_2px_0px_#111215] hover:bg-red-700 cursor-pointer flex items-center gap-2 shrink-0 whitespace-nowrap"
           >
-            <span className="w-2 h-2 rounded-full bg-white animate-pulse shrink-0" />
+            <span className="w-2 h-2 rounded-full bg-white auto-sos-indicator shrink-0" />
             <span className="font-headline text-base tracking-wider leading-none whitespace-nowrap">SOS DISPATCH</span>
           </button>
 
@@ -133,12 +135,12 @@ export const Navbar: React.FC<NavbarProps> = ({
             onClick={toggleTheme}
             title={theme === 'dark' ? 'Switch to Light Theme (RoadFix Editorial)' : 'Switch to Dark Theme (Midnight Garage)'}
             aria-label={theme === 'dark' ? 'Switch to Light Theme' : 'Switch to Dark Theme'}
-            className="w-10 h-10 rounded-xl bg-[#111A2E] dark:bg-[#111A2E] light:bg-white border border-[#1E2C48] dark:border-[#1E2C48] light:border-[#111215] text-[#FFB51B] dark:text-[#FFB51B] light:text-[#D97706] light:shadow-[2px_2px_0px_#111215] hover:border-[#FFB51B] transition-all duration-150 shadow-sm flex items-center justify-center shrink-0 group active:scale-95 focus:outline-none cursor-pointer"
+            className="btn-auto w-10 h-10 rounded-xl bg-[#111A2E] dark:bg-[#111A2E] light:bg-white border border-[#1E2C48] dark:border-[#1E2C48] light:border-[#111215] text-[#FFB51B] dark:text-[#FFB51B] light:text-[#D97706] light:shadow-[2px_2px_0px_#111215] hover:border-[#FFB51B] hover:shadow-[0_0_14px_rgba(255,181,27,0.4)] shadow-sm flex items-center justify-center shrink-0 group focus:outline-none cursor-pointer"
           >
             {theme === 'dark' ? (
-              <Sun className="w-4 h-4 text-[#FFB51B] group-hover:rotate-45 transition-transform duration-300" />
+              <Sun className="w-4 h-4 text-[#FFB51B] group-hover:rotate-90 group-active:scale-90 transition-transform duration-300" />
             ) : (
-              <Moon className="w-4 h-4 text-[#D97706] group-hover:-rotate-12 transition-transform duration-300" />
+              <Moon className="w-4 h-4 text-[#D97706] group-hover:-rotate-45 group-active:scale-90 transition-transform duration-300" />
             )}
           </button>
 

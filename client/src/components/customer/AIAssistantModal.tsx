@@ -178,7 +178,7 @@ export const AIAssistantModal: React.FC<AIAssistantModalProps> = ({
                               onDispatchHelp(m.content.title);
                               onClose();
                             }}
-                            className="px-3.5 py-1.5 rounded-lg bg-[#FFB51B] hover:bg-[#FFD166] text-[#080D1C] font-extrabold text-xs shadow-md btn-primary-amber"
+                            className="px-3.5 py-1.5 rounded-lg bg-[#FFB51B] hover:bg-[#FFD166] text-[#080D1C] font-extrabold text-xs shadow-md btn-primary-amber btn-auto"
                           >
                             Dispatch Technician Now &rarr;
                           </button>
@@ -197,7 +197,7 @@ export const AIAssistantModal: React.FC<AIAssistantModalProps> = ({
                             <button
                               key={i}
                               onClick={() => handleSend(q)}
-                              className="px-2.5 py-1 rounded-lg bg-[#111A2E] hover:bg-[#1E2C48] border border-[#1E2C48] text-[#94A3B8] hover:text-[#F1F5F9] text-[11px] transition-colors"
+                              className="px-2.5 py-1 rounded-lg bg-[#111A2E] hover:bg-[#1E2C48] border border-[#1E2C48] text-[#94A3B8] hover:text-[#F1F5F9] text-[11px] transition-all btn-auto"
                             >
                               "{q}"
                             </button>
@@ -212,8 +212,8 @@ export const AIAssistantModal: React.FC<AIAssistantModalProps> = ({
           ))}
 
           {isTyping && (
-            <div className="flex items-center gap-2 text-xs text-[#94A3B8] p-2">
-              <Sparkles className="w-4 h-4 text-[#38BDF8] animate-spin" />
+            <div className="flex items-center gap-2 text-xs text-[#94A3B8] p-2 animate-in fade-in">
+              <Sparkles className="w-4 h-4 text-[#38BDF8] animate-pulse" />
               <span>AI is evaluating vehicle failure modes...</span>
             </div>
           )}
@@ -238,7 +238,7 @@ export const AIAssistantModal: React.FC<AIAssistantModalProps> = ({
             <button
               type="submit"
               disabled={!inputQuery.trim() || isTyping}
-              className="p-2.5 rounded-xl bg-[#FFB51B] hover:bg-[#FFD166] disabled:opacity-40 text-[#080D1C] font-bold transition-colors btn-primary-amber"
+              className="p-2.5 rounded-xl bg-[#FFB51B] hover:bg-[#FFD166] disabled:opacity-40 text-[#080D1C] font-bold transition-all btn-primary-amber btn-auto"
             >
               <Send className="w-4 h-4" />
             </button>

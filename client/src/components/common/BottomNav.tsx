@@ -55,18 +55,21 @@ export const BottomNav: React.FC<BottomNavProps> = ({ currentTab, setCurrentTab 
           <button
             key={tab.id}
             onClick={() => setCurrentTab(tab.id)}
-            className={`flex flex-col items-center justify-center py-1 px-3 rounded-xl transition-all active:scale-95 ${
+            aria-label={tab.label}
+            aria-selected={isActive}
+            role="tab"
+            className={`flex flex-col items-center justify-center py-1 px-3 rounded-xl transition-all btn-auto ${
               isActive
-                ? 'text-[#FFB51B] dark:text-[#FFB51B] light:text-[#111215] font-extrabold'
+                ? 'text-[#FFB51B] dark:text-[#FFB51B] light:text-[#111215] font-extrabold scale-105'
                 : 'text-slate-400 dark:text-[#94A3B8] light:text-[#4B5563] hover:text-slate-200 light:hover:text-[#111215]'
             }`}
           >
-            <div className={`p-1.5 rounded-xl transition-all ${
+            <div className={`p-1.5 rounded-xl transition-all duration-200 ${
               isActive
                 ? 'bg-[#FFB51B]/15 dark:bg-[#FFB51B]/15 light:bg-[#FACC15] light:border light:border-[#111215] shadow-sm text-[#FFB51B] dark:text-[#FFB51B] light:text-[#111215]'
-                : ''
+                : 'hover:bg-white/5'
             }`}>
-              <Icon className="w-4 h-4" />
+              <Icon className={`w-4 h-4 transition-transform duration-200 ${isActive ? 'scale-110' : ''}`} />
             </div>
             <span className="text-[10px] mt-0.5 tracking-tight font-heading">{tab.label}</span>
           </button>

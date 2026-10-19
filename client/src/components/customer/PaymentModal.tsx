@@ -142,7 +142,7 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({
             /* DIGITAL INVOICE RECEIPT VIEW */
             <div className="space-y-5 animate-in fade-in" id="printable-invoice">
               <div className="p-5 rounded-2xl bg-[#10B981]/15 border border-[#10B981]/30 flex items-center gap-3 text-[#10B981]">
-                <CheckCircle2 className="w-6 h-6 shrink-0" />
+                <CheckCircle2 className="w-6 h-6 shrink-0 animate-checkmark-pop" />
                 <div>
                   <h4 className="text-sm font-extrabold font-heading">Payment Successfully Settled</h4>
                   <p className="text-xs text-[#94A3B8]">
@@ -223,14 +223,14 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({
               <div className="flex items-center justify-end gap-3 pt-2">
                 <button
                   onClick={handlePrint}
-                  className="px-4 py-2 rounded-xl bg-[#1E2C48] hover:bg-[#2A3E66] text-[#F1F5F9] font-semibold text-xs flex items-center gap-1.5 transition-colors"
+                  className="px-4 py-2 rounded-xl bg-[#1E2C48] hover:bg-[#2A3E66] text-[#F1F5F9] font-semibold text-xs flex items-center gap-1.5 transition-colors btn-auto"
                 >
                   <Printer className="w-4 h-4" />
                   Print Receipt
                 </button>
                 <button
                   onClick={onClose}
-                  className="px-6 py-2 rounded-xl bg-[#FFB51B] hover:bg-[#FFD166] text-[#080D1C] font-extrabold text-xs btn-primary-amber"
+                  className="px-6 py-2 rounded-xl bg-[#FFB51B] hover:bg-[#FFD166] text-[#080D1C] font-extrabold text-xs btn-primary-amber btn-auto"
                 >
                   Done
                 </button>
@@ -298,13 +298,13 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({
                         key={m.id}
                         type="button"
                         onClick={() => setSelectedMethod(m.id as any)}
-                        className={`p-3 rounded-2xl border text-center transition-all flex flex-col items-center justify-center gap-1.5 ${
+                        className={`p-3 rounded-2xl border text-center transition-all flex flex-col items-center justify-center gap-1.5 btn-auto ${
                           isSelected
-                            ? 'bg-[#FFB51B]/20 border-[#FFB51B] text-[#FFD166] shadow-md'
+                            ? 'bg-[#FFB51B]/20 border-[#FFB51B] text-[#FFD166] shadow-md shadow-[#FFB51B]/10'
                             : 'bg-[#080D1C] border-[#1E2C48] text-[#94A3B8] hover:text-[#F1F5F9]'
                         }`}
                       >
-                        <Icon className="w-5 h-5" />
+                        <Icon className="w-5 h-5 transition-transform duration-200 group-hover:scale-110" />
                         <span className="text-xs font-bold">{m.label}</span>
                       </button>
                     );
@@ -396,10 +396,19 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({
               <button
                 disabled={isProcessing}
                 onClick={handlePay}
-                className="w-full py-3.5 rounded-2xl bg-[#FFB51B] hover:bg-[#FFD166] text-[#080D1C] font-extrabold text-sm flex items-center justify-center gap-2 shadow-xl shadow-[#FFB51B]/30 transition-transform hover:scale-[1.01] btn-primary-amber"
+                className="w-full py-3.5 rounded-2xl bg-[#FFB51B] hover:bg-[#FFD166] text-[#080D1C] font-extrabold text-sm flex items-center justify-center gap-2 shadow-xl shadow-[#FFB51B]/30 transition-all btn-primary-amber btn-auto disabled:opacity-60 disabled:cursor-not-allowed"
               >
-                <ShieldCheck className="w-5 h-5 text-[#080D1C]" />
-                <span>{isProcessing ? 'Authorizing Payment...' : `Complete Payment of ₹${booking?.pricing.total}`}</span>
+                {isProcessing ? (
+                  <>
+                    <div className="w-5 h-5 border-2 border-[#080D1C] border-t-transparent rounded-full animate-spin shrink-0" />
+                    <span>Authorizing Payment Settlement...</span>
+                  </>
+                ) : (
+                  <>
+                    <ShieldCheck className="w-5 h-5 text-[#080D1C]" />
+                    <span>Complete Payment of ₹{booking?.pricing.total}</span>
+                  </>
+                )}
               </button>
             </div>
           )}

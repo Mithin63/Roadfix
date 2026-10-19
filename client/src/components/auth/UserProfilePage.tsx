@@ -256,9 +256,9 @@ export const UserProfilePage: React.FC<UserProfilePageProps> = ({
             <div className={`p-3 rounded-xl text-xs flex items-center gap-2 ${
               saveMessage.includes('successfully')
                 ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30'
-                : 'bg-red-500/20 text-red-300 border border-red-500/30'
+                : 'bg-red-500/20 text-red-300 border border-red-500/30 animate-error-shake'
             }`}>
-              <CheckCircle2 className="w-4 h-4" />
+              <CheckCircle2 className={`w-4 h-4 shrink-0 ${saveMessage.includes('successfully') ? 'animate-checkmark-pop text-emerald-400' : ''}`} />
               <span>{saveMessage}</span>
             </div>
           )}
@@ -370,10 +370,19 @@ export const UserProfilePage: React.FC<UserProfilePageProps> = ({
             <button
               type="submit"
               disabled={isSaving}
-              className="px-6 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs flex items-center gap-2 shadow-lg shadow-amber-500/20"
+              className="px-6 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs flex items-center gap-2 shadow-lg shadow-amber-500/20 btn-primary-amber btn-auto disabled:opacity-60 disabled:cursor-not-allowed"
             >
-              <Save className="w-4 h-4" />
-              <span>{isSaving ? 'Saving Changes...' : 'Save Profile Changes'}</span>
+              {isSaving ? (
+                <>
+                  <div className="w-4 h-4 border-2 border-slate-950 border-t-transparent rounded-full animate-spin shrink-0" />
+                  <span>Saving Changes...</span>
+                </>
+              ) : (
+                <>
+                  <Save className="w-4 h-4" />
+                  <span>Save Profile Changes</span>
+                </>
+              )}
             </button>
           </div>
         </form>

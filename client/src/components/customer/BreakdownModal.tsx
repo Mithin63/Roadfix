@@ -39,7 +39,8 @@ import {
   AlertCircle,
   Trash2,
   Volume2,
-  Truck
+  Truck,
+  Navigation
 } from 'lucide-react';
 
 import { VehicleFormFields, VehicleFormData } from '../common/VehicleFormFields';
@@ -1058,9 +1059,38 @@ export const BreakdownModal: React.FC<BreakdownModalProps> = ({
               </div>
 
               {isMatching ? (
-                <div className="py-16 text-center space-y-3">
-                  <div className="w-12 h-12 rounded-full border-4 border-amber-500 border-t-transparent animate-spin mx-auto" />
-                  <h3 className="text-base font-bold text-white">Matching qualified technicians...</h3>
+                <div className="py-10 flex flex-col items-center justify-center space-y-5 animate-in fade-in">
+                  <div className="radar-sweep-viewport">
+                    <div className="radar-sweep-ray" />
+                    <div className="radar-sonar-wave-1" />
+                    <div className="radar-sonar-wave-2" />
+                    <div className="relative z-10 w-10 h-10 rounded-full bg-slate-950 border border-amber-400 flex items-center justify-center shadow-lg">
+                      <Navigation className="w-5 h-5 text-amber-400 animate-pulse" />
+                    </div>
+                  </div>
+                  <div className="text-center space-y-1">
+                    <h3 className="text-base font-extrabold text-white">
+                      Scanning Sector for Qualified Technicians...
+                    </h3>
+                    <p className="text-xs text-slate-400 max-w-sm">
+                      Matching real-time GPS proximity, equipment readiness, and certified ratings within your area.
+                    </p>
+                  </div>
+                  {/* Telematics Skeleton Loaders */}
+                  <div className="w-full space-y-2.5 pt-2 max-w-lg">
+                    {[1, 2, 3].map((n) => (
+                      <div key={n} className="p-3.5 rounded-2xl bg-slate-950/70 border border-slate-800 flex items-center justify-between gap-3">
+                        <div className="flex items-center gap-3">
+                          <div className="w-11 h-11 rounded-xl auto-skeleton shrink-0" />
+                          <div className="space-y-2">
+                            <div className="w-32 h-3.5 auto-skeleton" />
+                            <div className="w-24 h-2.5 auto-skeleton" />
+                          </div>
+                        </div>
+                        <div className="w-16 h-7 auto-skeleton" />
+                      </div>
+                    ))}
+                  </div>
                 </div>
               ) : (
                 <div className="space-y-3 max-h-[380px] overflow-y-auto pr-1">
@@ -1075,9 +1105,9 @@ export const BreakdownModal: React.FC<BreakdownModalProps> = ({
                         <div
                           key={mech.mechanicId}
                           onClick={() => setSelectedMechanic(mech)}
-                          className={`p-4 rounded-2xl cursor-pointer border transition-all text-left flex flex-col md:flex-row items-start md:items-center justify-between gap-4 ${
+                          className={`auto-card-interactive p-4 rounded-2xl cursor-pointer border transition-all text-left flex flex-col md:flex-row items-start md:items-center justify-between gap-4 ${
                             isSelected
-                              ? 'bg-amber-500/15 border-amber-500 shadow-lg'
+                              ? 'auto-service-card-selected bg-amber-500/15 border-amber-500 shadow-lg'
                               : 'bg-slate-950/70 border-slate-800 hover:border-slate-700'
                           }`}
                         >
@@ -1127,9 +1157,9 @@ export const BreakdownModal: React.FC<BreakdownModalProps> = ({
                                 ₹{mech.baseServiceFee}
                               </div>
                             </div>
-                            <span className={`text-xs px-3 py-1 rounded-xl font-bold mt-2 ${
+                            <span className={`text-xs px-3 py-1 rounded-xl font-bold mt-2 transition-all ${
                               isSelected
-                                ? 'bg-amber-500 text-slate-950'
+                                ? 'bg-amber-500 text-slate-950 shadow-md shadow-amber-500/30'
                                 : 'bg-slate-800 text-slate-300'
                             }`}>
                               {isSelected ? 'Selected' : 'Select'}
@@ -1273,7 +1303,7 @@ export const BreakdownModal: React.FC<BreakdownModalProps> = ({
               </div>
 
               {bookingError && (
-                <div className="p-3.5 rounded-xl bg-red-950/80 border border-red-500/60 text-red-200 text-xs flex items-center gap-2.5 animate-in fade-in">
+                <div className="animate-error-shake p-3.5 rounded-xl bg-red-950/80 border border-red-500/60 text-red-200 text-xs flex items-center gap-2.5">
                   <AlertCircle className="w-4 h-4 text-red-400 shrink-0" />
                   <span>{bookingError}</span>
                 </div>
@@ -1283,7 +1313,7 @@ export const BreakdownModal: React.FC<BreakdownModalProps> = ({
                 <button
                   type="button"
                   onClick={() => setCurrentStep(5)}
-                  className="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold flex items-center gap-1.5 cursor-pointer"
+                  className="btn-auto px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold flex items-center gap-1.5 cursor-pointer"
                 >
                   <ChevronLeft className="w-4 h-4" />
                   Back
@@ -1292,7 +1322,7 @@ export const BreakdownModal: React.FC<BreakdownModalProps> = ({
                   <button
                     type="button"
                     onClick={onClose}
-                    className="px-4 py-2 rounded-xl bg-slate-800/80 hover:bg-slate-700 text-slate-400 hover:text-white text-xs font-semibold cursor-pointer"
+                    className="btn-auto px-4 py-2 rounded-xl bg-slate-800/80 hover:bg-slate-700 text-slate-400 hover:text-white text-xs font-semibold cursor-pointer"
                   >
                     Cancel
                   </button>
@@ -1300,10 +1330,19 @@ export const BreakdownModal: React.FC<BreakdownModalProps> = ({
                     type="button"
                     disabled={isSubmittingBooking}
                     onClick={handleConfirmBooking}
-                    className="px-8 py-3 rounded-xl bg-gradient-to-r from-amber-500 to-amber-400 hover:from-amber-400 hover:to-amber-300 disabled:opacity-50 text-slate-950 font-black text-sm flex items-center gap-2 shadow-xl shadow-amber-500/25 transition-transform hover:scale-[1.02] cursor-pointer"
+                    className="btn-auto px-8 py-3 rounded-xl bg-gradient-to-r from-amber-500 to-amber-400 hover:from-amber-400 hover:to-amber-300 disabled:opacity-50 text-slate-950 font-black text-sm flex items-center gap-2 shadow-xl shadow-amber-500/25 cursor-pointer"
                   >
-                    <CheckCircle2 className="w-5 h-5 text-slate-950" />
-                    <span>{isSubmittingBooking ? 'Dispatching...' : 'Confirm Booking'}</span>
+                    {isSubmittingBooking ? (
+                      <>
+                        <div className="w-4 h-4 border-2 border-slate-950 border-t-transparent rounded-full animate-spin" />
+                        <span>Dispatching Certified Rescue Unit...</span>
+                      </>
+                    ) : (
+                      <>
+                        <CheckCircle2 className="w-5 h-5 text-slate-950" />
+                        <span>Confirm Booking</span>
+                      </>
+                    )}
                   </button>
                 </div>
               </div>

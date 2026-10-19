@@ -229,7 +229,7 @@ export const TrackingScreen: React.FC<TrackingScreenProps> = ({
       )}
 
       {/* Top Header Card */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-5 rounded-3xl bg-[#111A2E] dark:bg-[#111A2E] light:bg-white border border-[#1E2C48] dark:border-[#1E2C48] light:border-[#111215] shadow-xl light:shadow-[4px_4px_0px_#111215]">
+      <div className="auto-fade-in-up flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-5 rounded-3xl bg-[#111A2E] dark:bg-[#111A2E] light:bg-white border border-[#1E2C48] dark:border-[#1E2C48] light:border-[#111215] shadow-xl light:shadow-[4px_4px_0px_#111215]">
         <div className="flex items-start gap-4">
           <div className="w-12 h-12 rounded-2xl bg-[#FFB51B]/15 light:bg-amber-100 border border-[#FFB51B]/30 light:border-[#92400E]/30 flex items-center justify-center shrink-0">
             <Navigation className="w-6 h-6 text-[#FFB51B] dark:text-[#FFB51B] light:text-[#92400E] animate-pulse" />
@@ -243,9 +243,18 @@ export const TrackingScreen: React.FC<TrackingScreenProps> = ({
                 {booking.vehicleInfo.make} {booking.vehicleInfo.model} ({booking.vehicleInfo.regNo})
               </span>
             </div>
-            <h2 className="text-lg sm:text-xl font-extrabold text-[#F1F5F9] dark:text-[#F1F5F9] light:text-[#111215] font-heading mt-1">
-              Live Status: {booking.status.replace(/_/g, ' ').toUpperCase()}
-            </h2>
+            <div className="flex items-center gap-2.5 mt-1 flex-wrap">
+              <h2 className="text-lg sm:text-xl font-extrabold text-[#F1F5F9] dark:text-[#F1F5F9] light:text-[#111215] font-heading">
+                Live Status:
+              </h2>
+              <span 
+                key={booking.status}
+                className="animate-badge-pop inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full text-xs font-black uppercase tracking-wider bg-amber-500/15 border border-amber-500/40 text-amber-400 dark:text-amber-400 light:text-[#92400E] light:bg-amber-100"
+              >
+                <span className="w-2 h-2 rounded-full bg-amber-400 animate-ping" />
+                {booking.status.replace(/_/g, ' ')}
+              </span>
+            </div>
             <p className="text-xs text-[#94A3B8] dark:text-[#94A3B8] light:text-[#374151] mt-0.5">
               {booking.customerAddress}
             </p>
@@ -256,7 +265,7 @@ export const TrackingScreen: React.FC<TrackingScreenProps> = ({
         <div className="flex items-center gap-2 flex-wrap shrink-0">
           <button
             onClick={() => setSimulatedCall(true)}
-            className="px-3.5 py-2 rounded-xl bg-[#10B981]/15 dark:bg-[#10B981]/15 light:bg-emerald-50 hover:bg-[#10B981]/25 light:hover:bg-emerald-100 text-[#10B981] dark:text-[#10B981] light:text-[#047857] border border-[#10B981]/40 dark:border-[#10B981]/40 light:border-[#047857] text-xs font-bold flex items-center gap-1.5 transition-colors cursor-pointer"
+            className="btn-auto px-3.5 py-2 rounded-xl bg-[#10B981]/15 dark:bg-[#10B981]/15 light:bg-emerald-50 hover:bg-[#10B981]/25 light:hover:bg-emerald-100 text-[#10B981] dark:text-[#10B981] light:text-[#047857] border border-[#10B981]/40 dark:border-[#10B981]/40 light:border-[#047857] text-xs font-bold flex items-center gap-1.5 transition-colors cursor-pointer"
           >
             <PhoneCall className="w-3.5 h-3.5" />
             <span>Call Mechanic</span>
@@ -264,7 +273,7 @@ export const TrackingScreen: React.FC<TrackingScreenProps> = ({
 
           <button
             onClick={() => onOpenChat(booking.id)}
-            className="px-3.5 py-2 rounded-xl bg-[#38BDF8]/15 dark:bg-[#38BDF8]/15 light:bg-sky-50 hover:bg-[#38BDF8]/25 light:hover:bg-sky-100 text-[#38BDF8] dark:text-[#38BDF8] light:text-[#0369A1] border border-[#38BDF8]/40 dark:border-[#38BDF8]/40 light:border-[#0284C7] text-xs font-bold flex items-center gap-1.5 transition-colors cursor-pointer"
+            className="btn-auto px-3.5 py-2 rounded-xl bg-[#38BDF8]/15 dark:bg-[#38BDF8]/15 light:bg-sky-50 hover:bg-[#38BDF8]/25 light:hover:bg-sky-100 text-[#38BDF8] dark:text-[#38BDF8] light:text-[#0369A1] border border-[#38BDF8]/40 dark:border-[#38BDF8]/40 light:border-[#0284C7] text-xs font-bold flex items-center gap-1.5 transition-colors cursor-pointer"
           >
             <MessageSquare className="w-3.5 h-3.5" />
             <span>Chat</span>
@@ -272,7 +281,7 @@ export const TrackingScreen: React.FC<TrackingScreenProps> = ({
 
           <button
             onClick={handleShareTrip}
-            className="px-3.5 py-2 rounded-xl bg-[#080D1C] dark:bg-[#080D1C] light:bg-white hover:bg-[#1E2C48] light:hover:bg-[#EFECE5] text-[#94A3B8] dark:text-[#94A3B8] light:text-[#111215] border border-[#1E2C48] dark:border-[#1E2C48] light:border-[#111215] text-xs font-semibold flex items-center gap-1.5 transition-colors light:shadow-[2px_2px_0px_#111215] cursor-pointer"
+            className="btn-auto px-3.5 py-2 rounded-xl bg-[#080D1C] dark:bg-[#080D1C] light:bg-white hover:bg-[#1E2C48] light:hover:bg-[#EFECE5] text-[#94A3B8] dark:text-[#94A3B8] light:text-[#111215] border border-[#1E2C48] dark:border-[#1E2C48] light:border-[#111215] text-xs font-semibold flex items-center gap-1.5 transition-colors light:shadow-[2px_2px_0px_#111215] cursor-pointer"
           >
             {copiedLink ? <Check className="w-3.5 h-3.5 text-[#10B981] light:text-[#047857]" /> : <Share2 className="w-3.5 h-3.5" />}
             <span>{copiedLink ? 'Link Copied!' : 'Share Trip'}</span>
@@ -282,7 +291,7 @@ export const TrackingScreen: React.FC<TrackingScreenProps> = ({
 
       {/* ADDITIONAL CHARGE APPROVAL ALERT (Section 10) */}
       {pendingCharges && pendingCharges.length > 0 && (
-        <div className="p-4 rounded-2xl bg-[#FFB51B]/15 border-2 border-[#FFB51B] space-y-3">
+        <div className="auto-fade-in-up p-4 rounded-2xl bg-[#FFB51B]/15 border-2 border-[#FFB51B] space-y-3">
           <div className="flex items-center gap-2 text-[#FFB51B] font-bold text-sm font-heading">
             <AlertTriangle className="w-5 h-5 shrink-0" />
             <span>Action Required: Mechanic Requested Additional Work & Charges</span>
@@ -300,13 +309,13 @@ export const TrackingScreen: React.FC<TrackingScreenProps> = ({
                 <div className="flex items-center gap-2">
                   <button
                     onClick={() => handleApproveCharge(chg.id, false)}
-                    className="px-3 py-1.5 rounded-lg bg-[#1E2C48] hover:bg-[#2A3E66] text-[#94A3B8] text-xs font-semibold"
+                    className="btn-auto px-3 py-1.5 rounded-lg bg-[#1E2C48] hover:bg-[#2A3E66] text-[#94A3B8] text-xs font-semibold"
                   >
                     Reject
                   </button>
                   <button
                     onClick={() => handleApproveCharge(chg.id, true)}
-                    className="px-4 py-1.5 rounded-lg bg-[#10B981] hover:bg-emerald-400 text-[#080D1C] text-xs font-extrabold"
+                    className="btn-auto px-4 py-1.5 rounded-lg bg-[#10B981] hover:bg-emerald-400 text-[#080D1C] text-xs font-extrabold"
                   >
                     Approve Charge
                   </button>
@@ -320,10 +329,11 @@ export const TrackingScreen: React.FC<TrackingScreenProps> = ({
       {/* Main Grid: Map & Status Progression */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Left Column: Live Map */}
-        <div className="lg:col-span-2 space-y-4">
+        <div className="auto-fade-in-up lg:col-span-2 space-y-4">
           <MapLeaflet
             center={[booking.customerLat, booking.customerLng]}
             zoom={14}
+            isSearching={booking.status === 'requested'}
             customerPoint={{
               lat: booking.customerLat,
               lng: booking.customerLng,
@@ -370,11 +380,20 @@ export const TrackingScreen: React.FC<TrackingScreenProps> = ({
             </div>
 
             <div className="text-right">
-              <div className="text-[10px] text-[#94A3B8] dark:text-[#94A3B8] light:text-[#374151] uppercase tracking-wider font-heading">Estimated Arrival</div>
-              <div className="text-lg font-black text-[#10B981] light:text-[#047857]">
-                {booking.status === 'arrived' || booking.status === 'diagnosis_started' || booking.status === 'repair_in_progress' || booking.status === 'repair_completed'
-                  ? 'On-Site'
-                  : `~${booking.etaMinutes} Mins`}
+              <div className="text-[10px] text-[#94A3B8] dark:text-[#94A3B8] light:text-[#374151] uppercase tracking-wider font-heading">
+                {['arrived', 'diagnosis_started', 'repair_in_progress', 'repair_completed', 'payment_completed'].includes(booking.status)
+                  ? 'Status'
+                  : 'Estimated Arrival'}
+              </div>
+              <div className="text-base sm:text-lg font-black text-[#10B981] light:text-[#047857] flex items-center justify-end gap-1.5">
+                {['arrived', 'diagnosis_started', 'repair_in_progress', 'repair_completed', 'payment_completed'].includes(booking.status) ? (
+                  <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 light:text-[#047857] text-xs font-black uppercase">
+                    <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
+                    On-Site
+                  </span>
+                ) : (
+                  <span>~{booking.etaMinutes || 15} Mins</span>
+                )}
               </div>
               <div className="text-[10px] text-[#94A3B8] dark:text-[#94A3B8] light:text-[#374151]">
                 {booking.distanceKm} km away
@@ -383,44 +402,79 @@ export const TrackingScreen: React.FC<TrackingScreenProps> = ({
           </div>
         </div>
 
-        {/* Right Column: 9-Step Timeline & Bill Summary */}
-        <div className="space-y-4">
+        {/* Right Column: 6-Step Timeline & Bill Summary */}
+        <div className="auto-fade-in-up space-y-4" style={{ animationDelay: '100ms' }}>
           {/* Timeline */}
           <div className="p-5 rounded-2xl bg-[#111A2E] dark:bg-[#111A2E] light:bg-white border border-[#1E2C48] dark:border-[#1E2C48] light:border-[#111215] light:shadow-[4px_4px_0px_#111215] space-y-4">
-            <h3 className="text-xs font-bold uppercase tracking-wider text-[#FFB51B] dark:text-[#FFB51B] light:text-[#92400E] font-heading">
-              Assistance Progress Timeline
-            </h3>
+            <div className="flex items-center justify-between">
+              <h3 className="text-xs font-bold uppercase tracking-wider text-[#FFB51B] dark:text-[#FFB51B] light:text-[#92400E] font-heading">
+                Assistance Progress Timeline
+              </h3>
+              <span className="text-[11px] font-mono text-emerald-400 font-bold">
+                Step {currentStepIndex + 1} of {statusSteps.length}
+              </span>
+            </div>
 
-            <div className="space-y-3 relative pl-4 border-l-2 border-[#1E2C48] dark:border-[#1E2C48] light:border-[#111215]">
+            {/* Continuous Smooth Connecting Line Container */}
+            <div className="relative pl-7 space-y-4">
+              {/* Background Grey Track */}
+              <div className="absolute left-[11px] top-3 bottom-4 w-0.5 bg-[#1E2C48] dark:bg-[#1E2C48] light:bg-[#111215]/20 rounded-full" />
+              
+              {/* Active Smooth Fill Line */}
+              <div 
+                className="absolute left-[11px] top-3 w-0.5 bg-gradient-to-b from-[#10B981] via-[#10B981] to-[#FFB51B] rounded-full timeline-progress-fill transition-all duration-700 ease-out"
+                style={{
+                  height: `${Math.min(100, Math.max(0, (currentStepIndex / (statusSteps.length - 1)) * 100))}%`
+                }}
+              />
+
               {statusSteps.map((step, idx) => {
-                const isPassed = currentStepIndex >= idx;
+                const isPassed = currentStepIndex > idx;
                 const isCurrent = currentStepIndex === idx;
 
                 return (
                   <div key={step.id} className="relative group text-left">
-                    {/* Circle dot indicator */}
+                    {/* Circle Milestone Indicator */}
                     <div
-                      className={`absolute -left-[23px] top-0.5 w-3.5 h-3.5 rounded-full border-2 transition-all ${
+                      className={`absolute -left-[27px] top-0.5 w-[22px] h-[22px] rounded-full flex items-center justify-center transition-all duration-300 ${
                         isCurrent
-                          ? 'bg-[#FFB51B] border-white ring-4 ring-[#FFB51B]/20 animate-pulse'
+                          ? 'bg-[#FFB51B] text-[#080D1C] border-2 border-white dark:border-slate-900 timeline-milestone-active'
                           : isPassed
-                          ? 'bg-[#10B981] border-emerald-400'
-                          : 'bg-[#080D1C] dark:bg-[#080D1C] light:bg-[#EFECE5] border-[#1E2C48] dark:border-[#1E2C48] light:border-[#111215]'
+                          ? 'bg-[#10B981] text-[#080D1C] border-2 border-emerald-300 dark:border-emerald-950 shadow-[0_0_10px_rgba(16,185,129,0.35)]'
+                          : 'bg-[#080D1C] dark:bg-[#080D1C] light:bg-[#EFECE5] border-2 border-[#1E2C48] dark:border-[#1E2C48] light:border-[#111215] text-[#64748B]'
                       }`}
-                    />
+                    >
+                      {isPassed ? (
+                        <Check className="w-3.5 h-3.5 text-white dark:text-[#080D1C] stroke-[3] animate-checkmark-pop" />
+                      ) : isCurrent ? (
+                        <div className="w-2 h-2 rounded-full bg-[#080D1C] animate-ping" />
+                      ) : (
+                        <span className="text-[10px] font-bold">{idx + 1}</span>
+                      )}
+                    </div>
 
                     <div>
-                      <h4
-                        className={`text-xs font-bold font-heading ${
-                          isCurrent
-                            ? 'text-[#FFB51B] dark:text-[#FFB51B] light:text-[#92400E]'
-                            : isPassed
-                            ? 'text-[#F1F5F9] dark:text-[#F1F5F9] light:text-[#111215]'
-                            : 'text-[#64748B] dark:text-[#64748B] light:text-[#4B5563]'
-                        }`}
-                      >
-                        {idx + 1}. {step.label}
-                      </h4>
+                      <div className="flex items-center gap-2">
+                        <h4
+                          className={`text-xs font-bold font-heading transition-colors ${
+                            isCurrent
+                              ? 'text-[#FFB51B] dark:text-[#FFB51B] light:text-[#92400E]'
+                              : isPassed
+                              ? 'text-[#F1F5F9] dark:text-[#F1F5F9] light:text-[#111215]'
+                              : 'text-[#64748B] dark:text-[#64748B] light:text-[#4B5563]'
+                          }`}
+                        >
+                          {step.label}
+                        </h4>
+                        {isCurrent && (
+                          <span className="animate-badge-pop text-[9px] px-1.5 py-0.2 rounded font-black uppercase bg-[#FFB51B]/20 text-[#FFB51B] dark:text-[#FFB51B] light:text-[#92400E] border border-[#FFB51B]/30">
+                            Active
+                          </span>
+                        )}
+                        {isPassed && (
+                          <span className="text-[9px] text-emerald-400 font-bold">✓ Completed</span>
+                        )}
+                      </div>
                       <p className="text-[11px] text-[#94A3B8] dark:text-[#94A3B8] light:text-[#374151] mt-0.5">
                         {step.desc}
                       </p>

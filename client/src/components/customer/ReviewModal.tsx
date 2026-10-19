@@ -112,8 +112,8 @@ export const ReviewModal: React.FC<ReviewModalProps> = ({
         </div>
 
         {submitted ? (
-          <div className="py-8 text-center space-y-2">
-            <CheckCircle2 className="w-12 h-12 text-[#10B981] mx-auto animate-bounce" />
+          <div className="py-8 text-center space-y-2 animate-in fade-in">
+            <CheckCircle2 className="w-12 h-12 text-[#10B981] mx-auto animate-checkmark-pop" />
             <h4 className="text-base font-extrabold text-[#F1F5F9] font-heading">Thank You for Your Review!</h4>
             <p className="text-xs text-[#94A3B8]">Your rating has been published to the mechanic profile.</p>
           </div>
@@ -161,9 +161,16 @@ export const ReviewModal: React.FC<ReviewModalProps> = ({
             <button
               disabled={isSubmitting}
               type="submit"
-              className="w-full py-2.5 rounded-xl bg-[#FFB51B] hover:bg-[#FFD166] text-[#080D1C] font-extrabold text-xs shadow-lg shadow-[#FFB51B]/20 btn-primary-amber"
+              className="w-full py-2.5 rounded-xl bg-[#FFB51B] hover:bg-[#FFD166] text-[#080D1C] font-extrabold text-xs shadow-lg shadow-[#FFB51B]/20 btn-primary-amber btn-auto flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed"
             >
-              {isSubmitting ? 'Submitting...' : 'Submit Service Rating'}
+              {isSubmitting ? (
+                <>
+                  <div className="w-4 h-4 border-2 border-[#080D1C] border-t-transparent rounded-full animate-spin shrink-0" />
+                  <span>Submitting Feedback...</span>
+                </>
+              ) : (
+                'Submit Service Rating'
+              )}
             </button>
           </form>
         )}
