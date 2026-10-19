@@ -44,6 +44,7 @@ const MainAppContent: React.FC = () => {
   const [isDamageAnalysisOpen, setIsDamageAnalysisOpen] = useState(false);
   const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
   const [paymentBookingId, setPaymentBookingId] = useState<string>('');
+  const [activeTrackingBookingId, setActiveTrackingBookingId] = useState<string>('');
   const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
   const [reviewBookingId, setReviewBookingId] = useState<string>('');
   const [isChatOpen, setIsChatOpen] = useState(false);
@@ -69,8 +70,9 @@ const MainAppContent: React.FC = () => {
   };
 
   const handleBookingCreated = (bookingId: string) => {
-    setCurrentTab('tracking');
+    setActiveTrackingBookingId(bookingId);
     setPaymentBookingId(bookingId);
+    setCurrentTab('tracking');
   };
 
   const handleOpenChat = (bookingId: string) => {
@@ -214,6 +216,7 @@ const MainAppContent: React.FC = () => {
             /* ROLE 1: CUSTOMER VIEWS (Default for customer & any unexpected role) */
             currentTab === 'tracking' ? (
               <TrackingScreen
+                bookingId={activeTrackingBookingId || paymentBookingId}
                 onOpenChat={handleOpenChat}
                 onOpenPayment={handleOpenPayment}
                 onOpenReview={handleOpenReview}

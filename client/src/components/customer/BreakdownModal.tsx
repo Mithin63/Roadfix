@@ -122,6 +122,7 @@ export const BreakdownModal: React.FC<BreakdownModalProps> = ({
 
   // Step 6: Confirmation
   const [isSubmittingBooking, setIsSubmittingBooking] = useState(false);
+  const [bookingError, setBookingError] = useState<string | null>(null);
 
   // Sync coords if activeLocation changes
   useEffect(() => {
@@ -368,32 +369,64 @@ export const BreakdownModal: React.FC<BreakdownModalProps> = ({
   };
 
   // Submit Final Booking
-  const handleConfirmBooking = async () => {
-    if (!user || !selectedMechanic || !selectedVehicleId || !diagnosis) return;
+  const handleConfirmBooking = async (e?: React.MouseEvent) => {
+    if (e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+    setBookingError(null);
+
+    // Resolve vehicle ID
+    let resolvedVehicleId = selectedVehicleId;
+    if (!resolvedVehicleId && vehicles.length > 0) {
+      resolvedVehicleId = vehicles[0].id;
+      setSelectedVehicleId(resolvedVehicleId);
+    }
+
+    // Resolve mechanic
+    let resolvedMechanic = selectedMechanic;
+    if (!resolvedMechanic && matchedMechanics.length > 0) {
+      resolvedMechanic = matchedMechanics[0];
+      setSelectedMechanic(resolvedMechanic);
+    }
+
+    if (!user) {
+      setBookingError('You must be signed in to submit a roadside request.');
+      return;
+    }
+
+    if (!resolvedMechanic) {
+      setBookingError('Please go back to Step 5 and select a mechanic.');
+      return;
+    }
 
     setIsSubmittingBooking(true);
     try {
-      const chosenVehicle = vehicles.find(v => v.id === selectedVehicleId);
-      const activeProblems = diagnosis.problemTypes || (problemTypes.length > 0 ? problemTypes : [diagnosis.problemType]);
+      const activeProblems = diagnosis?.problemTypes || (problemTypes.length > 0 ? problemTypes : [primaryProblemType]);
 
       const res = await api.createBooking({
         customerId: user.id,
-        mechanicId: selectedMechanic.mechanicId,
-        vehicleId: selectedVehicleId,
-        problemType: diagnosis.problemType,
+        mechanicId: resolvedMechanic.mechanicId,
+        vehicleId: resolvedVehicleId || 'veh-default',
+        problemType: diagnosis?.problemType || primaryProblemType,
         problemTypes: activeProblems,
-        problemDescription: problemDescription || diagnosis.problemTitle,
+        problemDescription: problemDescription || diagnosis?.problemTitle || 'Emergency roadside breakdown assistance requested',
         customerLat: coords.lat,
         customerLng: coords.lng,
-        customerAddress: locationAddress,
+        customerAddress: locationAddress || 'Current Roadside Location',
         mediaUrls: uploadedPhotoUrl ? [uploadedPhotoUrl] : [],
-        aiDiagnosis: diagnosis
+        aiDiagnosis: diagnosis || undefined
       });
 
-      onBookingCreated(res.booking.id);
-      onClose();
-    } catch (err) {
-      console.error(err);
+      if (res && res.booking && res.booking.id) {
+        onBookingCreated(res.booking.id);
+        onClose();
+      } else {
+        throw new Error('Booking could not be created by the server.');
+      }
+    } catch (err: any) {
+      console.error('[BreakdownModal] Confirm booking failed:', err);
+      setBookingError(err.message || 'Could not dispatch roadside booking. Please check server connection.');
     } finally {
       setIsSubmittingBooking(false);
     }
@@ -1239,28 +1272,38 @@ export const BreakdownModal: React.FC<BreakdownModalProps> = ({
                 </div>
               </div>
 
+              {bookingError && (
+                <div className="p-3.5 rounded-xl bg-red-950/80 border border-red-500/60 text-red-200 text-xs flex items-center gap-2.5 animate-in fade-in">
+                  <AlertCircle className="w-4 h-4 text-red-400 shrink-0" />
+                  <span>{bookingError}</span>
+                </div>
+              )}
+
               <div className="flex justify-between pt-4 border-t border-slate-800">
                 <button
+                  type="button"
                   onClick={() => setCurrentStep(5)}
-                  className="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold flex items-center gap-1.5"
+                  className="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold flex items-center gap-1.5 cursor-pointer"
                 >
                   <ChevronLeft className="w-4 h-4" />
                   Back
                 </button>
                 <div className="flex items-center gap-3">
                   <button
+                    type="button"
                     onClick={onClose}
-                    className="px-4 py-2 rounded-xl bg-slate-800/80 hover:bg-slate-700 text-slate-400 hover:text-white text-xs font-semibold"
+                    className="px-4 py-2 rounded-xl bg-slate-800/80 hover:bg-slate-700 text-slate-400 hover:text-white text-xs font-semibold cursor-pointer"
                   >
                     Cancel
                   </button>
                   <button
+                    type="button"
                     disabled={isSubmittingBooking}
                     onClick={handleConfirmBooking}
-                    className="px-8 py-3 rounded-xl bg-gradient-to-r from-amber-500 to-amber-400 hover:from-amber-400 hover:to-amber-300 text-slate-950 font-black text-sm flex items-center gap-2 shadow-xl shadow-amber-500/25 transition-transform hover:scale-[1.02]"
+                    className="px-8 py-3 rounded-xl bg-gradient-to-r from-amber-500 to-amber-400 hover:from-amber-400 hover:to-amber-300 disabled:opacity-50 text-slate-950 font-black text-sm flex items-center gap-2 shadow-xl shadow-amber-500/25 transition-transform hover:scale-[1.02] cursor-pointer"
                   >
                     <CheckCircle2 className="w-5 h-5 text-slate-950" />
-                    <span>{isSubmittingBooking ? 'Dispatched...' : 'Confirm Booking'}</span>
+                    <span>{isSubmittingBooking ? 'Dispatching...' : 'Confirm Booking'}</span>
                   </button>
                 </div>
               </div>

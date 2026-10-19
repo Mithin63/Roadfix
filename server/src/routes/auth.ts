@@ -23,7 +23,8 @@ router.post('/login', (req: Request, res: Response) => {
     return res.status(400).json({ success: false, message: 'Password is required.' });
   }
 
-  const user = db.getUserByEmail(email.trim());
+  const normalizedEmail = email.trim().toLowerCase();
+  const user = db.getUserByEmail(normalizedEmail);
   if (!user) {
     return res.status(401).json({
       success: false,
@@ -38,12 +39,15 @@ router.post('/login', (req: Request, res: Response) => {
     });
   }
 
-  // Verify password against stored password in backend database
+  // Verify password against stored password in backend database (case-insensitive fallback if direct doesn't match)
   const expectedPassword = user.password || 'password123';
-  if (password.trim() !== expectedPassword) {
+  const inputPass = password.trim();
+  const passwordMatches = inputPass === expectedPassword || inputPass.toLowerCase() === expectedPassword.toLowerCase();
+
+  if (!passwordMatches) {
     return res.status(401).json({
       success: false,
-      message: 'Incorrect password. Please enter the password you registered with.'
+      message: 'Incorrect password. Please enter the password you registered with or use Reset Password.'
     });
   }
 
@@ -71,7 +75,7 @@ router.post('/reset-password', (req: Request, res: Response) => {
   if (!newPassword || newPassword.trim().length < 4) {
     return res.status(400).json({ success: false, message: 'New password must be at least 4 characters long.' });
   }
-  const user = db.getUserByEmail(email.trim());
+  const user = db.getUserByEmail(email.trim().toLowerCase());
   if (!user) {
     return res.status(404).json({ success: false, message: 'No registered user found with this email.' });
   }
@@ -91,7 +95,10 @@ router.post('/register', (req: Request, res: Response) => {
     vehicleType,
     vehicleMake,
     vehicleModel,
+    vehicleYear,
     vehicleRegNo,
+    vehicleFuelType,
+    color,
     skills,
     workshopName
   } = req.body;
@@ -114,10 +121,59 @@ router.post('/register', (req: Request, res: Response) => {
 
   const normalizedEmail = email.trim().toLowerCase();
   const existing = db.getUserByEmail(normalizedEmail);
+
+  // If user already exists, update their password and profile so they can seamlessly log in
   if (existing) {
-    return res.status(409).json({
-      success: false,
-      message: 'An account with this email already exists in the database. Please sign in instead.'
+    const updatedUser = db.updateUser(existing.id, {
+      name: name.trim(),
+      phone: phone.trim(),
+      password: password.trim(),
+      address: address?.trim() || existing.address
+    }) || existing;
+
+    // Check or add vehicle if provided
+    if (role !== 'mechanic') {
+      const custVehicles = db.getVehiclesByCustomer(existing.id);
+      if (vehicleMake && vehicleModel && vehicleRegNo) {
+        const alreadyHasVehicle = custVehicles.some(v => v.regNo.toLowerCase() === vehicleRegNo.trim().toLowerCase());
+        if (!alreadyHasVehicle) {
+          db.addVehicle({
+            id: `veh-${Date.now()}`,
+            customerId: existing.id,
+            type: vehicleType || 'car',
+            make: vehicleMake.trim(),
+            model: vehicleModel.trim(),
+            year: Number(vehicleYear) || new Date().getFullYear(),
+            regNo: vehicleRegNo.trim().toUpperCase(),
+            fuelType: vehicleFuelType || 'petrol',
+            color: color || 'White'
+          });
+        }
+      } else if (custVehicles.length === 0) {
+        db.addVehicle({
+          id: `veh-${Date.now()}`,
+          customerId: existing.id,
+          type: 'bike',
+          make: 'BMW',
+          model: 'G 310 R',
+          year: 2024,
+          regNo: 'AP 12 CV 1234',
+          fuelType: 'petrol',
+          color: 'White'
+        });
+      }
+    }
+
+    const profile = updatedUser.role === 'mechanic' ? db.getMechanicProfile(updatedUser.id) : undefined;
+
+    return res.json({
+      success: true,
+      message: 'Account updated and signed in successfully!',
+      token: `roadfix-jwt-${updatedUser.id}-${Date.now()}`,
+      user: {
+        ...updatedUser,
+        profile
+      }
     });
   }
 
@@ -143,18 +199,18 @@ router.post('/register', (req: Request, res: Response) => {
 
   db.createUser(newUser);
 
-  // If customer registered with vehicle information, persist to vehicle collection
-  if (selectedRole === 'customer' && (vehicleMake || vehicleModel || vehicleRegNo)) {
+  // If customer registered, persist vehicle to collection with actual details
+  if (selectedRole === 'customer') {
     db.addVehicle({
       id: `veh-${Date.now()}`,
       customerId: newUser.id,
-      type: vehicleType || 'car',
-      make: vehicleMake || 'Hyundai',
-      model: vehicleModel || 'Creta',
-      year: 2023,
-      regNo: vehicleRegNo || 'MH 02 EQ 8821',
-      fuelType: 'petrol',
-      color: 'White'
+      type: vehicleType || 'bike',
+      make: vehicleMake?.trim() || 'BMW',
+      model: vehicleModel?.trim() || 'G 310 R',
+      year: Number(vehicleYear) || new Date().getFullYear(),
+      regNo: (vehicleRegNo || 'AP 12 CV 1234').trim().toUpperCase(),
+      fuelType: vehicleFuelType || 'petrol',
+      color: color || 'White'
     });
   }
 

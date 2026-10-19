@@ -53,7 +53,9 @@ async function fetchJson<T>(url: string, options: RequestInit = {}): Promise<T> 
   }
 
   if (!res.ok || data.success === false) {
-    throw new Error(data.message || `Request failed with status ${res.status}`);
+    const err: any = new Error(data.message || `Request failed with status ${res.status}`);
+    err.status = res.status;
+    throw err;
   }
 
   return data;

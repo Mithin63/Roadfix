@@ -46,7 +46,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onSuccess, onClose }) => {
   const { user, login, register, logout, activeLocation, detectLocation } = useAuth();
   const { theme, toggleTheme } = useTheme();
 
-  const [mode, setMode] = useState<'login' | 'register'>('login');
+  const [mode, setMode] = useState<'login' | 'register' | 'reset'>('login');
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
@@ -60,6 +60,10 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onSuccess, onClose }) => {
   // Login form state
   const [loginEmail, setLoginEmail] = useState('');
   const [loginPassword, setLoginPassword] = useState('');
+
+  // Reset password form state
+  const [resetEmail, setResetEmail] = useState('');
+  const [resetPassword, setResetPassword] = useState('');
 
   // Register form state
   const [regRole, setRegRole] = useState<'customer' | 'mechanic'>('customer');
@@ -76,7 +80,8 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onSuccess, onClose }) => {
     model: '',
     year: '',
     regNo: '',
-    fuelType: ''
+    fuelType: '',
+    color: 'White'
   });
 
   // Mechanic fields
@@ -109,6 +114,25 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onSuccess, onClose }) => {
       }, 500);
     } catch (err: any) {
       setErrorMsg(err.message || 'Invalid credentials or account not registered in database.');
+      setLoading(false);
+    }
+  };
+
+  const handleResetPasswordSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setErrorMsg(null);
+    setSuccessMsg(null);
+    setLoading(true);
+
+    try {
+      await api.resetPassword(resetEmail.trim(), resetPassword);
+      await login(resetEmail.trim(), resetPassword);
+      setSuccessMsg('Password successfully updated! Opening Roadfix...');
+      setTimeout(() => {
+        if (onSuccess) onSuccess();
+      }, 500);
+    } catch (err: any) {
+      setErrorMsg(err.message || 'Failed to update password. Please check email address.');
       setLoading(false);
     }
   };
@@ -148,6 +172,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onSuccess, onClose }) => {
         vehicleYear: vehicleData.year || new Date().getFullYear(),
         vehicleRegNo: vehicleData.regNo.toUpperCase(),
         vehicleFuelType: vehicleData.fuelType || 'petrol',
+        color: vehicleData.color || 'White',
         workshopName: workshopName.trim(),
         skills
       });
@@ -162,7 +187,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onSuccess, onClose }) => {
     }
   };
 
-  const openAuthWithMode = (newMode: 'login' | 'register') => {
+  const openAuthWithMode = (newMode: 'login' | 'register' | 'reset') => {
     triggerHaptic('light');
     setMode(newMode);
     setIsAuthModalOpen(true);
@@ -802,10 +827,12 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onSuccess, onClose }) => {
                 </span>
               </div>
               <h2 className={`font-headline text-4xl uppercase tracking-tight ${isDark ? 'text-white' : 'text-[#111215]'}`}>
-                {mode === 'login' ? 'Sign In to Roadfix' : 'Create Your Roadfix Account'}
+                {mode === 'reset' ? 'Reset Password' : mode === 'login' ? 'Sign In to Roadfix' : 'Create Your Roadfix Account'}
               </h2>
               <p className={`font-mono text-xs ${isDark ? 'text-slate-400' : 'text-[#111215]/70'}`}>
-                {mode === 'login'
+                {mode === 'reset'
+                  ? 'Set a new password for your registered account and sign in immediately.'
+                  : mode === 'login'
                   ? 'Access your registered vehicles, roadside bookings & service history.'
                   : 'Register as a vehicle owner or service mechanic in the Roadfix database.'}
               </p>
@@ -849,9 +876,39 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onSuccess, onClose }) => {
 
             {/* Alerts */}
             {errorMsg && (
-              <div className="mb-4 p-3 bg-red-950/80 border border-red-500/50 rounded-lg text-red-200 font-mono text-xs flex items-start gap-2">
-                <AlertCircle className="w-4 h-4 text-red-400 shrink-0 mt-0.5" />
-                <span>{errorMsg}</span>
+              <div className="mb-4 p-3 bg-red-950/80 border border-red-500/50 rounded-lg text-red-200 font-mono text-xs flex flex-col gap-2">
+                <div className="flex items-start gap-2">
+                  <AlertCircle className="w-4 h-4 text-red-400 shrink-0 mt-0.5" />
+                  <span>{errorMsg}</span>
+                </div>
+                {(errorMsg.toLowerCase().includes('password') || errorMsg.toLowerCase().includes('already exists')) && (
+                  <div className="flex items-center gap-2 pt-1 border-t border-red-500/30">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setResetEmail(loginEmail || regEmail);
+                        setMode('reset');
+                        setErrorMsg(null);
+                      }}
+                      className="px-2.5 py-1 rounded bg-amber-500 text-slate-950 font-bold text-[10px] uppercase hover:bg-amber-400 cursor-pointer"
+                    >
+                      Reset Password Now
+                    </button>
+                    {mode !== 'login' && (
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setLoginEmail(regEmail);
+                          setMode('login');
+                          setErrorMsg(null);
+                        }}
+                        className="px-2.5 py-1 rounded bg-slate-800 text-slate-200 font-bold text-[10px] uppercase hover:bg-slate-700 cursor-pointer"
+                      >
+                        Switch to Sign In
+                      </button>
+                    )}
+                  </div>
+                )}
               </div>
             )}
 
@@ -862,8 +919,85 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onSuccess, onClose }) => {
               </div>
             )}
 
-            {/* Login Form */}
-            {mode === 'login' ? (
+            {/* Reset Password Form */}
+            {mode === 'reset' ? (
+              <form onSubmit={handleResetPasswordSubmit} className="space-y-4">
+                <div>
+                  <label className={`block font-mono text-xs uppercase font-bold mb-1 ${
+                    isDark ? 'text-slate-300' : 'text-[#111215]'
+                  }`}>
+                    Registered Email Address
+                  </label>
+                  <div className="relative">
+                    <Mail className="w-4 h-4 text-slate-400 absolute left-3.5 top-3" />
+                    <input
+                      type="email"
+                      required
+                      value={resetEmail}
+                      onChange={(e) => setResetEmail(e.target.value)}
+                      placeholder="e.g. mithin@example.com"
+                      className={`w-full pl-10 pr-4 py-2.5 rounded-lg font-mono text-xs focus:outline-none ${
+                        isDark
+                          ? 'bg-[#121824] border border-[#1E2638] text-white focus:border-[#F59E0B]'
+                          : 'bg-white border-2 border-[#111215] text-[#111215] shadow-[2px_2px_0px_#111215]'
+                      }`}
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label className={`block font-mono text-xs uppercase font-bold mb-1 ${
+                    isDark ? 'text-slate-300' : 'text-[#111215]'
+                  }`}>
+                    New Password
+                  </label>
+                  <div className="relative">
+                    <Lock className="w-4 h-4 text-slate-400 absolute left-3.5 top-3" />
+                    <input
+                      type={showPassword ? 'text' : 'password'}
+                      required
+                      minLength={4}
+                      value={resetPassword}
+                      onChange={(e) => setResetPassword(e.target.value)}
+                      placeholder="Enter new password (min. 4 chars)"
+                      className={`w-full pl-10 pr-10 py-2.5 rounded-lg font-mono text-xs focus:outline-none ${
+                        isDark
+                          ? 'bg-[#121824] border border-[#1E2638] text-white focus:border-[#F59E0B]'
+                          : 'bg-white border-2 border-[#111215] text-[#111215] shadow-[2px_2px_0px_#111215]'
+                      }`}
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowPassword(!showPassword)}
+                      className="absolute right-3 top-2.5 text-slate-400 hover:text-white"
+                    >
+                      {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                    </button>
+                  </div>
+                </div>
+
+                <button
+                  type="submit"
+                  disabled={loading}
+                  className="w-full btn-amber-hydraulic font-headline text-2xl tracking-wider py-3.5 rounded-xl border-2 border-[#111215] font-bold flex justify-center items-center gap-2 cursor-pointer mt-2"
+                >
+                  <span>{loading ? 'Updating Password...' : 'Update Password & Sign In →'}</span>
+                </button>
+
+                <div className="text-center pt-1">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setMode('login');
+                      setErrorMsg(null);
+                    }}
+                    className="text-xs font-mono text-slate-400 hover:text-white underline cursor-pointer"
+                  >
+                    ← Back to Sign In
+                  </button>
+                </div>
+              </form>
+            ) : mode === 'login' ? (
               <form onSubmit={handleLoginSubmit} className="space-y-4">
                 <div>
                   <label className={`block font-mono text-xs uppercase font-bold mb-1 ${
@@ -889,11 +1023,24 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onSuccess, onClose }) => {
                 </div>
 
                 <div>
-                  <label className={`block font-mono text-xs uppercase font-bold mb-1 ${
-                    isDark ? 'text-slate-300' : 'text-[#111215]'
-                  }`}>
-                    Password
-                  </label>
+                  <div className="flex items-center justify-between mb-1">
+                    <label className={`block font-mono text-xs uppercase font-bold ${
+                      isDark ? 'text-slate-300' : 'text-[#111215]'
+                    }`}>
+                      Password
+                    </label>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setResetEmail(loginEmail);
+                        setMode('reset');
+                        setErrorMsg(null);
+                      }}
+                      className="text-[11px] font-mono text-amber-500 hover:text-amber-400 cursor-pointer underline"
+                    >
+                      Forgot?
+                    </button>
+                  </div>
                   <div className="relative">
                     <Lock className="w-4 h-4 text-slate-400 absolute left-3.5 top-3" />
                     <input

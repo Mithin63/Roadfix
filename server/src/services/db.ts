@@ -43,7 +43,16 @@ import {
   PaymentModel
 } from '../models';
 
-const DB_FILE_PATH = path.join(__dirname, '..', 'data', 'database_store.json');
+const DATA_DIR = path.join(__dirname, '..', '..', 'data');
+if (!fs.existsSync(DATA_DIR)) {
+  try {
+    fs.mkdirSync(DATA_DIR, { recursive: true });
+  } catch (e) {
+    // ignore
+  }
+}
+const DB_FILE_PATH = path.join(DATA_DIR, 'database_store.json');
+const LEGACY_DB_PATH = path.join(__dirname, '..', 'data', 'database_store.json');
 
 // Haversine formula to compute great-circle distance between two coordinates in km
 export function calculateDistanceKm(lat1: number, lon1: number, lat2: number, lon2: number): number {
@@ -77,9 +86,15 @@ class DatabaseStore {
   }
 
   private init() {
-    if (fs.existsSync(DB_FILE_PATH)) {
+    const fileToLoad = fs.existsSync(DB_FILE_PATH)
+      ? DB_FILE_PATH
+      : fs.existsSync(LEGACY_DB_PATH)
+      ? LEGACY_DB_PATH
+      : null;
+
+    if (fileToLoad) {
       try {
-        const raw = fs.readFileSync(DB_FILE_PATH, 'utf-8');
+        const raw = fs.readFileSync(fileToLoad, 'utf-8');
         const data = JSON.parse(raw);
         if (data.users) this.users = new Map(data.users);
         if (data.mechanics) this.mechanics = new Map(data.mechanics);
@@ -93,7 +108,10 @@ class DatabaseStore {
         if (data.chatMessages) this.chatMessages = new Map(data.chatMessages);
         if (data.maintenanceRecords) this.maintenanceRecords = new Map(data.maintenanceRecords);
         if (data.emergencyContacts) this.emergencyContacts = new Map(data.emergencyContacts);
-        console.log(`[DatabaseStore] Loaded ${this.users.size} registered users from ${DB_FILE_PATH}`);
+        console.log(`[DatabaseStore] Loaded ${this.users.size} registered users from ${fileToLoad}`);
+        if (fileToLoad !== DB_FILE_PATH) {
+          this.saveToFile();
+        }
         return;
       } catch (err) {
         console.error('[DatabaseStore] Error loading database file, falling back to seed:', err);
@@ -343,6 +361,7 @@ class DatabaseStore {
       createdAt: new Date().toISOString()
     });
 
+    this.saveToFile();
     return booking;
   }
 
@@ -384,6 +403,7 @@ class DatabaseStore {
     });
 
     this.bookings.set(id, booking);
+    this.saveToFile();
     return booking;
   }
 
@@ -402,6 +422,7 @@ class DatabaseStore {
       booking.pricing.additionalCharges;
 
     this.bookings.set(bookingId, booking);
+    this.saveToFile();
     return booking;
   }
 
@@ -425,6 +446,7 @@ class DatabaseStore {
     });
 
     this.bookings.set(bookingId, booking);
+    this.saveToFile();
     return booking;
   }
 
@@ -449,6 +471,7 @@ class DatabaseStore {
       booking.pricing.additionalCharges;
 
     this.bookings.set(bookingId, booking);
+    this.saveToFile();
     return booking;
   }
 
@@ -468,6 +491,7 @@ class DatabaseStore {
       booking.pricing.additionalCharges;
 
     this.bookings.set(bookingId, booking);
+    this.saveToFile();
     return booking;
   }
 
@@ -482,6 +506,7 @@ class DatabaseStore {
 
   createInvoice(invoice: Invoice): Invoice {
     this.invoices.set(invoice.invoiceNumber, invoice);
+    this.saveToFile();
     return invoice;
   }
 
@@ -531,6 +556,7 @@ class DatabaseStore {
       };
       this.invoices.set(inv.invoiceNumber, inv);
     }
+    this.saveToFile();
     return payment;
   }
 
@@ -556,6 +582,7 @@ class DatabaseStore {
       this.mechanics.set(review.mechanicId, profile);
     }
 
+    this.saveToFile();
     return review;
   }
 
@@ -568,6 +595,7 @@ class DatabaseStore {
 
   addNotification(notification: Notification): Notification {
     this.notifications.set(notification.id, notification);
+    this.saveToFile();
     return notification;
   }
 
@@ -576,6 +604,7 @@ class DatabaseStore {
     if (!notif) return false;
     notif.read = true;
     this.notifications.set(id, notif);
+    this.saveToFile();
     return true;
   }
 
@@ -588,6 +617,7 @@ class DatabaseStore {
     const list = this.chatMessages.get(bookingId) || [];
     list.push(message);
     this.chatMessages.set(bookingId, list);
+    this.saveToFile();
     return message;
   }
 
@@ -598,6 +628,7 @@ class DatabaseStore {
 
   addMaintenanceRecord(record: MaintenanceRecord): MaintenanceRecord {
     this.maintenanceRecords.set(record.id, record);
+    this.saveToFile();
     return record;
   }
 
@@ -608,11 +639,14 @@ class DatabaseStore {
 
   addEmergencyContact(contact: EmergencyContact): EmergencyContact {
     this.emergencyContacts.set(contact.id, contact);
+    this.saveToFile();
     return contact;
   }
 
   deleteEmergencyContact(id: string): boolean {
-    return this.emergencyContacts.delete(id);
+    const res = this.emergencyContacts.delete(id);
+    if (res) this.saveToFile();
+    return res;
   }
 
   // Complaints
@@ -622,6 +656,7 @@ class DatabaseStore {
 
   createComplaint(complaint: Complaint): Complaint {
     this.complaints.set(complaint.id, complaint);
+    this.saveToFile();
     return complaint;
   }
 
@@ -631,6 +666,7 @@ class DatabaseStore {
     comp.status = status;
     if (resolutionNote) comp.resolutionNote = resolutionNote;
     this.complaints.set(id, comp);
+    this.saveToFile();
     return comp;
   }
 }

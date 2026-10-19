@@ -278,9 +278,23 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
               });
             }
           }
-        } catch (e) {
-          console.warn('Session restore failed, returning to login:', e);
-          logout();
+        } catch (e: any) {
+          console.warn('Session restore check warning:', e);
+          if (e?.status === 401 || e?.status === 403 || e?.status === 404) {
+            logout();
+          } else {
+            // Backend might be warming up or temporarily unreachable; keep saved session
+            const storedRole = (localStorage.getItem('roadfix_user_role') || 'customer') as any;
+            const storedName = localStorage.getItem('roadfix_user_name') || storedEmail.split('@')[0];
+            const storedId = localStorage.getItem('roadfix_user_id') || 'temp-id';
+            setUser({
+              id: storedId,
+              email: storedEmail,
+              name: storedName,
+              role: storedRole,
+              phone: ''
+            } as any);
+          }
         }
       } else {
         // First-time or logged-out: do not auto-login, show login page!

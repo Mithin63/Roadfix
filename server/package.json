@@ -4,7 +4,7 @@
   "description": "Backend API for Roadfix - 24/7 Roadside Vehicle Assistance & Mechanic Dispatch",
   "main": "dist/server.js",
   "scripts": {
-    "dev": "tsx watch src/server.ts",
+    "dev": "tsx watch --ignore \"**/data/**\" src/server.ts",
     "build": "npm --prefix ../client install && npm --prefix ../client run build && tsc",
     "start": "node dist/server.js"
   },

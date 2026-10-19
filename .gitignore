@@ -46,3 +46,6 @@ __pycache__/
 *$py.class
 .pytest_cache/
 
+# Runtime database files
+server/data/
+
